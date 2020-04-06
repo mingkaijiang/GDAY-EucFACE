@@ -325,5 +325,5 @@ if __name__ == "__main__":
 
     experiment_id = "FACE"
     site = "EUC"
-    treatment = "ele"
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=False)
+    #treatment = "amb"
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True)
