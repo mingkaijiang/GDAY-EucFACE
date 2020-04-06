@@ -2,7 +2,7 @@
 
 """ EucFACE CO2 simulations
 
-Full spin-up and simulations under amb and ele CO2 conditions for quasi-equil analysis
+Full spin-up and simulations under amb and ele CO2 conditions for EucFACE
 """
 
 import os
@@ -11,13 +11,13 @@ import sys
 import subprocess
 
 USER = os.getlogin()
-sys.path.append('/Users/%s/Documents/Research/Projects/EucFACE_Modeling/test/scripts' % (USER))
+sys.path.append('/Users/%s/Documents/Research/Projects/EucFACE_Modeling/GDAY-EucFACE/GDAY/scripts' % (USER))
 import adjust_gday_param_file as ad
 
 
-__author__  = "Martin De Kauwe"
-__version__ = "1.0 (14.12.2014)"
-__email__   = "mdekauwe@gmail.com"
+__author__  = "Mingkai Jiang"
+__version__ = "2.0 (06.04.2020)"
+__email__   = "m.jiang@westernsydney.edu.au"
 
 def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION=True, ELE_SPINUP=True, ELE_EQUILIB=True):
 
@@ -26,7 +26,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
     # dir names
     base_param_name = "base_start_with_P"
-    base_param_dir = "/Users/%s/Documents/Research/Projects/EucFACE_Modeling/test/GDAY/params" % (USER)
+    base_param_dir = "/Users/%s/Documents/Research/Projects/EucFACE_Modeling/GDAY-EucFACE/GDAY/params" % (USER)
     base_dir = os.path.dirname(os.getcwd())
     param_dir = os.path.join(base_dir, "params")
     met_dir = os.path.join(base_dir, "met_data")
