@@ -2,9 +2,11 @@
 
 """ EucFACE CO2 simulations
 
-Full spin-up and simulations under amb and ele CO2 conditions for EucFACE
+Full spin-up and simulations under amb CO conditions for EucFACE
 Include spin-up period, post-industrial period (1750 - 2011),
         observed period (2012 - 2019), and predicted period (2020 - 2069)
+Include dry and wet climate conditions
+Include NOP, MDP and HIP phosphorus treatment
 
 """
 
@@ -22,7 +24,7 @@ __author__  = "Mingkai Jiang"
 __version__ = "2.0 (06.04.2020)"
 __email__   = "m.jiang@westernsydney.edu.au"
 
-def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION=True, ELE_SPINUP=True, ELE_EQUILIB=True):
+def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, met_treatment="DRY", ELE_SPINUP=True, ELE_EQUILIB=True):
 
     GDAY_SPIN = "./gday -s -p "
     GDAY = "./gday -p "
@@ -46,7 +48,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
         # effectively zero
         itag = "%s_%s_model_spinup" % (experiment_id, site)
         otag = "%s_%s_model_spunup" % (experiment_id, site)
-        mtag = "%s_met_DRY_AMB_daily_2012_2019.csv" % (site)
+        mtag = "%s_met_spinup_daily_20yrs.csv" % (site)
         out_fn = itag + "_equilib.out"
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
@@ -309,7 +311,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_spunup_adj" % (experiment_id, site)
         otag = "%s_%s_model_indust" % (experiment_id, site)
-        mtag = "%s_met_data_amb_var_co2.csv" % (site)
+        mtag = "%s_met_historic_daily_1750_2011.csv" % (site)
         out_fn = "%s_amb_equilib.csv" % (site)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
@@ -337,7 +339,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_spunup_adj" % (experiment_id, site)
         otag = "%s_%s_model_indust" % (experiment_id, site)
-        mtag = "%s_met_data_amb_var_co2.csv" % (site)
+        mtag = "%s_met_historic_daily_1750_2011.csv" % (site)
         out_fn = "%s_amb_equilib.csv" % (site)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
@@ -357,8 +359,8 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
     
-    # elevated co2 initialization to store output 
-    if ELE_INITIALIZATION == True:
+    # met treatment under dry condition to store output 
+    if met_treatment == "DRY:
         
         # copy last cfg file and make new one
         shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
@@ -366,8 +368,8 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_ele_initial" % (experiment_id, site)
-        mtag = "%s_met_data_%s_var_co2.csv" % (site, treatment)
-        out_fn = "%s_ele_initial.csv" % (site)
+        mtag = "%s_met_DRY_%s_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_daily_212_2019.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -386,8 +388,8 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
     
-    # elevated co2 initialization to store cfg
-    if ELE_INITIALIZATION == True:
+    # met treatment under dry condition to store cfg
+    if met_treatment == "DRY:
         
         # copy last cfg file and make new one
         shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
@@ -395,8 +397,8 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_ele_initial" % (experiment_id, site)
-        mtag = "%s_met_data_%s_var_co2.csv" % (site, treatment)
-        out_fn = "%s_ele_initial.csv" % (site)
+        mtag = "%s_met_DRY_%s_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_daily_212_2019.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -415,7 +417,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
     
-    # elevated CO2 during spin up to store cfg file
+    # future predictions to store cfg file
     if ELE_SPINUP == True:
         
         # copy last cfg file and make new one
@@ -424,8 +426,8 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_ele_spinup" % (experiment_id, site)
         otag = "%s_%s_model_ele_spunup" % (experiment_id, site)
-        mtag = "%s_met_data_%s_var_co2.csv" % (site, treatment)
-        out_fn = "FACE_EUC_ele_spunup_%s%s.csv" % (site, treatment.upper())
+        mtag = "%s_met_data_%s_var_co2.csv" % (site, CO2_treatment)
+        out_fn = "FACE_EUC_ele_spunup_%s%s.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -453,7 +455,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION
 
         itag = "%s_%s_model_ele_equil" % (experiment_id, site)
         otag = "%s_%s_model_ele_final" % (experiment_id, site)
-        mtag = "%s_met_data_%s_var_co2.csv" % (site, treatment)
+        mtag = "%s_met_data_%s_var_co2.csv" % (site, CO2_treatment)
         out_fn = "%s_ele_final_equilib.csv" % (site)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
@@ -477,5 +479,7 @@ if __name__ == "__main__":
 
     experiment_id = "FACE"
     site = "EUC"
-    treatment = "ele"
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, ELE_INITIALIZATION=True, ELE_SPINUP=True, ELE_EQUILIB=True)
+    CO2_treatment = "AMB"
+    
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, met_treatment="DRY", ELE_SPINUP=True, ELE_EQUILIB=True)
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, met_treatment="WET", ELE_SPINUP=True, ELE_EQUILIB=True)
