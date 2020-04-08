@@ -283,7 +283,7 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "model_optroot": "false",
                         "modeljm": "1",
                         "ncycle": "true",
-                        "pcycle": "false",
+                        "pcycle": "true",
                         "nuptake_model": "1",
                         "puptake_model": "1",
                         "triose_p": "false",
