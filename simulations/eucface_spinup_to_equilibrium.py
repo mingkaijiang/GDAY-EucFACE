@@ -45,7 +45,7 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True):
         # effectively zero
         itag = "%s_%s_model_spinup" % (experiment_id, site)
         otag = "%s_%s_model_spunup" % (experiment_id, site)
-        mtag = "%s_met_spinup_daily_20yrs.csv" % (site)
+        mtag = "%s_met_spinup_daily_50yrs.csv" % (site)
         out_fn = itag + "_equilib.out"
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")

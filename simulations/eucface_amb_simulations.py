@@ -49,7 +49,7 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
         # effectively zero
         itag = "%s_%s_model_spinup" % (experiment_id, site)
         otag = "%s_%s_model_spunup" % (experiment_id, site)
-        mtag = "%s_met_spinup_daily_20yrs.csv" % (site)
+        mtag = "%s_met_spinup_daily_50yrs.csv" % (site)
         out_fn = itag + "_equilib.out"
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
