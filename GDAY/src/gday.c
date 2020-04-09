@@ -1082,7 +1082,8 @@ void unpack_met_data(control *c, fluxes *f, met_arrays *ma, met *m, params *p, i
     f->ninflow = m->ndep + m->nfix;
     
     /* P deposition to fluxes */
-    f->p_atm_dep = p->p_atm_deposition;
+    /*f->p_atm_dep = p->p_atm_deposition;*/
+    f->p_atm_dep = m->pdep;
     
     return;
 }
