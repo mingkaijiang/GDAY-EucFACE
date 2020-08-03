@@ -119,12 +119,12 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True):
                         "alpha_j": "0.308",  # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",
-                        "latitude": "-33.61",
+                        "latitude": "-33.61",     # EucFACE parameter file
                         "albedo": "0.2",
                         "finesoil": "0.2",   # silt + clay fraction. Surface soil texture (upper 45 cm) for Clarenden sand: 80 +/- 8% sand, 9 +/- 5% silt, 11 +/- 3% clay
-                        "slamax": "4.0",    # 43.7 +/- 1.5 cm2 g 1 dry mass
-                        "sla": "4.0",       # 43.7 +/-  1.5 cm2 g 1 dry mass
-                        "slazero": "4.0",   # 43.7+/-  1.5 cm2 g 1 dry mass
+                        "slamax": "6.34",    # EucFACE parameter file
+                        "sla": "5.57",       # EucFACE parameter file
+                        "slazero": "5.57",   # EucFACE parameter file
                         "lai_closed": "0.5",  # I am effectively turning this feature off by setting it so low
                         "c_alloc_fmax": "0.25",  # 0.35
                         "c_alloc_fmin": "0.05",  # 0.15
@@ -134,21 +134,21 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True):
                         "c_alloc_bmin": "0.05",   # 0.1
                         "c_alloc_cmax": "0.0", # turn off coarse roots!
                         "biochemical_p_constant": "150.0",
-                        "fretrans": "0.5",
-                        "fretransp": "0.5",
-                        "rretrans": "0.0",
-                        "bretrans": "0.0",
-                        "wretrans": "0.7",
+                        "fretrans": "0.31",     # EucFACE parameter file
+                        "fretransp": "0.53",    # EucFACE parameter file
+                        "rretrans": "0.3",      # EucFACE parameter file
+                        "bretrans": "0.7",      # EucFACE parameter file
+                        "wretrans": "0.7",      # EucFACE parameter file
                         "cretrans": "0.0",
                         "crit_n_cost_of_p": "15.0",
-                        "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
-                        "ncwnew": "0.003",           #New stem ring N:C at critical leaf N:C (mob)
+                        "ncwnewz": "0.009",          #New stem ring N:C at zero leaf N:C (mobile)
+                        "ncwnew": "0.009",           #New stem ring N:C at critical leaf N:C (mob)
                         "ncwimmz": "0.003",          #Immobile stem N C at zero leaf N C
                         "ncwimm": "0.003",           #Immobile stem N C at critical leaf N C
                         "ncbnewz": "0.003",          #new branch N C at zero leaf N C
                         "ncbnew": "0.003",           #new branch N C at critical leaf N C
-                        "nccnewz": "0.003",          #new coarse root N C at zero leaf N C
-                        "nccnew": "0.003",           #new coarse root N C at critical leaf N C
+                        "nccnewz": "0.009",          #new coarse root N C at zero leaf N C
+                        "nccnew": "0.009",           #new coarse root N C at critical leaf N C
                         "ncrfac": "0.8",
                         "ncmaxfyoung": "0.1",
                         "ncmaxfold": "0.1",
@@ -224,14 +224,14 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True):
                         "pcbnewz": "0.0003",
                         "pccnew": "0.0003",
                         "pccnewz": "0.0003",
-                        "pcmaxfold": "0.002",    # 0.0015 Table 3, Olander et al. 2005, Earth Interactions.
+                        "pcmaxfold": "0.001",    # EucFACE parameter file
                         "pcmaxfyoung": "0.002",
-                        "pcmaxr": "0.0006",
+                        "pcmaxr": "0.0006",     # EucFACE parameter file
                         "pcrfac": "0.8",
-                        "pcwimm": "0.00014",
-                        "pcwimmz": "0.00014",
-                        "pcwnew": "0.00014",
-                        "pcwnewz": "0.00014",
+                        "pcwimm": "0.00013",     # EucFACE parameter file
+                        "pcwimmz": "0.00013",    # EucFACE parameter file
+                        "pcwnew": "0.00013",     # EucFACE parameter file
+                        "pcwnewz": "0.00013",    # EucFACE parameter file
                         "pf_crit": "0.002",
                         "pf_min": "0.0002",
                         "phmax": "7.6",
@@ -244,10 +244,10 @@ def main(experiment_id, site, SPIN_UP=True, POST_INDUST=True):
                         "pmin0": "0.0",
                         "pmincrit": "2.0",
                         "prateloss": "0.05",
-                        "prateuptake": "7.0",    # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "prateuptake": "4.0",    # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "slowpcmin": "0.005",
                         "slowpcmax": "0.011111",
-                        "soilph": "4.5",          # Olander et al., 2005, Earth Interactions.
+                        "soilph": "5.52",          # EucFACE parameter file
                         "sorpmx": "5.0",
                         "sorpaf": "1.0",
                         "structcp": "5500.0",

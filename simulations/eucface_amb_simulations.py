@@ -68,15 +68,15 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "activesoil": "0.001",
                         "activesoiln": "0.00004",
                         "activesoilp": "0.000002",
-                        "age": "100.0",
+                        "age": "90.0",                # EucFACE parameter file
                         "branch": "0.001",
                         "branchn": "0.00004",
                         "branchp": "0.000002",
                         "cstore": "0.0",
                         "nstore": "0.0",
                         "pstore": "0.0",
-                        "inorgn": "0.0000",     # 0.00004
-                        "inorglabp": "0.0000",  # 0.00004
+                        "inorgn": "0.0000",           # 0.00004
+                        "inorglabp": "0.0000",        # 0.00004
                         "inorgsorbp": "0.0",
                         "inorgssorbp": "0.0",
                         "inorgoccp": "0.0",
@@ -123,26 +123,26 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "alpha_j": "0.308",  # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",
-                        "latitude": "-33.61",
+                        "latitude": "-33.61",     # EucFACE parameter file
                         "albedo": "0.2",
                         "finesoil": "0.2",   # silt + clay fraction. Surface soil texture (upper 45 cm) for Clarenden sand: 80 +/- 8% sand, 9 +/- 5% silt, 11 +/- 3% clay
-                        "slamax": "5.1",    # current unit: m2 kg-1; original unit: 43.7 +/- 1.5 cm2 g 1 dry mass
-                        "sla": "5.1",       # current unit: m-2 kg-1; original unit: 43.7 +/-  1.5 cm2 g 1 dry mass
-                        "slazero": "5.1",   # current unit: m-2 kg-1; original unit: 43.7+/-  1.5 cm2 g 1 dry mass
+                        "slamax": "6.34",    # EucFACE parameter file
+                        "sla": "5.57",       # EucFACE parameter file
+                        "slazero": "5.57",   # EucFACE parameter file
                         "lai_closed": "0.5",  # I am effectively turning this feature off by setting it so low
-                        "c_alloc_fmax": "0.45",  # 0.35
-                        "c_alloc_fmin": "0.05",  # 0.15
-                        "c_alloc_rmax": "0.45",  # 0.35
-                        "c_alloc_rmin": "0.05",  # 0.05
-                        "c_alloc_bmax": "0.1",   # 0.1
-                        "c_alloc_bmin": "0.1",   # 0.1
+                        "c_alloc_fmax": "0.48",  # EucFACE parameter file
+                        "c_alloc_fmin": "0.48",  # EucFACE parameter file
+                        "c_alloc_rmax": "0.32",  # EucFACE parameter file
+                        "c_alloc_rmin": "0.22",  # EucFACE parameter file
+                        "c_alloc_bmax": "0.05",   # 
+                        "c_alloc_bmin": "0.05",   # 
                         "c_alloc_cmax": "0.0", # turn off coarse roots!
                         "biochemical_p_constant": "150.0",
-                        "fretrans": "0.5",
-                        "fretransp": "0.5",
-                        "rretrans": "0.0",
-                        "bretrans": "0.0",
-                        "wretrans": "0.7",
+                        "fretrans": "0.31",     # EucFACE parameter file
+                        "fretransp": "0.53",    # EucFACE parameter file
+                        "rretrans": "0.3",      # EucFACE parameter file
+                        "bretrans": "0.7",      # EucFACE parameter file
+                        "wretrans": "0.7",      # EucFACE parameter file
                         "cretrans": "0.0",
                         "crit_n_cost_of_p": "15.0",
                         "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
@@ -154,12 +154,12 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "nccnewz": "0.003",          #new coarse root N C at zero leaf N C
                         "nccnew": "0.003",           #new coarse root N C at critical leaf N C
                         "ncrfac": "0.8",
-                        "ncmaxfyoung": "0.04",
-                        "ncmaxfold": "0.04",
-                        "ncmaxr": "0.03",
+                        "ncmaxfyoung": "0.03",
+                        "ncmaxfold": "0.03",
+                        "ncmaxr": "0.018",
                         "retransmob": "0.0",
-                        "fdecay": "0.6",    # 18 mth turnover * 1/30
-                        "fdecaydry": "0.6", # 18 mth turnover * 1/30
+                        "fdecay": "1.0",    # 18 mth turnover * 1/30
+                        "fdecaydry": "1.0", # 18 mth turnover * 1/30
                         "max_p_biochemical": "0.001",
                         "rdecay": "0.6",
                         "rdecaydry": "0.6",
@@ -195,14 +195,6 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "z0h_z0m": "1.0",
 
                         "g1": "3.8667",          # 3.8667 Fit by Me to Teresa's data 7th Nov 2013; or 2.78 from stomatal model
-                        #"jmaxna": "14.891",      # 
-                        #"jmaxpa": "291.4305",    # 
-                        #"jmaxnb": "99.497",      # 
-                        #"jmaxpb": "99.949",      # 88.56  
-                        #"vcmaxna": "10.453",     # 6.426
-                        #"vcmaxpa": "153.1748",    
-                        #"vcmaxnb": "74.522",     # 60.526
-                        #"vcmaxpb": "57.242",     # 27.66
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
                         "jmaxpa": "933.90",      # forcing intercept to zero; if use all species df, 842.46 
                         "jmaxnb": "0.0",         # forcing intercept to zero
@@ -223,27 +215,27 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "croot0": "0.34",
                         "croot1": "0.84",
                         "targ_sens": "0.5",
-                        "density": "800.0",       # 480
+                        "density": "492.0",       # EucFACE parameter file
                         "nf_min": "0.005", 
                         "nf_crit": "0.015",
                         "sapturnover": "0.1",
                         "p_atm_deposition": "0.000086",   # 1/4 of value from Table 4, Olander et al. 2005; Earth Interactions.
                         "p_rate_par_weather": "0.0001", # Calcualted so that weathering rate = atm deposition;
-                        "passpcmin": "0.005",
-                        "passpcmax": "0.05",
+                        "passpcmin": "0.004",
+                        "passpcmax": "0.004",
                         "psecmnp": "0.000022",
-                        "pcbnew": "0.0003",
-                        "pcbnewz": "0.0003",
-                        "pccnew": "0.0003",
-                        "pccnewz": "0.0003",
-                        "pcmaxfold": "0.002",    # 0.0015 Table 3, Olander et al. 2005, Earth Interactions.
+                        "pcbnew": "0.00013",
+                        "pcbnewz": "0.00013",
+                        "pccnew": "0.00013",
+                        "pccnewz": "0.00013",
+                        "pcmaxfold": "0.002",    # EucFACE parameter file
                         "pcmaxfyoung": "0.002",
-                        "pcmaxr": "0.0006",
+                        "pcmaxr": "0.0006",      # EucFACE parameter file
                         "pcrfac": "0.8",
-                        "pcwimm": "0.00014",
-                        "pcwimmz": "0.00014",
-                        "pcwnew": "0.00014",
-                        "pcwnewz": "0.00014",
+                        "pcwimm": "0.00013",     # EucFACE parameter file
+                        "pcwimmz": "0.00013",    # EucFACE parameter file
+                        "pcwnew": "0.00013",     # EucFACE parameter file
+                        "pcwnewz": "0.00013",    # EucFACE parameter file
                         "pf_crit": "0.002",
                         "pf_min": "0.0002",
                         "phmax": "7.6",
@@ -256,10 +248,10 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "pmin0": "0.0",
                         "pmincrit": "2.0",
                         "prateloss": "0.05",
-                        "prateuptake": "3.6",    # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "prateuptake": "2.6",    # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "slowpcmin": "0.005",
                         "slowpcmax": "0.011111",
-                        "soilph": "4.5",          # Olander et al., 2005, Earth Interactions.
+                        "soilph": "5.52",          # EucFACE parameter file
                         "sorpmx": "5.0",
                         "sorpaf": "1.0",
                         "structcp": "5500.0",

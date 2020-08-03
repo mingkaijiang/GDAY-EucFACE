@@ -1608,7 +1608,7 @@ void calc_p_net_mineralisation(fluxes *f) {
         P Net mineralisation from microbial activity,
         excluding the (- f->p_sorb_to_ssorb + f->p_ssorb_to_sorb activity)
     */
-    f->pmineralisation = f->pgross - f->pimmob + f->plittrelease;
+    f->pmineralisation = 0.003/365; /*f->pgross - f->pimmob + f->plittrelease;*/
 
     return;
 }
@@ -1901,7 +1901,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     /* pcmin & pcmax from Parton 1989 fig 2 */
     s->metabsoilp += (f->p_soil_metab_litter - f->p_soil_metab_to_active);
     s->metabsoilp += pc_limit(f, s->metabsoil, s->metabsoilp,
-                              1.0/150.0, 1.0/80.0);
+                              1.0/4.0, 1.0/2.0);
 
 
     /* When nothing is being added to the metabolic pools, there is the
