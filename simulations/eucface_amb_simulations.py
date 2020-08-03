@@ -219,7 +219,7 @@ PRD_DRY_NOP=True, PRD_WET_NOP=True, PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_
                         "nf_min": "0.005", 
                         "nf_crit": "0.015",
                         "sapturnover": "0.1",
-                        "p_atm_deposition": "0.000086",   # 1/4 of value from Table 4, Olander et al. 2005; Earth Interactions.
+                        "p_atm_deposition": "0.0", # 0.000086",   # 1/4 of value from Table 4, Olander et al. 2005; Earth Interactions.
                         "p_rate_par_weather": "0.0001", # Calcualted so that weathering rate = atm deposition;
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
@@ -823,5 +823,5 @@ if __name__ == "__main__":
     CO2_treatment = "AMB"
     
     main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=False, PRD_WET_NOP=True,
     PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
