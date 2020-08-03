@@ -823,5 +823,5 @@ if __name__ == "__main__":
     CO2_treatment = "AMB"
     
     main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=False, PRD_WET_NOP=False,
-    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)

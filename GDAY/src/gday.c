@@ -627,8 +627,8 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (c->pcycle) {
                 /* Have we reached a steady state? */
                 fprintf(stderr,
-                        "Spinup: LAI - %f, Leaf CP - %f, Wood C - %f, Soil P - %f, P min - %f, P gross - %f, P upt1 - %f, P litrel - %f\n",
-                        s->lai, s->shoot/s->shootp, s->stem, s->soilp, f->pmineralisation*365, f->pgross*365, f->puptake*365, f->plittrelease*365);
+                        "Spinup: LAI - %f, Leaf CP - %f, Wood C - %f, Soil P - %f, P min - %f, P upt - %f\n",
+                        s->lai, s->shoot/s->shootp, s->stem, s->soilp, f->pmineralisation*365, f->puptake*365);
             } else {
               /* Have we reached a steady state? */
               fprintf(stderr,
