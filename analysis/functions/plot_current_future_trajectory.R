@@ -138,24 +138,10 @@ plot_current_future_trajectory <- function() {
     dev.off()
     
     
-    ### plotting
-    #pdf("outputs/analysis/current_future_trajectory.pdf")
-    #for (i in 3:n) {
-    #    plot(plotDF[,i]~plotDF$year, col=c("red3", "blue2",
-    #                                       "yellow", "orange", "brown",
-    #                                       "cyan", "blue2", "darkblue"), 
-    #         pch=c(17, 17, 19, 19, 19, 19, 19, 19),
-    #         xlab="year", ylab=colnames(plotDF)[i])
-    #    title(colnames(plotDF)[i])
-    #    legend("bottomright", title="Trt",
-    #           pch=c(17, 17, 19, 19, 19, 19, 19, 19),
-    #           c("DRY_AMB_2012_2019", "WET_AMB_2012_2019",
-    #             "DRY_AMB_NOP_2020_2069", "DRY_AMB_MDP_2020_2069", "DRY_AMB_HIP_2020_2069",
-    #             "WET_AMB_NOP_2020_2069", "WET_AMB_MDP_2020_2069", "WET_AMB_HIP_2020_2069"), 
-    #           col=c("red3", "blue2",
-    #                 "yellow", "orange", "brown",
-    #                 "cyan", "blue2", "darkblue"), 
-    #           cex=0.6, bg='lightgrey')
-    #}
-    #dev.off()
+    ### problems:
+    ## 1. we have too much inorganic P in the soil (100 g P m-2)!
+    ## 2. Restart file (year 2020) is disequilibrated, need to check:
+    ##   a. cfg restart files (may be time-consuming);
+    ##   b. parameters (re-calibrate);
+    ##   c. met data
 }
