@@ -12,6 +12,9 @@ source("analysis/prepare.R")
 ### Plot historic validation
 plot_historic_validation()
 
+### Plot current future trajectory
+plot_current_future_trajectory()
+
 ### Plot carbon
 
 ### Plot nitrogen
