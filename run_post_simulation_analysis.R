@@ -9,6 +9,12 @@ rm(list=ls(all=TRUE))
 #### Source functions and packages
 source("analysis/prepare.R")
 
+
+### Plot annual met data
+plot_annual_met_data()
+
+### Plot daily met data over the transition periods
+
 ### Plot historic validation
 plot_historic_validation()
 
