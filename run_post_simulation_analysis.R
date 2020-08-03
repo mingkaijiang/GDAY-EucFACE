@@ -9,8 +9,8 @@ rm(list=ls(all=TRUE))
 #### Source functions and packages
 source("analysis/prepare.R")
 
-
-### Plot met data
+### Plot historic validation
+plot_historic_validation()
 
 ### Plot carbon
 

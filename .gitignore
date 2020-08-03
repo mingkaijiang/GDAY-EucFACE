@@ -41,7 +41,7 @@ outputs/*.nceas
 outputs/old/*.csv
 data/*.csv
 analysis/*.csv
-
+outputs/analysis/*.pdf
 
 # All nc files
 met_data/raw_met_data/*.nc
