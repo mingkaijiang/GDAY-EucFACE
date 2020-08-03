@@ -14,6 +14,8 @@ source("analysis/prepare.R")
 plot_annual_met_data()
 
 ### Plot daily met data over the transition periods
+plot_daily_met_data()
+
 
 ### Plot historic validation
 plot_historic_validation()
