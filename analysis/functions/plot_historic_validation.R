@@ -94,11 +94,5 @@ plot_historic_validation <- function() {
     dev.off()
     
     
-    ### hsitoric period checked,
-    ### there wasn't a bump between historic and current period for most variables,
-    ### hence restart file seems OK, but still need to make sure with fut period.
-    ### Variability is large in historic period, 
-    ### hence the variability may be reasonable in the current to future period.
-    
     
 }

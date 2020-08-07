@@ -224,7 +224,7 @@ def main(experiment_id, site,
                         "nf_crit": "0.015",
                         "sapturnover": "0.1",
                         "p_atm_deposition": "0.0", # 0.000086",   # read in from met data now, hence set it to zero. 
-                        "p_rate_par_weather": "0.0001", # Calcualted so that weathering rate = atm deposition;
+                        "p_rate_par_weather": "0.001", # Calcualted so that weathering rate = atm deposition;
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "psecmnp": "0.000022",

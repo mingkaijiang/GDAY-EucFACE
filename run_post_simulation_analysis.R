@@ -11,10 +11,10 @@ source("analysis/prepare.R")
 
 
 ### Plot annual met data
-plot_annual_met_data()
+#plot_annual_met_data()
 
 ### Plot daily met data over the transition periods
-plot_daily_met_data()
+#plot_daily_met_data()
 
 
 ### Plot historic validation
@@ -23,10 +23,5 @@ plot_historic_validation()
 ### Plot current future trajectory
 plot_current_future_trajectory()
 
-### Plot carbon
 
-### Plot nitrogen
 
-### Plot phosphorus
-
-### Plot water

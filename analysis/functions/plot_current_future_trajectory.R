@@ -144,4 +144,8 @@ plot_current_future_trajectory <- function() {
     ##   a. cfg restart files (may be time-consuming);
     ##   b. parameters (re-calibrate);
     ##   c. met data
+    ## 3. Pools especially stem pool is too variable.
+    
+    
+    #test <- subset(plotDF, year == 2020)
 }
