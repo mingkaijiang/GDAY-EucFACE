@@ -198,7 +198,7 @@ def main(experiment_id, site,
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
                         "z0h_z0m": "1.0",
 
-                        "g1": "3.8667",          # 3.8667 Fit by Me to Teresa's data 7th Nov 2013; or 2.78 from stomatal model
+                        "g1": "3.04",          # EucFACE parameter
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
                         "jmaxpa": "933.90",      # forcing intercept to zero; if use all species df, 842.46 
                         "jmaxnb": "0.0",         # forcing intercept to zero
@@ -224,7 +224,7 @@ def main(experiment_id, site,
                         "nf_crit": "0.015",
                         "sapturnover": "0.1",
                         "p_atm_deposition": "0.0", # 0.000086",   # read in from met data now, hence set it to zero. 
-                        "p_rate_par_weather": "0.001", # Calcualted so that weathering rate = atm deposition;
+                        "p_rate_par_weather": "0.005", # Calcualted so that weathering rate = atm deposition;
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "psecmnp": "0.000022",

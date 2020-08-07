@@ -6,16 +6,20 @@ plot_annual_met_data <- function() {
     histDF <- read.csv("met_data/EUC_met_historic_daily_1750_2011.csv",skip=4)
     obsDF <- read.csv("met_data/EUC_met_DRY_AMB_daily_2012_2019.csv",skip=4)
     futDF <- read.csv("met_data/EUC_met_DRY_AMB_NOP_daily_2020_2069.csv",skip=4)
+    futDF2 <- read.csv("met_data/EUC_met_DRY_AMB_MDP_daily_2020_2069.csv",skip=4)
+    futDF3 <- read.csv("met_data/EUC_met_DRY_AMB_HIP_daily_2020_2069.csv",skip=4)
     
     ### colnames
-    colnames(spinDF)[1] <- colnames(histDF)[1] <- colnames(obsDF)[1] <- colnames(futDF)[1] <- "year"
+    colnames(spinDF)[1] <- colnames(histDF)[1] <- colnames(obsDF)[1] <- colnames(futDF)[1] <- colnames(futDF2)[1] <- colnames(futDF3)[1] <- "year"
     spinDF$Trt <- "Spinup"
     histDF$Trt <- "Hist"
     obsDF$Trt <- "Obs"
-    futDF$Trt <- "Fut"
+    futDF$Trt <- "Fut_NOP"
+    futDF2$Trt <- "Fut_MDP"
+    futDF3$Trt <- "Fut_HIP"
     
     ### merge
-    myDF <- rbind(spinDF, histDF, obsDF, futDF)
+    myDF <- rbind(spinDF, histDF, obsDF, futDF, futDF2, futDF3)
     
     ### annual
     plotDF <- summaryBy(.~year+Trt, data=myDF, FUN=mean, keep.names=T, na.rm=T)
@@ -44,24 +48,24 @@ plot_annual_met_data <- function() {
                                             hjust = 0.5))+
             ylab(colnames(plotDF)[i])+
             scale_color_manual(name="",
-                               limits=c("Spinup", "Hist", "Obs", "Fut"),
-                               labels=c("Spinup", "Hist", "Obs", "Fut"),
-                               values=c("grey", "black", "green", "purple"),
+                               limits=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                               labels=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                               values=c("grey", "black", "green", "purple", "orange", "yellow"),
                                guide=guide_legend(nrow=1))+
             scale_fill_manual(name="",
-                              limits=c("Spinup", "Hist", "Obs", "Fut"),
-                              labels=c("Spinup", "Hist", "Obs", "Fut"),
-                              values=c("grey", "black", "green", "purple"),
+                              limits=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                              labels=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                              values=c("grey", "black", "green", "purple", "orange", "yellow"),
                               guide=guide_legend(nrow=1))+
             scale_linetype_manual(name="",
-                                  limits=c("Spinup", "Hist", "Obs", "Fut"),
-                                  labels=c("Spinup", "Hist", "Obs", "Fut"),
-                                  values=c("dotted", "dotted", "solid", "solid"),
+                                  limits=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                                  labels=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                                  values=c("dotted", "dotted", "solid", "solid", "solid", "solid"),
                                   guide=guide_legend(nrow=1))+
             scale_shape_manual(name="",
-                               limits=c("Spinup", "Hist", "Obs", "Fut"),
-                               labels=c("Spinup", "Hist", "Obs", "Fut"),
-                               values=c(24,24,21,21),
+                               limits=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                               labels=c("Spinup", "Hist", "Obs", "Fut_NOP", "Fut_MDP", "Fut_HIP"),
+                               values=c(24,24,21,21, 21, 21),
                                guide=guide_legend(nrow=1))+
             ggtitle(colnames(plotDF)[i])+
             xlab("Year")+
