@@ -2016,10 +2016,6 @@ double pc_limit(fluxes *f, double cpool, double ppool, double pcmin,
     double pmax = cpool * pcmax;
     double pmin = cpool * pcmin;
 
-    //fprintf(stderr, "ppool %f\n", ppool*100000);
-    //fprintf(stderr, "pmax %f\n", pmax*100000);
-    //fprintf(stderr, "pmin %f\n", pmin*100000);
-
     if (ppool > pmax) {
         /* release */
         rel = ppool - pmax;

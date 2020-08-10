@@ -583,7 +583,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     double prev_plantn = 99999.9;
     double prev_soiln = 99999.9;
     double prev_plantp = 99999.9;
-    double prev_soilp = 99999.9;
+    double prev_soilavailp = 99999.9;
     int i, cntrl_flag;
     
     /* check for convergences in units of kg/m2 */
@@ -610,7 +610,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             fabs((prev_plantn) - (s->plantn)) < tol_n &&
             fabs((prev_soiln) - (s->soiln)) < tol_n &&
             fabs((prev_plantp) - (s->plantp)) < tol_p &&
-            fabs((prev_soilp) - (s->soilp)) < tol_p) {
+            fabs((prev_soilavailp) - (s->inorgavlp)) < tol_p) {
             break;
         } else {
             prev_plantc = s->plantc;
@@ -618,7 +618,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             prev_plantn = s->plantn;
             prev_soiln = s->soiln;
             prev_plantp = s->plantp;
-            prev_soilp = s->soilp;
+            prev_soilavailp = s->inorgavlp;
 
             /* 1000 years (50 yrs x 20 cycles) */
             for (i = 0; i < 20; i++) {
@@ -627,8 +627,8 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (c->pcycle) {
                 /* Have we reached a steady state? */
                 fprintf(stderr,
-                        "Spinup: LAI - %f, Leaf CP - %f, Wood C - %f, Soil P - %f, P min - %f, P upt - %f, P weather - %f\n",
-                        s->lai, s->shoot/s->shootp, s->stem, s->soilp, f->pmineralisation*365, f->puptake*365, f->p_par_to_min*365);
+                        "Spinup: LAI - %f, Leaf CP - %f, Wood C - %f, Avail P - %f, P min - %f, P upt - %f, P weather - %f\n",
+                        s->lai, s->shoot/s->shootp, s->stem, s->inorgavlp, f->pmineralisation*365, f->puptake*365, f->p_par_to_min*365);
             } else {
               /* Have we reached a steady state? */
               fprintf(stderr,

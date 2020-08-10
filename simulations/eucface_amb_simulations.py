@@ -133,20 +133,20 @@ def main(experiment_id, site,
                         "slamax": "6.34",    # EucFACE parameter file
                         "sla": "5.57",       # EucFACE parameter file
                         "slazero": "5.57",   # EucFACE parameter file
-                        "lai_closed": "0.5",  # I am effectively turning this feature off by setting it so low
+                        "lai_closed": "0.5", # I am effectively turning this feature off by setting it so low
                         "c_alloc_fmax": "0.52",  # EucFACE parameter file
-                        "c_alloc_fmin": "0.52", #"0.44",  # EucFACE parameter file
+                        "c_alloc_fmin": "0.44",  # EucFACE parameter file
                         "c_alloc_rmax": "0.32",  # EucFACE parameter file
-                        "c_alloc_rmin": "0.32",  #"0.22",  # EucFACE parameter file
-                        "c_alloc_bmax": "0.05",   # 
-                        "c_alloc_bmin": "0.05",   # 
-                        "c_alloc_cmax": "0.0",    # turn off coarse roots!
+                        "c_alloc_rmin": "0.22",  # EucFACE parameter file
+                        "c_alloc_bmax": "0.1",  # guess
+                        "c_alloc_bmin": "0.05",  # guess
+                        "c_alloc_cmax": "0.0",   # turn off coarse roots!
                         "biochemical_p_constant": "150.0",
                         "fretrans": "0.31",     # EucFACE parameter file
                         "fretransp": "0.53",    # EucFACE parameter file
                         "rretrans": "0.3",      # EucFACE parameter file
                         "bretrans": "0.7",      # EucFACE parameter file
-                        "wretrans": "0.7",      # EucFACE parameter file
+                        "wretrans": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
                         "crit_n_cost_of_p": "15.0",
                         "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
@@ -162,20 +162,20 @@ def main(experiment_id, site,
                         "ncmaxfold": "0.03",
                         "ncmaxr": "0.018",
                         "retransmob": "0.0",
-                        "fdecay": "1.0",    # 18 mth turnover * 1/30
-                        "fdecaydry": "1.0", # 18 mth turnover * 1/30
+                        "fdecay": "0.83",            # foliage decay rate, guess parameter
+                        "fdecaydry": "0.83",         # foliage decay rate, guess parameter
                         "max_p_biochemical": "0.001",
-                        "rdecay": "0.6",
-                        "rdecaydry": "0.6",
+                        "rdecay": "0.6",             # EucFACE parameter file
+                        "rdecaydry": "0.6",          # as above
                         "crdecay": "0.00",           # turn off coarse roots!
-                        "bdecay": "0.1",            # no idea, assuming 50 years
-                        "wdecay": "0.1",            # no idea, assuming 50 years
+                        "bdecay": "0.1",            # no idea, assuming 25 years
+                        "wdecay": "0.1",            # no idea, assuming 25 years
                         "watdecaydry": "0.0",
                         "watdecaywet": "0.1",
-                        "ligshoot": "0.18",          # Based on white et al. 2000 #"0.145",   # assuming leaf and root same as DE word document
-                        "ligroot": "0.22",           # Based on white et al. 2000    # assuming leaf and root same as DE word document
+                        "ligshoot": "0.15",          # EucFACE parameter file
+                        "ligroot": "0.2",            # Same as Medlyn 2016
                         "rateuptake": "1.8",
-                        "rateloss": "0.05",           # was 0.1
+                        "rateloss": "0.05",           # guess value
                         "topsoil_depth": "450.0",    # Not needed as I have supplied the root zone water and topsoil water available
                         "rooting_depth": "2500.0",   # Not needed as I have supplied the root zone water and topsoil water available
                         "wcapac_root": "300.0",      # [mm] (FC-WP)*rooting_depth. But using 2.0 m, site_description_stuff/EucFACE_Plot_Summary.doc
@@ -190,10 +190,6 @@ def main(experiment_id, site,
                         "ks": "0.5",
                         "kp": "0.3",
                         "krp": "0.00001",
-                        #"dz0v_dh": "0.1",
-                        #"z0h_z0m": "1.0",
-                        #"displace_ratio": "0.67",
-
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
                         "z0h_z0m": "1.0",
@@ -207,6 +203,8 @@ def main(experiment_id, site,
                         "vcmaxpa": "516.83",     # forcing intercept to zero; if use all species df, 468.76
                         "vcmaxnb": "0.0",        # forcing intercept to zero
                         "vcmaxpb": "0.0",        # forcing intercept to zero
+                        #"jmax": "162.91",         # EucFACE parameter file
+                        #"vcmax": "92.85",         # EucFACE parameter file
                         "measurement_temp": "25.0", # parameters obtained at 22 not 25 degrees
                         "heighto": "4.826",
                         "htpower": "0.35",
@@ -222,24 +220,26 @@ def main(experiment_id, site,
                         "density": "492.0",       # EucFACE parameter file
                         "nf_min": "0.005", 
                         "nf_crit": "0.015",
-                        "sapturnover": "0.1",
-                        "p_atm_deposition": "0.0", # 0.000086",   # read in from met data now, hence set it to zero. 
+                        "sapturnover": "0.1",     # guess value
+                        "p_atm_deposition": "0.0",     # read in from met data now. 
                         "p_rate_par_weather": "0.005", # Calcualted so that weathering rate = atm deposition;
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
+                        "actpcmax": "0.5",       # guess value based on microbial P
+                        "actpcmin": "0.25",      # guess value based on microbial P
                         "psecmnp": "0.000022",
-                        "pcbnew": "0.00013",
-                        "pcbnewz": "0.000013",
-                        "pccnew": "0.00013",
-                        "pccnewz": "0.00013",
-                        "pcmaxfold": "0.002",    # EucFACE parameter file
-                        "pcmaxfyoung": "0.002",
+                        "pcbnew": "0.000286",    # same as sapwood
+                        "pcbnewz": "0.000286",   # same as sapwood
+                        "pccnew": "0.000286",    # same as sapwood
+                        "pccnewz": "0.000286",   # same as sapwood
+                        "pcmaxfold": "0.0014",   # EucFACE parameter file
+                        "pcmaxfyoung": "0.002",  # EucFACE parameter file
                         "pcmaxr": "0.0006",      # EucFACE parameter file
                         "pcrfac": "0.8",
                         "pcwimm": "0.00013",     # EucFACE parameter file
                         "pcwimmz": "0.00013",    # EucFACE parameter file
-                        "pcwnew": "0.00013",     # EucFACE parameter file
-                        "pcwnewz": "0.00013",    # EucFACE parameter file
+                        "pcwnew": "0.000286",    # EucFACE parameter file
+                        "pcwnewz": "0.000286",   # EucFACE parameter file
                         "pf_crit": "0.002",
                         "pf_min": "0.0002",
                         "phmax": "7.6",
@@ -247,14 +247,15 @@ def main(experiment_id, site,
                         "phtextmin": "0.000008",
                         "phtextmax": "0.00015",
                         "phtextslope": "0.00004",
-                        "pmax": "0.002",
-                        "pmin": "0.01",
-                        "pmin0": "0.0",
+                        "pmax": "0.002",           # not needed
+                        "pmin": "0.01",            # not needed
+                        "pmin0": "0.0",            # set to zero for now
                         "pmincrit": "2.0",
-                        "prateloss": "0.05",
-                        "prateuptake": "2.6",    # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
-                        "slowpcmin": "0.005",
-                        "slowpcmax": "0.011111",
+                        "prateloss": "0.05",       # set it to be the same as N rate loss
+                        "prateuptake": "2.6",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "p_lab_avail": "0.2",      # this parameter is calculated in GDAY, no need to define it
+                        "slowpcmin": "0.005",      # guess range
+                        "slowpcmax": "0.011111",   # guess range
                         "soilph": "5.52",          # EucFACE parameter file
                         "sorpmx": "5.0",
                         "sorpaf": "1.0",

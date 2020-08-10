@@ -883,7 +883,6 @@ void calculate_jmax_and_vcmax(control *c, params *p, state *s, double Tk,
             
         }
 
-        
         *vcmax = arrh(mt, vcmax25, p->eav, Tk);
         
         *jmax = peaked_arrh(mt, jmax25, p->eaj, Tk,
