@@ -134,13 +134,13 @@ def main(experiment_id, site,
                         "sla": "5.57",       # EucFACE parameter file
                         "slazero": "5.57",   # EucFACE parameter file
                         "lai_closed": "0.5",  # I am effectively turning this feature off by setting it so low
-                        "c_alloc_fmax": "0.48",  # EucFACE parameter file
-                        "c_alloc_fmin": "0.48",  # EucFACE parameter file
+                        "c_alloc_fmax": "0.52",  # EucFACE parameter file
+                        "c_alloc_fmin": "0.52", #"0.44",  # EucFACE parameter file
                         "c_alloc_rmax": "0.32",  # EucFACE parameter file
-                        "c_alloc_rmin": "0.22",  # EucFACE parameter file
+                        "c_alloc_rmin": "0.32",  #"0.22",  # EucFACE parameter file
                         "c_alloc_bmax": "0.05",   # 
                         "c_alloc_bmin": "0.05",   # 
-                        "c_alloc_cmax": "0.0", # turn off coarse roots!
+                        "c_alloc_cmax": "0.0",    # turn off coarse roots!
                         "biochemical_p_constant": "150.0",
                         "fretrans": "0.31",     # EucFACE parameter file
                         "fretransp": "0.53",    # EucFACE parameter file
