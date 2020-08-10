@@ -596,6 +596,7 @@ void initialise_state(state *s) {
     s->inorgssorbp = 0.055;             /* Binkley et al 2000 Forest Ecology and Management, Table 1, unit converted from 55 ug P g dry soil to t/ha */
     s->inorgoccp = 0.0;               
     s->inorgparp = 0.054;               /* Binkley et al 2000 Forest Ecology and Management, Table 1 */
+    s->fertilizerp = 0.0;               /* Application of P fertilization */
     s->metabsoil = 0.135656771805;
     s->metabsoiln = 0.00542627087221;
     s->metabsoilp = 0.001179624;        /* based on metabolic pool C/P ratio of 115 from Parton et al., 1989, Ecology of arable land. */

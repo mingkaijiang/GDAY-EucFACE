@@ -558,6 +558,8 @@ int handler(char *section, char *name, char *value, control *c,
         s->inorgoccp = atof(value);
     } else if (MATCH("state", "inorgparp")) {
         s->inorgparp = atof(value);
+    } else if (MATCH("state", "fertilizerp")) {
+      s->fertilizerp = atof(value);
     } else if (MATCH("state", "lai")) {
         s->lai = atof(value);
     } else if (MATCH("state", "metabsoil")) {

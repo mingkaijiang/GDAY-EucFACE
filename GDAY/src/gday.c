@@ -861,6 +861,7 @@ void reset_all_p_pools_and_fluxes(fluxes *f, state *s) {
     s->inorgssorbp = 0.0;
     s->inorgoccp = 0.0;
     s->inorgparp = 0.0;
+    s->fertilizerp = 0.0;
     s->stemp = 0.0;
     s->stempimm = 0.0;
     s->stempmob = 0.0;
@@ -987,13 +988,13 @@ void day_end_calculations(control *c, params *p, state *s, int days_in_year,
     s->totaln = s->plantn + s->littern + s->soiln;
 
     /* total plant, soil & litter phosphorus */
-    s->inorgp = s->inorglabp + s->inorgsorbp + s->inorgssorbp + s->inorgoccp + s->inorgparp;
+    s->inorgp = s->inorglabp + s->inorgsorbp + s->inorgssorbp + s->inorgoccp + s->inorgparp + s->fertilizerp;
     s->soilp = s->inorgp + s->activesoilp + s->slowsoilp + s->passivesoilp;
     s->litterpag = s->structsurfp + s->metabsurfp;
     s->litterpbg = s->structsoilp + s->metabsoilp;
     s->litterp = s->litterpag + s->litterpbg;
     s->plantp = s->shootp + s->rootp + s->crootp + s->branchp + s->stemp;
-    s->totalp = s->plantp + s->litterp + s->soilp;// + s->inorgssorbp + s->inorgoccp + s->inorgparp;
+    s->totalp = s->plantp + s->litterp + s->soilp;
 
     /* total plant, soil, litter and system carbon */
     s->soilc = s->activesoil + s->slowsoil + s->passivesoil;

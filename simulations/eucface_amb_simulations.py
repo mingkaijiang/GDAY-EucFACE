@@ -85,6 +85,7 @@ def main(experiment_id, site,
                         "inorgssorbp": "0.0",
                         "inorgoccp": "0.0",
                         "inorgparp": "0.054",
+                        "fertilizerp": "0.0",         # Fertilizer P pool
                         "metabsoil": "0.0",
                         "metabsoiln": "0.0",
                         "metabsoilp": "0.0",

@@ -94,6 +94,7 @@ typedef struct {
     double inorgssorbp;                 /* Inorganic soil P pool - strongly sorbed P (t/ha) */
     double inorgoccp;                   /* Inorganic soil P pool - occluded P (t/ha) */
     double inorgparp;                   /* Inorganic soil P pool - parent P (t/ha) */
+    double fertilizerp;                 /* Fertilizer P pool - fertilizer P (t/ha) */
     double lai;                         /* leaf area index m2 (leaf) m-2 (ground) */
     double fipar;
     double metabsoil;                   /* metabolic soil c (t/ha) */
