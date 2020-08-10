@@ -1958,13 +1958,9 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     fixp = pc_flux(f->c_into_passive, p_into_passive, pass_pc);
     s->passivesoilp += p_into_passive + fixp - p_out_of_passive;
 
-    //fprintf(stderr, "inorglabp 1 %f\n", s->inorglabp);
-
     /* Daily increment of soil inorganic labile and sorbed P pool */
     s->inorglabp += f->p_lab_in - f->p_lab_out;
     s->inorgsorbp += f->p_sorb_in - f->p_sorb_out;
-
-    //fprintf(stderr, "psorb calc %f\n", (9 * s->inorglabp)/(0.0012+s->inorglabp));
 
     /* Daily increment of soil inorganic available P pool (lab + sorb) */
     s->inorgavlp = s->inorglabp + s->inorgsorbp;
@@ -1977,13 +1973,6 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
 
     /* Daily increment of soil inorganic parent P pool */
     s->inorgparp += f->p_atm_dep - f->p_par_to_min;
-    
-    //fprintf(stderr, "inorglabp %f\n", s->inorglabp);
-    //fprintf(stderr, "inorgsorbp %f\n", s->inorgsorbp);
-    //fprintf(stderr, "inorgssorbp %f\n", s->inorgssorbp);
-    //fprintf(stderr, "inorgoccp %f\n", s->inorgoccp);
-    //fprintf(stderr, "inorgparp %f\n", s->inorgparp);
-    
 
     return;
 }
