@@ -31,7 +31,8 @@ plot_historic_validation <- function() {
     
     
     sumDF2 <- summaryBy(et+transpiration+soil_evap+canopy_evap+runoff+nep+gpp+npp+hetero_resp+
-                            auto_resp+nuptake+ngross+nmineralisation+nloss+puptake+pgross+
+                            auto_resp+cpleaf+cpbranch+cpstem+cproot+
+                            nuptake+ngross+nmineralisation+nloss+puptake+pgross+
                             pmineralisation+ploss+leafretransn+leafretransp~year+Trt,
                         FUN=sum, data=myDF, na.rm=T, keep.names=T)
     

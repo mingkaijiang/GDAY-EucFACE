@@ -229,7 +229,7 @@ def main(experiment_id, site,
                         "passpcmax": "0.004",
                         "psecmnp": "0.000022",
                         "pcbnew": "0.00013",
-                        "pcbnewz": "0.00013",
+                        "pcbnewz": "0.000013",
                         "pccnew": "0.00013",
                         "pccnewz": "0.00013",
                         "pcmaxfold": "0.002",    # EucFACE parameter file
