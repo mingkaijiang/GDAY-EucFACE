@@ -224,11 +224,11 @@ def main(experiment_id, site,
                         "sapturnover": "0.1",                 # guess value
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # 
-                        "p_rate_release_fertilizer": "0.01",   # 
+                        "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
-                        "smax": "10.0",           # no need to set it as GDAY calculates it based on soil type
-                        "ks": "0.6",              # reduce to increase allocation to labile P pool, increase to reduce allocation to labile P pool
+                        "smax": "10.0",             # no need to set it as GDAY calculates it based on soil type
+                        "ks": "0.6",                # reduce to increase allocation to labile P pool, increase to reduce allocation to labile P pool
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "actpcmax": "0.5",       # guess value based on microbial P
