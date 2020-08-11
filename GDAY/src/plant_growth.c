@@ -1644,25 +1644,35 @@ double calculate_puptake(control *c, params *p, state *s, fluxes *f) {
         puptake : float
         P uptake
     */
-    double puptake, U0, Kr;
-
+    double puptake, U0, Kr, p_lab_avail;
+    double min_frac_p_available_to_plant = 0.4;
+    double max_frac_p_available_to_plant = 0.8;
+    double mineral_n_with_max_p = 0.02;              /* Unit [t N ha-1] */
+  
+  /* calculating fraction of labile P available for plant uptake */
+  p_lab_avail = MAX(min_frac_p_available_to_plant,
+                    MIN(min_frac_p_available_to_plant + s->inorgn *
+                      (max_frac_p_available_to_plant - min_frac_p_available_to_plant) /
+                        mineral_n_with_max_p, max_frac_p_available_to_plant));
+  
+  
     if (c->puptake_model == 0) {
         /* Constant P uptake */
         puptake = p->puptakez;
     } else if (c->puptake_model == 1) {
         // evaluate puptake : proportional to lab P pool that is
         // available to plant uptake
-        puptake = p->prateuptake * s->inorglabp * p->p_lab_avail;
+        puptake = p->prateuptake * s->inorglabp * p_lab_avail;
     } else if (c->puptake_model == 2) {
         /* P uptake is a saturating function on root biomass, as N */
 
         /* supply rate of available mineral P */
         if (s->inorgsorbp > 0.0) {
-            U0 = p->prateuptake * s->inorglabp * p->p_lab_avail;
+            U0 = p->prateuptake * s->inorglabp * p_lab_avail;
         } else {
             U0 = MIN((f->p_par_to_min + f->pmineralisation +
                      f->purine + f->p_slow_biochemical),
-                     (p->prateuptake * s->inorglabp * p->p_lab_avail));
+                     (p->prateuptake * s->inorglabp * p_lab_avail));
         }
 
         Kr = p->krp;

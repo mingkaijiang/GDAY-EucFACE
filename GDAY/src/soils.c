@@ -1215,44 +1215,6 @@ void precision_control_soil_n(fluxes *f, state *s) {
     return;
 }
 
-void soil_sorption_parameters(char *soil_order, params *p) {
-    //
-    // Parameterize Smax and Ks parameters based on soil order;
-    // Ref. Yang et al., 2016, GRL, Table S2
-    //
-
-    if (strcmp(soil_order, "andisol") == 0) {
-        p->smax = 10;
-    } else if (strcmp(soil_order, "gelisol") == 0) {
-        p->smax = 5;
-    } else if (strcmp(soil_order, "histosol") == 0) {
-        p->smax = 5;
-    } else if (strcmp(soil_order, "entisol") == 0) {
-        p->smax = 5;
-    } else if (strcmp(soil_order, "inceptisol") == 0) {
-        p->smax = 5;
-    } else if (strcmp(soil_order, "aridsol") == 0) {
-        p->smax = 7;
-    } else if (strcmp(soil_order, "vertisol") == 0) {
-        p->smax = 7;
-    } else if (strcmp(soil_order, "mollisol") == 0) {
-        p->smax = 7;
-    } else if (strcmp(soil_order, "alfisol") == 0) {
-        p->smax = 7;
-    } else if (strcmp(soil_order, "spodosol") == 0) {
-        p->smax = 9;
-    } else if (strcmp(soil_order, "ultisol") == 0) {
-        p->smax = 9;
-    } else if (strcmp(soil_order, "oxisol") == 0) {
-        p->smax = 9;
-    } else {
-      prog_error("Could not understand soil order", __LINE__);
-        exit(EXIT_FAILURE);
-    }
-
-    return;
-}
-
 
 void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
                            int doy) {
@@ -1733,16 +1695,13 @@ void calculate_p_biochemical_mineralisation(fluxes *f, params *p, state *s) {
 void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     /* Calculate the mineral P fluxes (in and out) */
     double numer, denom1, denom2;
-    double min_frac_p_available_to_plant = 0.4;
-    double max_frac_p_available_to_plant = 0.8;
-    double mineral_n_with_max_p = 0.02;              /* Unit [t N ha-1] */
     double tot_in, tot_out;
 
     // Note: pmineralisation can be negative, and therefore, during spinup,
     // when sorbp stock is low, the current approach resulted in negative sorbp
     // in some cases, but it does not affect the final equilibrated state, so
     // leave as is until better method is found
-    tot_in = f->p_par_to_min + f->pmineralisation + /*f->p_fertilizer_to_min +*/
+    tot_in = f->p_par_to_min + f->pmineralisation + f->p_fertilizer_to_min +
              f->purine + f->p_slow_biochemical +
              f->p_ssorb_to_min;
 
@@ -1755,9 +1714,6 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
         tot_out = f->puptake + f->ploss + f->p_min_to_ssorb;
     }
 
-    /* Use soil order to obtain smax and ks values */
-    soil_sorption_parameters(p->soil_order, p);
-
     /* Calculate lab P dynamics */
     numer = p->smax * p->ks;
     denom1 = (s->inorglabp + p->ks) * (s->inorglabp + p->ks);
@@ -1768,12 +1724,6 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     denom2 = (s->inorglabp + p->ks) * (s->inorglabp + p->ks) + numer;
     f->p_sorb_in = tot_in * (numer / denom2);
     f->p_sorb_out = tot_out * (numer / denom2);
-
-    /* calculating fraction of labile P available for plant uptake */
-    p->p_lab_avail = 0.4;/*MAX(min_frac_p_available_to_plant,
-                     MIN(min_frac_p_available_to_plant + s->inorgn *
-                    (max_frac_p_available_to_plant - min_frac_p_available_to_plant) /
-                     mineral_n_with_max_p, max_frac_p_available_to_plant));*/
 
     return;
 
@@ -1976,7 +1926,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     s->passivesoilp += p_into_passive + fixp - p_out_of_passive;
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
-    s->inorglabp += f->p_lab_in - f->p_lab_out + f->p_fertilizer_to_min;
+    s->inorglabp += f->p_lab_in - f->p_lab_out;
     s->inorgsorbp += f->p_sorb_in - f->p_sorb_out;
 
     /* Daily increment of soil inorganic available P pool (lab + sorb) */

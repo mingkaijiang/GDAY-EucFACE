@@ -379,7 +379,6 @@ typedef struct {
     double phtextmin;                       /* the solubility of secondary P corresponding to min pH (/yr) */
     double phtextmax;                       /* the solubility of secondary P corresponding to max pH (/yr) */
     double phtextslope;                     /* slope controlling effect of sand on secondary P flow to mineral P */
-    double p_lab_avail;                     /* Fraction of labile P available for plant uptake */
     double pmax;
     double pmin;                            /* (bewdy) minimum leaf p for +ve p/s (g/m2) */
     double pmin0;                           /* mineral P pool corresponding to Actpc0,etc (g/m2) */
