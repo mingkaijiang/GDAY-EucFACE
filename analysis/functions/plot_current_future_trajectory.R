@@ -30,7 +30,7 @@ plot_current_future_trajectory <- function() {
     ### calculate annual mean and/or sum
     sumDF1 <- summaryBy(shoot+lai+branch+stem+root+croot+shootn+branchn+stemn+rootn+crootn+
                             shootp+branchp+stemp+rootp+crootp+soilc+soiln+soilp+inorgn+inorgp+
-                            inorgavlp+inorglabp+inorgsorbp+inorgssorbp+inorgoccp+inorgparp+
+                            inorgavlp+inorglabp+inorgsorbp+inorgssorbp+inorgoccp+inorgparp+fertilizerp+
                             litterc+littercag+littercbg+litternag+litternbg+litterpag+litterpbg+
                             activesoil+slowsoil+passivesoil+activesoiln+slowsoiln+passivesoiln+
                             activesoilp+slowsoilp+passivesoilp~year+Trt, FUN=mean,
@@ -138,15 +138,5 @@ plot_current_future_trajectory <- function() {
     
     dev.off()
     
-    
-    ### problems:
-    ## 1. we have too much inorganic P in the soil (100 g P m-2)!
-    ## 2. Restart file (year 2020) is disequilibrated, need to check:
-    ##   a. cfg restart files (may be time-consuming);
-    ##   b. parameters (re-calibrate);
-    ##   c. met data
-    ## 3. Pools especially stem pool is too variable.
-    
-    
-    #test <- subset(plotDF, year == 2020)
+ 
 }

@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 108;  /* change with number of variables ? total count below is 93 */
+    int ncols = 108;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -108,33 +108,9 @@ void write_output_header(control *c, FILE **fp) {
     /* P stuff 4 */
     fprintf(*fp, "puptake,pgross,pmineralisation,ploss,");
 
-//    /* traceability stuff */
-//    fprintf(*fp, "tfac_soil_decomp,c_into_active,c_into_slow,");
-//    fprintf(*fp, "c_into_passive,active_to_slow,active_to_passive,");
-//    fprintf(*fp, "slow_to_active,slow_to_passive,passive_to_active,");
-//    fprintf(*fp, "co2_rel_from_surf_struct_litter,");
-//    fprintf(*fp, "co2_rel_from_soil_struct_litter,");
-//    fprintf(*fp, "co2_rel_from_surf_metab_litter,");
-//    fprintf(*fp, "co2_rel_from_soil_metab_litter,");
-//    fprintf(*fp, "co2_rel_from_active_pool,");
-//    fprintf(*fp, "co2_rel_from_slow_pool,");
-//    fprintf(*fp, "co2_rel_from_passive_pool,");
-//
-//    /* extra priming stuff */
-//    fprintf(*fp, "root_exc,");
-//    fprintf(*fp, "root_exn,");
-//    fprintf(*fp, "co2_released_exud,");
-//    fprintf(*fp, "factive,");
-//    fprintf(*fp, "rtslow,");
-//    fprintf(*fp, "rexc_cue,");
-
-    /* Misc 2 */
+    /* Misc 3 */
     fprintf(*fp, "leafretransn,");
     fprintf(*fp, "leafretransp\n");
-    //fprintf(*fp, "predawn_swp,");
-    //fprintf(*fp, "midday_lwp,");
-    //fprintf(*fp, "leafretransn\n");
-
 
     if (c->output_ascii == FALSE) {
         fprintf(*fp, "nrows=%d\n", nrows);
@@ -260,37 +236,9 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
     fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
                     f->puptake,f->pgross,f->pmineralisation,f->ploss);
 
-
-//    /* traceability stuff */
-//    fprintf(c->ofp, "%.10f,%.10f,%.10f,",
-//                    f->tfac_soil_decomp,f->c_into_active,f->c_into_slow);
-//    fprintf(c->ofp, "%.10f,%.10f,%.10f,",
-//                    f->c_into_passive,f->active_to_slow,f->active_to_passive);
-//    fprintf(c->ofp, "%.10f,%.10f,%.10f,",
-//                    f->slow_to_active,f->slow_to_passive,f->passive_to_active);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_surf_struct_litter);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_soil_struct_litter);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_surf_metab_litter);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_soil_metab_litter);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_active_pool);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_slow_pool);
-//    fprintf(c->ofp, "%.10f,", f->co2_rel_from_passive_pool);
-//
-//    /* extra priming stuff */
-//    fprintf(c->ofp, "%.10f,", f->root_exc);
-//    fprintf(c->ofp, "%.10f,", f->root_exn);
-//    fprintf(c->ofp, "%.10f,", f->co2_released_exud);
-//    fprintf(c->ofp, "%.10f,", f->factive);
-//    fprintf(c->ofp, "%.10f,", f->rtslow);
-//    fprintf(c->ofp, "%.10f,", f->rexc_cue);
-
     /* Misc */
     fprintf(c->ofp, "%.10f,", f->leafretransn);
     fprintf(c->ofp, "%.10f\n", f->leafretransp);
-    //fprintf(c->ofp, "%.10f,", s->predawn_swp);
-    //fprintf(c->ofp, "%.10f,", s->midday_lwp);
-    //fprintf(c->ofp, "%.10f\n", f->leafretransn);
-
 
     return;
 }
@@ -647,7 +595,7 @@ int ohandler(char *section, char *name, char *value, control *c, params *p,
     } else if (MATCH("state", "structsurfp")) {
         fprintf(c->ofp, "structsurfp = %.10f\n", s->structsurfp);
         *match = TRUE;
-    }
+    } 
 
     return (1);
 }
