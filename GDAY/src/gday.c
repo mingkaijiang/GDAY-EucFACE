@@ -156,6 +156,7 @@ int main(int argc, char **argv)
     free(ma->co2);
     free(ma->ndep);
     free(ma->pdep);
+    free(ma->pfert);
     free(ma->wind);
     free(ma->press);
     free(ma->par);
@@ -720,6 +721,7 @@ void correct_rate_constants(params *p, int output) {
         p->pmax *= NDAYS_IN_YR;
         p->p_atm_deposition *= NDAYS_IN_YR;
         p->p_rate_par_weather *= NDAYS_IN_YR;
+        p->p_rate_release_fertilizer *= NDAYS_IN_YR;
         p->max_p_biochemical *= NDAYS_IN_YR;
         p->rate_sorb_ssorb *= NDAYS_IN_YR;
         p->rate_ssorb_occ *= NDAYS_IN_YR;
@@ -750,6 +752,7 @@ void correct_rate_constants(params *p, int output) {
         p->pmax /= NDAYS_IN_YR;
         p->p_atm_deposition /= NDAYS_IN_YR;
         p->p_rate_par_weather /= NDAYS_IN_YR;
+        p->p_rate_release_fertilizer /= NDAYS_IN_YR;
         p->max_p_biochemical /= NDAYS_IN_YR;
         p->rate_sorb_ssorb /= NDAYS_IN_YR;
         p->rate_ssorb_occ /= NDAYS_IN_YR;
@@ -915,7 +918,9 @@ void reset_all_p_pools_and_fluxes(fluxes *f, state *s) {
     f->p_ssorb_to_min = 0.0;
     f->p_ssorb_to_occ = 0.0;
     f->p_par_to_min = 0.0;
+    f->p_fertilizer_to_min = 0.0;
     f->p_atm_dep = 0.0;
+    f->p_fertilizer_input = 0.0;
 
     return;
 }
@@ -1040,10 +1045,12 @@ void unpack_met_data(control *c, fluxes *f, met_arrays *ma, met *m, params *p, i
             m->ndep = ma->ndep[c->hour_idx];
             m->nfix = ma->nfix[c->hour_idx];
             m->pdep = ma->pdep[c->hour_idx];
+            m->pfert = ma->pfert[c->hour_idx];
         } else {
             m->ndep += ma->ndep[c->hour_idx];
             m->nfix += ma->nfix[c->hour_idx];
             m->pdep += ma->pdep[c->hour_idx];
+            m->pfert += ma->pfert[c->hour_idx];
         }
     } else {
         m->Ca = ma->co2[c->day_idx];
@@ -1067,6 +1074,7 @@ void unpack_met_data(control *c, fluxes *f, met_arrays *ma, met *m, params *p, i
         m->ndep = ma->ndep[c->day_idx];
         m->nfix = ma->nfix[c->day_idx];
         m->pdep = ma->pdep[c->day_idx];
+        m->pfert = ma->pfert[c->day_idx];
         m->tsoil = ma->tsoil[c->day_idx];
         m->Tk_am = ma->tam[c->day_idx] + DEG_TO_KELVIN;
         m->Tk_pm = ma->tpm[c->day_idx] + DEG_TO_KELVIN;
@@ -1085,6 +1093,9 @@ void unpack_met_data(control *c, fluxes *f, met_arrays *ma, met *m, params *p, i
     /* P deposition to fluxes */
     /*f->p_atm_dep = p->p_atm_deposition;*/
     f->p_atm_dep = m->pdep;
+    
+    /* P fertilization rate */
+    f->p_fertilizer_input = m->pfert;
     
     return;
 }

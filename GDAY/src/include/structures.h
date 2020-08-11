@@ -351,7 +351,8 @@ typedef struct {
     double nuptakez;                        /* constant N uptake per year (1/yr) */
     double oi;                              /* intercellular concentration of O2 [umol mol-1] */
     double p_rate_par_weather;              /* parent P material weathering rate [yr-1] */
-    double p_atm_deposition;               /* user-defined atmospheric deposition rate [yr-1] */
+    double p_rate_release_fertilizer;       /* user-defined P ferilizer release rate [yr-1] */
+    double p_atm_deposition;                /* user-defined atmospheric deposition rate [yr-1] */
     double passivesoilnz;
     double passivesoilpz;
     double passivesoilz;
@@ -494,6 +495,7 @@ typedef struct {
     double *ndep;
     double *nfix;       /* N inputs from biological fixation (t/ha/timestep (d/30min)) */
     double *pdep;
+    double *pfert;
     double *wind;
     double *press;
 
@@ -534,6 +536,7 @@ typedef struct {
     double ndep;
     double nfix;       /* N inputs from biological fixation (t/ha/timestep (d/30min)) */
     double pdep;
+    double pfert;
     double tsoil;
 
     /* daily */
@@ -734,7 +737,9 @@ typedef struct {
     double p_ssorb_to_min;
     double p_ssorb_to_occ;
     double p_par_to_min;
+    double p_fertilizer_to_min;
     double p_atm_dep;
+    double p_fertilizer_input;
 
 
     /* CO2 flows to the air */

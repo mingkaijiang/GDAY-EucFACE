@@ -955,6 +955,8 @@ int handler(char *section, char *name, char *value, control *c,
       p->puptakez = atof(value);
     } else if (MATCH("params", "p_rate_par_weather")) {
         p->p_rate_par_weather = atof(value);
+    } else if (MATCH("params", "p_rate_release_fertilizer")) {
+      p->p_rate_release_fertilizer = atof(value);
     } else if (MATCH("params", "oi")) {
         p->oi = atof(value);
     } else if (MATCH("params", "passivesoilz")) {

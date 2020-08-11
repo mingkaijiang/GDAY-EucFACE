@@ -1283,6 +1283,12 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
 
     /* calculate P parent influxe to mineral P */
     calculate_p_parent_fluxes(f, p, s);
+    
+    /* calculate P fertilizer release rate */
+    calculate_p_fertilization_fluxes(f, p, s);
+    
+    fprintf(stderr, "p_fertilizer_to_min %f\n", f->p_fertilizer_to_min);
+    
 
     /* gross P mineralisation */
     calculate_p_mineralisation(f);
@@ -1517,6 +1523,19 @@ void calculate_p_parent_fluxes(fluxes *f, params *p, state *s) {
     return;
 }
 
+void calculate_p_fertilization_fluxes(fluxes *f, params *p, state *s) {
+  /*
+   Calculate P fertilizer release rate i.e.
+   the fluxes enterring into mineral P pool;
+   
+   */
+  
+  /* fertilizer release rate into the mineral P pool */
+  f->p_fertilizer_to_min = p->p_rate_release_fertilizer * s->fertilizerp;
+  
+  return;
+}
+
 void calculate_p_mineralisation(fluxes *f) {
     /* P gross mineralisation rate is given by the excess of P outflows
     over inflows. P mineralisation is the process by which organic P is
@@ -1725,7 +1744,7 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     // when sorbp stock is low, the current approach resulted in negative sorbp
     // in some cases, but it does not affect the final equilibrated state, so
     // leave as is until better method is found
-    tot_in = f->p_par_to_min + f->pmineralisation +
+    tot_in = f->p_par_to_min + f->pmineralisation + f->p_fertilizer_to_min +
              f->purine + f->p_slow_biochemical +
              f->p_ssorb_to_min;
 
@@ -1973,6 +1992,9 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
 
     /* Daily increment of soil inorganic parent P pool */
     s->inorgparp += f->p_atm_dep - f->p_par_to_min;
+    
+    /* Daily increment of fertilizer P pool */
+    s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_min;
 
     return;
 }
