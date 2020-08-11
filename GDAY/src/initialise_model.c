@@ -263,7 +263,6 @@ void initialise_params(params *p) {
     p->root_exu_CUE = -999.9;
     p->rooting_depth = 750.0;
     strcpy(p->rootsoil_type, "clay");
-    strcpy(p->soil_order, "aridsol");
     p->rretrans = 0.0;
     //p->sand_frac = 0.2;          /* commented out because finesoil is provided externally */
     p->sapturnover = 0.1;

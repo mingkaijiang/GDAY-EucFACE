@@ -188,14 +188,13 @@ def main(experiment_id, site,
                         "ntheta_root": "5.5",        # Derive based on soil type sandy_clay_loam
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
-                        "soil_order": "andisol",
                         "kp": "0.3",
                         "krp": "0.00001",
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
                         "z0h_z0m": "1.0",
 
-                        "g1": "3.04",          # EucFACE parameter
+                        "g1": "3.04",            # EucFACE parameter
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
                         "jmaxpa": "933.90",      # forcing intercept to zero; if use all species df, 842.46 
                         "jmaxnb": "0.0",         # forcing intercept to zero
@@ -227,7 +226,7 @@ def main(experiment_id, site,
                         "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
-                        #"smax": "10.0",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "smax": "10.0",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
                         "ks": "0.6",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
