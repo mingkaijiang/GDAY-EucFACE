@@ -225,7 +225,7 @@ def main(experiment_id, site,
                         "sapturnover": "0.1",                 # guess value
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # per day
-                        "p_rate_release_fertilizer": "0.001",   # per day * 365 = 0.00365
+                        "p_rate_release_fertilizer": "1.0",   # per day * 365 = 0.365
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "actpcmax": "0.5",       # guess value based on microbial P
