@@ -340,7 +340,6 @@ typedef struct {
     double ncwimmz;                         /* N alloc param: Immobile stem N C at zero leaf N C */
     double ncwnew;                          /* N alloc param: New stem ring N:C at critical leaf N:C (mob) */
     double ncwnewz;                         /* N alloc param: New stem ring N:C at zero leaf N:C (mobile) */
-    double nf_crit;                         /* leaf N:C below which N availability limits productivity  */
     double nf_min;                          /* leaf N:C minimum N concentration which allows productivity */
     double nmax;
     double nmin;                            /* (bewdy) minimum leaf n for +ve p/s (g/m2) */
@@ -372,15 +371,12 @@ typedef struct {
     double pcwimmz;                         /* P alloc param: Immobile stem P C at zero leaf P C */
     double pcwnew;                          /* P alloc param: New stem ring P:C at critical leaf P:C (mob) */
     double pcwnewz;                         /* P alloc param: New stem ring P:C at zero leaf P:C (mobile) */
-    double pf_crit;                         /* leaf P:C below which P availability limits productivity  */
     double pf_min;                          /* leaf P:C minimum P concentration which allows productivity */
     double phmax;                           /* max pH for determining effect on solubility of secondary P */
     double phmin;                           /* min pH for determining effect on solubility of secondary P */
     double phtextmin;                       /* the solubility of secondary P corresponding to min pH (/yr) */
     double phtextmax;                       /* the solubility of secondary P corresponding to max pH (/yr) */
     double phtextslope;                     /* slope controlling effect of sand on secondary P flow to mineral P */
-    double pmax;
-    double pmin;                            /* (bewdy) minimum leaf p for +ve p/s (g/m2) */
     double pmin0;                           /* mineral P pool corresponding to Actpc0,etc (g/m2) */
     double pmincrit;                        /* Critical mineral P pool at max soil P:C (g/m2) */
     double prateloss;                       /* Rate of P loss from mineral P pool (/yr), Ref Wang et al., 2007, GB1018 */
@@ -424,8 +420,6 @@ typedef struct {
     double structcp;                        /* C:P ratio of structural bit of litter input, Ref Attiwill 1980, Aus. J. Bot. 28, 199-222 Table 9 sum of branch, stem, sap and heartwood; */
     double structratp;                      /* structural input p:c as fraction of metab */
     double soilph;                          /* soil pH value */
-    double sorpmx;                          /* maximum P sorption potential for a soil */
-    double sorpaf;                          /* slope term which controls the fraction of mineral P that is labile */
     double targ_sens;                       /* sensitivity of allocation (leaf/branch) to track the target, higher values = less responsive. */
     double theta;                           /* curvature of photosynthetic light response curve */
     double theta_sp_root;

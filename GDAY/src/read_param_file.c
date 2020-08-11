@@ -917,12 +917,8 @@ int handler(char *section, char *name, char *value, control *c,
         p->pcwnew = atof(value);
     } else if (MATCH("params", "pcwnewz")) {
         p->pcwnewz = atof(value);
-    } else if (MATCH("params", "nf_crit")) {
-        p->nf_crit = atof(value);
     } else if (MATCH("params", "nf_min")) {
         p->nf_min = atof(value);
-    } else if (MATCH("params", "pf_crit")) {
-        p->pf_crit = atof(value);
     } else if (MATCH("params", "pf_min")) {
         p->pf_min = atof(value);
     } else if (MATCH("params", "n_layers")) {
@@ -941,10 +937,6 @@ int handler(char *section, char *name, char *value, control *c,
         p->ntheta_topsoil = atof(value);
     } else if (MATCH("params", "nuptakez")) {
         p->nuptakez = atof(value);
-    } else if (MATCH("params", "pmax")) {
-        p->pmax = atof(value);
-    } else if (MATCH("params", "pmin")) {
-        p->pmin = atof(value);
     } else if (MATCH("params", "pmin0")) {
         p->pmin0 = atof(value);
     } else if (MATCH("params", "pmincrit")) {
@@ -1073,10 +1065,6 @@ int handler(char *section, char *name, char *value, control *c,
         p->structcp = atof(value);
     } else if (MATCH("params", "structratp")) {
         p->structratp = atof(value);
-    } else if (MATCH("params", "sorpmx")) {
-        p->sorpmx = atof(value);
-    } else if (MATCH("params", "sorpaf")) {
-        p->sorpaf = atof(value);
     } else if (MATCH("params", "soilph")) {
         p->soilph = atof(value);
     } else if (MATCH("params", "targ_sens")) {

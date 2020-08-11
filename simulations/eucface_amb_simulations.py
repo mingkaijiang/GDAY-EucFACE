@@ -131,7 +131,6 @@ def main(experiment_id, site,
                         "max_intercep_lai": "3.0",
                         "latitude": "-33.61",     # EucFACE parameter file
                         "albedo": "0.2",
-                        "finesoil": "0.2",   # silt + clay fraction. Surface soil texture (upper 45 cm) for Clarenden sand: 80 +/- 8% sand, 9 +/- 5% silt, 11 +/- 3% clay
                         "slamax": "6.34",    # EucFACE parameter file
                         "sla": "5.57",       # EucFACE parameter file
                         "slazero": "5.57",   # EucFACE parameter file
@@ -143,14 +142,12 @@ def main(experiment_id, site,
                         "c_alloc_bmax": "0.1",  # guess
                         "c_alloc_bmin": "0.05",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
-                        "biochemical_p_constant": "150.0",
                         "fretrans": "0.31",     # EucFACE parameter file
                         "fretransp": "0.53",    # EucFACE parameter file
                         "rretrans": "0.3",      # EucFACE parameter file
                         "bretrans": "0.7",      # EucFACE parameter file
                         "wretrans": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
-                        "crit_n_cost_of_p": "15.0",
                         "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
                         "ncwnew": "0.003",           #New stem ring N:C at critical leaf N:C (mob)
                         "ncwimmz": "0.003",          #Immobile stem N C at zero leaf N C
@@ -166,7 +163,6 @@ def main(experiment_id, site,
                         "retransmob": "0.0",
                         "fdecay": "0.83",            # foliage decay rate, guess parameter
                         "fdecaydry": "0.83",         # foliage decay rate, guess parameter
-                        "max_p_biochemical": "0.001",
                         "rdecay": "0.6",             # EucFACE parameter file
                         "rdecaydry": "0.6",          # as above
                         "crdecay": "0.00",           # turn off coarse roots!
@@ -219,20 +215,23 @@ def main(experiment_id, site,
                         "targ_sens": "0.5",
                         "density": "492.0",       # EucFACE parameter file
                         "nf_min": "0.005", 
-                        "nf_crit": "0.015",
                         "sapturnover": "0.1",                 # guess value
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # 
                         "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
+                        # sorption calculation
                         "smax": "10.0",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
                         "ks": "0.6",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        # biochemical P mineralization
+                        "biochemical_p_constant": "150.0",
+                        "max_p_biochemical": "0.001",
+                        "crit_n_cost_of_p": "15.0",
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "actpcmax": "0.5",       # guess value based on microbial P
                         "actpcmin": "0.25",      # guess value based on microbial P
-                        "psecmnp": "0.000022",
                         "pcbnew": "0.000286",    # same as sapwood
                         "pcbnewz": "0.000286",   # same as sapwood
                         "pccnew": "0.000286",    # same as sapwood
@@ -245,24 +244,23 @@ def main(experiment_id, site,
                         "pcwimmz": "0.00013",    # EucFACE parameter file
                         "pcwnew": "0.000286",    # EucFACE parameter file
                         "pcwnewz": "0.000286",   # EucFACE parameter file
-                        "pf_crit": "0.002",
                         "pf_min": "0.0002",
-                        "phmax": "7.6",
+                        # for calculate_p_ssorb_to_sorb function
+                        "finesoil": "0.2",         # EucFACE parameter file
                         "phmin": "5.0",
+                        "phmax": "14.0",  
+                        "soilph": "5.52",          # EucFACE parameter file
                         "phtextmin": "0.000008",
                         "phtextmax": "0.00015",
                         "phtextslope": "0.00004",
-                        "pmax": "0.002",           # not needed
-                        "pmin": "0.01",            # not needed
+                        "psecmnp": "0.000022",
+                        # to determine soil SOM PC ratios
                         "pmin0": "0.0",            # set to zero for now
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
                         "prateuptake": "2.6",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "slowpcmin": "0.005",      # guess range
                         "slowpcmax": "0.011111",   # guess range
-                        "soilph": "5.52",          # EucFACE parameter file
-                        "sorpmx": "5.0",
-                        "sorpaf": "1.0",
                         "structcp": "5500.0",
                         "structratp": "0.0",
 

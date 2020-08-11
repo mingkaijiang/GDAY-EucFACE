@@ -197,7 +197,6 @@ void initialise_params(params *p) {
     p->ncwimmz = 0.003;
     p->ncwnew = 0.003;
     p->ncwnewz = 0.003;
-    p->nf_crit = 0.015;
     p->nf_min = 0.005;
     p->nmax = 0.24;
     p->nmin = 0.95;
@@ -229,15 +228,12 @@ void initialise_params(params *p) {
     p->pcwimmz = 0.0003;
     p->pcwnew = 0.0003;
     p->pcwnewz = 0.0003;
-    p->pf_crit = 0.002;      /* based on P:C ratio of 500, guess value */
     p->pf_min = 0.0002;      /* based on P:C ratio of 5000, guess value */
     p->phmax = 7.6;
     p->phmin = 5.0;
     p->phtextmin = 0.000008;
     p->phtextmax = 0.00015;
     p->phtextslope = 0.00004;/* CENTURY */
-    p->pmax = 0.002;         /* guess value */
-    p->pmin = 0.01;          /* guess value */
     p->pmin0 = 0.0;
     p->pmincrit = 2.0;       /* Based on CENTURY VARAT1(2,3) = 2 value */
     p->prateloss = 0.005;    
@@ -275,8 +271,6 @@ void initialise_params(params *p) {
     p->slowpcmin = 0.005;
     p->smax = 10.0;                 /* used intermediately weather soils value of 700 [g P m-2] in Yang et al. 2016 */
     p->soilph = 6.7;               /* pft-specific parameter, century value */
-    p->sorpmx = 5.0;                 /* pft-specific parameter, check CENTURY for values */
-    p->sorpaf = 1.0;
     p->store_transfer_len = -999.9;
     p->structcn = 150.0;
     p->structrat = 0.0;
