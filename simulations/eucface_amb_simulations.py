@@ -86,7 +86,7 @@ def main(experiment_id, site,
                         "inorgssorbp": "0.0",
                         "inorgoccp": "0.0",
                         "inorgparp": "0.054",
-                        "fertilizerp": "0.000001",         # Fertilizer P pool
+                        "fertilizerp": "0.0",         # Fertilizer P pool
                         "metabsoil": "0.0",
                         "metabsoiln": "0.0",
                         "metabsoilp": "0.0",
@@ -225,7 +225,7 @@ def main(experiment_id, site,
                         "sapturnover": "0.1",                 # guess value
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # Calcualted so that weathering rate = atm deposition;
-                        "p_rate_release_fertilizer": "0.0001",   # P fertilization rate
+                        "p_rate_release_fertilizer": "0.1",   # P fertilization rate
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "actpcmax": "0.5",       # guess value based on microbial P
@@ -859,10 +859,10 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    #OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=False, PRD_WET_NOP=True,
-    #PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
-    #
     main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=False, PRD_DRY_NOP=True, PRD_WET_NOP=False,
-    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=False, PRD_WET_NOP=True,
+    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    #
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
+    #OBS_DRY=True, OBS_WET=False, PRD_DRY_NOP=True, PRD_WET_NOP=False,
+    #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

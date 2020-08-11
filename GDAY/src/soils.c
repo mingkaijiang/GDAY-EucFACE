@@ -1287,7 +1287,7 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
     /* calculate P fertilizer release rate */
     calculate_p_fertilization_fluxes(f, p, s);
     
-    fprintf(stderr, "p_fertilizer_to_min %f\n", f->p_fertilizer_to_min);
+    /*fprintf(stderr, "p_fertilizer_to_min %f\n", f->p_fertilizer_to_min);*/
     
 
     /* gross P mineralisation */

@@ -6,7 +6,7 @@ void read_daily_met_data(char **argv, control *c, met_arrays *ma)
     char   line[STRING_LENGTH];
     int    file_len = 0;
     int    i = 0;
-    int    nvars = 22;
+    int    nvars = 23;
     int    skipped_lines = 0;
     double current_yr = -999.9;
 
