@@ -1529,7 +1529,8 @@ void calculate_p_fertilization_fluxes(fluxes *f, params *p, state *s) {
   
   /* fertilizer release rate into the mineral P pool */
   f->p_fertilizer_to_min = p->p_rate_release_fertilizer * s->fertilizerp;
-  /*f->p_fertilizer_to_min = 0.00001 * s->fertilizerp;*/
+   
+   
   return;
 }
 
