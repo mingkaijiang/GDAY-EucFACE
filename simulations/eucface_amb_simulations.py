@@ -189,7 +189,6 @@ def main(experiment_id, site,
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
                         "soil_order": "andisol",
-                        "ks": "0.5",
                         "kp": "0.3",
                         "krp": "0.00001",
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
@@ -224,8 +223,12 @@ def main(experiment_id, site,
                         "nf_crit": "0.015",
                         "sapturnover": "0.1",                 # guess value
                         "p_atm_deposition": "0.0",            # read in from met data now. 
-                        "p_rate_par_weather": "0.005",        # per day
-                        "p_rate_release_fertilizer": "1.0",   # per day * 365 = 0.365
+                        "p_rate_par_weather": "0.005",        # 
+                        "p_rate_release_fertilizer": "0.01",   # 
+                        "rate_sorb_ssorb": "0.0001",
+                        "rate_ssorb_occ": "0.048",
+                        "smax": "10.0",           # no need to set it as GDAY calculates it based on soil type
+                        "ks": "0.6",              # reduce to increase allocation to labile P pool, increase to reduce allocation to labile P pool
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
                         "actpcmax": "0.5",       # guess value based on microbial P

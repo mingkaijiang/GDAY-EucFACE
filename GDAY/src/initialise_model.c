@@ -275,7 +275,7 @@ void initialise_params(params *p) {
     p->slowncmin = 0.025;
     p->slowpcmax = 0.011111;
     p->slowpcmin = 0.005;
-    p->smax = 700.0;                 /* used intermediately weather soils value of 700 [g P m-2] in Yang et al. 2016 */
+    p->smax = 10.0;                 /* used intermediately weather soils value of 700 [g P m-2] in Yang et al. 2016 */
     p->soilph = 6.7;               /* pft-specific parameter, century value */
     p->sorpmx = 5.0;                 /* pft-specific parameter, check CENTURY for values */
     p->sorpaf = 1.0;
