@@ -16,8 +16,9 @@ import sys
 import subprocess
 
 USER = os.getlogin()
-sys.path.append('/Users/%s/Documents/Research/Projects/EucFACE_Modeling/GDAY-EucFACE/GDAY/scripts' % (USER))
+sys.path.append('/Users/%s/Documents/Research/Projects/EucFACE_Modeling/GDAY-EucFACE/scripts' % (USER))
 import adjust_gday_param_file as ad
+import translate_GDAY_output_to_EUCFACE_format as tr
 
 
 __author__  = "Mingkai Jiang"
@@ -357,6 +358,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # observed (2011-2019) under dry condition: store output 
     if OBS_DRY == True:
@@ -386,6 +390,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # observed (2011-2019) under dry condition: store cfg
     if OBS_DRY == True:
@@ -444,6 +451,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under DRY and NOP condition: store cfg
     if PRD_DRY_NOP == True:
@@ -502,6 +512,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under DRY and MDP condition: store cfg
     if PRD_DRY_MDP == True:
@@ -560,6 +573,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under DRY and MDP condition: store cfg
     if PRD_DRY_HIP == True:
@@ -588,7 +604,7 @@ def main(experiment_id, site,
     
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
-        os.system(GDAY + cfg_fname)     
+        os.system(GDAY + cfg_fname)   
 
     # observed (2012-2019) under wet condition: store output 
     if OBS_WET == True:
@@ -618,6 +634,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # observed (2012-2019) under wet condition: store cfg
     if OBS_WET == True:
@@ -676,6 +695,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under WET and NOP condition: store cfg
     if PRD_WET_NOP == True:
@@ -734,6 +756,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under WET and MDP condition: store cfg
     if PRD_WET_MDP == True:
@@ -792,6 +817,9 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under WET and MDP condition: store cfg
     if PRD_WET_HIP == True:
@@ -820,7 +848,9 @@ def main(experiment_id, site,
     
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
-        os.system(GDAY + cfg_fname)   
+        os.system(GDAY + cfg_fname)  
+
+
 
 if __name__ == "__main__":
 

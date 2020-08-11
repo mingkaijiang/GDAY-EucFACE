@@ -49,31 +49,31 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 86;  /* change with number of variables ? total count below is 93 */
+    int ncols = 108;  /* change with number of variables ? total count below is 93 */
     int nrows = c->num_days;
 
     /* Git version */
     fprintf(*fp, "#Git_revision_code:%s\n", c->git_code_ver);
 
-    /* time stuff */
+    /* time stuff 2 */
     fprintf(*fp, "year,doy,");
 
     /*
     ** STATE
     */
 
-    /* water*/
+    /* water 4 */
     fprintf(*fp, "wtfac_root,wtfac_topsoil,pawater_root,pawater_topsoil,");
 
-    /* plant */
+    /* plant 19 */
     fprintf(*fp, "shoot,lai,branch,stem,root,croot,");
     fprintf(*fp, "shootn,branchn,stemn,rootn,crootn,");
     fprintf(*fp, "shootp,branchp,stemp,rootp,crootp,");
     fprintf(*fp, "cstore,nstore,pstore,");
 
-    /* belowground */
+    /* belowground 28 */
     fprintf(*fp, "soilc,soiln,soilp,inorgn,");
-    fprintf(*fp, "inorgp,inorgavlp,inorglabp,inorgsorbp,inorgssorbp,inorgoccp,inorgparp,fertilizerp");
+    fprintf(*fp, "inorgp,inorgavlp,inorglabp,inorgsorbp,inorgssorbp,inorgoccp,inorgparp,fertilizerp,");
     fprintf(*fp, "litterc,littercag,littercbg,litternag,litternbg,");
     fprintf(*fp, "litterpag,litterpbg,");
     fprintf(*fp, "activesoil,slowsoil,passivesoil,");
@@ -83,29 +83,29 @@ void write_output_header(control *c, FILE **fp) {
     ** FLUXES
     */
 
-    /* water */
+    /* water 7 */
     fprintf(*fp, "et,transpiration,soil_evap,canopy_evap,runoff,");
     fprintf(*fp, "gs_mol_m2_sec,ga_mol_m2_sec,");
 
-    /* litter */
+    /* litter 15 */
     fprintf(*fp, "deadleaves,deadbranch,deadstems,deadroots,deadcroots,");
     fprintf(*fp, "deadleafn,deadbranchn,deadstemn,deadrootn,deadcrootn,");
     fprintf(*fp, "deadleafp,deadbranchp,deadstemp,deadrootp,deadcrootp,");
 
 
-    /* C fluxes */
+    /* C fluxes 6 */
     fprintf(*fp, "nep,gpp,npp,hetero_resp,auto_resp,apar,");
 
-    /* C, N and P growth */
+    /* C, N and P growth 17 */
     fprintf(*fp, "cpleaf,cpbranch,cpstem,cproot,cpcroot,");
     fprintf(*fp, "npleaf,npbranch,npstemimm,npstemmob,nproot,npcroot,");
     fprintf(*fp, "ppleaf,ppbranch,ppstemimm,ppstemmob,pproot,ppcroot,");
 
 
-    /* N stuff */
+    /* N stuff 4 */
     fprintf(*fp, "nuptake,ngross,nmineralisation,nloss,");
 
-    /* P stuff */
+    /* P stuff 4 */
     fprintf(*fp, "puptake,pgross,pmineralisation,ploss,");
 
 //    /* traceability stuff */
@@ -128,7 +128,7 @@ void write_output_header(control *c, FILE **fp) {
 //    fprintf(*fp, "rtslow,");
 //    fprintf(*fp, "rexc_cue,");
 
-    /* Misc */
+    /* Misc 2 */
     fprintf(*fp, "leafretransn,");
     fprintf(*fp, "leafretransp\n");
     //fprintf(*fp, "predawn_swp,");
