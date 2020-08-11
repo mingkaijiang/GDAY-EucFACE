@@ -1742,7 +1742,7 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     // when sorbp stock is low, the current approach resulted in negative sorbp
     // in some cases, but it does not affect the final equilibrated state, so
     // leave as is until better method is found
-    tot_in = f->p_par_to_min + f->pmineralisation + f->p_fertilizer_to_min +
+    tot_in = f->p_par_to_min + f->pmineralisation + /*f->p_fertilizer_to_min +*/
              f->purine + f->p_slow_biochemical +
              f->p_ssorb_to_min;
 
@@ -1770,10 +1770,10 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     f->p_sorb_out = tot_out * (numer / denom2);
 
     /* calculating fraction of labile P available for plant uptake */
-    p->p_lab_avail = MAX(min_frac_p_available_to_plant,
+    p->p_lab_avail = 0.4;/*MAX(min_frac_p_available_to_plant,
                      MIN(min_frac_p_available_to_plant + s->inorgn *
                     (max_frac_p_available_to_plant - min_frac_p_available_to_plant) /
-                     mineral_n_with_max_p, max_frac_p_available_to_plant));
+                     mineral_n_with_max_p, max_frac_p_available_to_plant));*/
 
     return;
 
@@ -1976,7 +1976,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     s->passivesoilp += p_into_passive + fixp - p_out_of_passive;
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
-    s->inorglabp += f->p_lab_in - f->p_lab_out;
+    s->inorglabp += f->p_lab_in - f->p_lab_out + f->p_fertilizer_to_min;
     s->inorgsorbp += f->p_sorb_in - f->p_sorb_out;
 
     /* Daily increment of soil inorganic available P pool (lab + sorb) */

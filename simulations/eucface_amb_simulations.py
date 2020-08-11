@@ -227,7 +227,7 @@ def main(experiment_id, site,
                         "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
-                        "smax": "10.0",             # no need to set it as GDAY calculates it based on soil type
+                        #"smax": "10.0",             # no need to set it as GDAY calculates it based on soil type
                         "ks": "0.6",                # reduce to increase allocation to labile P pool, increase to reduce allocation to labile P pool
                         "passpcmin": "0.004",
                         "passpcmax": "0.004",
@@ -259,7 +259,7 @@ def main(experiment_id, site,
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
                         "prateuptake": "2.6",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
-                        "p_lab_avail": "0.2",      # this parameter is calculated in GDAY, no need to define it
+                        #"p_lab_avail": "0.2",      # this parameter is calculated in GDAY, no need to define it
                         "slowpcmin": "0.005",      # guess range
                         "slowpcmax": "0.011111",   # guess range
                         "soilph": "5.52",          # EucFACE parameter file
