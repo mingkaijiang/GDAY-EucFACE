@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 108;  /* change with number of variables */
+    int ncols = 109;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -105,8 +105,8 @@ void write_output_header(control *c, FILE **fp) {
     /* N stuff 4 */
     fprintf(*fp, "nuptake,ngross,nmineralisation,nloss,");
 
-    /* P stuff 4 */
-    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,");
+    /* P stuff 5 */
+    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,");
 
     /* Misc 3 */
     fprintf(*fp, "leafretransn,");
@@ -233,8 +233,8 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
                     f->nuptake,f->ngross,f->nmineralisation,f->nloss);
 
     /* P stuff */
-    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
-                    f->puptake,f->pgross,f->pmineralisation,f->ploss);
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,",
+                    f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical);
 
     /* Misc */
     fprintf(c->ofp, "%.10f,", f->leafretransn);

@@ -40,7 +40,7 @@ plot_current_future_trajectory <- function() {
     sumDF2 <- summaryBy(et+transpiration+soil_evap+canopy_evap+runoff+nep+gpp+npp+hetero_resp+
                             auto_resp+cpleaf+cpbranch+cpstem+cproot+
                             nuptake+ngross+nmineralisation+nloss+puptake+pgross+
-                            pmineralisation+ploss+leafretransn+leafretransp~year+Trt,
+                            pmineralisation+ploss+p_slow_biochemical+leafretransn+leafretransp~year+Trt,
                         FUN=sum, data=myDF, na.rm=T, keep.names=T)
     
     ### merge

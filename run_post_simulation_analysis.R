@@ -19,7 +19,7 @@ plot_current_future_trajectory()
 
 ############################## Met data ############################## 
 ### Plot annual met data
-plot_annual_met_data()
+#plot_annual_met_data()
 
 ### Plot daily met data over the transition periods
 #plot_daily_met_data()

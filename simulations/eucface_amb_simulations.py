@@ -189,6 +189,9 @@ def main(experiment_id, site,
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
                         "z0h_z0m": "1.0",
+                        # root exudation
+                        "a0rhizo": "0.05",
+                        "a1rhizo": "0.6",
 
                         "g1": "3.04",            # EucFACE parameter
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
@@ -222,8 +225,8 @@ def main(experiment_id, site,
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
                         # sorption calculation
-                        "smax": "10.0",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
-                        "ks": "0.6",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "smax": "0.1",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "ks": "0.0006",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
                         # biochemical P mineralization
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
