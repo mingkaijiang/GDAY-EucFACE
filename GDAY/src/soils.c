@@ -1593,7 +1593,7 @@ void calc_p_net_mineralisation(fluxes *f) {
         P Net mineralisation from microbial activity,
         excluding the (- f->p_sorb_to_ssorb + f->p_ssorb_to_sorb activity)
     */
-    f->pmineralisation = 0.000054; //f->pgross - f->pimmob + f->plittrelease;
+    f->pmineralisation = f->pgross - f->pimmob + f->plittrelease;
 
     return;
 }

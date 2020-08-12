@@ -630,9 +630,9 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                 fprintf(stderr,
                         "Spinup: LAI - %f, N min - %f, P min - %f, P upt - %f, P gross - %f, P immob - %f, P release - %f\n",
                         s->lai, f->nmineralisation*365*1000000, f->pmineralisation*365*1000000, f->puptake*365*1000000, f->pgross*365*1000000, f->pimmob*365*1000000, f->plittrelease*365*1000000);
-                fprintf(stderr,
-                        "check: p_surf_struct_to_slow - %f, p_surf_struct_to_active - %f, p_soil_struct_to_slow - %f, p_soil_struct_to_active - %f, p_surf_metab_to_active - %f, p_soil_metab_to_active - %f\n",
-                        f->p_surf_struct_to_slow*365*1000000, f->p_surf_struct_to_active*365*1000000, f->p_soil_struct_to_slow*365*1000000, f->p_soil_struct_to_active*365*1000000, f->p_surf_metab_to_active*365*1000000, f->p_soil_metab_to_active*365*1000000);
+                //fprintf(stderr,
+                //        "check: p_surf_struct_to_slow - %f, p_surf_struct_to_active - %f, p_soil_struct_to_slow - %f, p_soil_struct_to_active - %f, p_surf_metab_to_active - %f, p_soil_metab_to_active - %f\n",
+                //        f->p_surf_struct_to_slow*365*1000000, f->p_surf_struct_to_active*365*1000000, f->p_soil_struct_to_slow*365*1000000, f->p_soil_struct_to_active*365*1000000, f->p_surf_metab_to_active*365*1000000, f->p_soil_metab_to_active*365*1000000);
             } else {
               /* Have we reached a steady state? */
               fprintf(stderr,
