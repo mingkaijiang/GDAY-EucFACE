@@ -225,8 +225,8 @@ def main(experiment_id, site,
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
                         # sorption calculation
-                        "smax": "0.1",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
-                        "ks": "0.0006",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "smax": "10",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "ks": "0.6",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
                         # biochemical P mineralization
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",

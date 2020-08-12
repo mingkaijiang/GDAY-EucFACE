@@ -1397,6 +1397,9 @@ void pfluxes_from_structural_pools(fluxes *f, params *p, state *s) {
 
     /* P flux from surface structural pool -> slow pool */
     f->p_surf_struct_to_slow = sigwt * p->ligshoot * 0.7;
+    
+    //fprintf(stderr, "p_surf_struct_to_slow %f, sigwt %f, ligshoot %f, structout_surf %f, structsurfp %f, decayrate %f\n", 
+    //        f->p_surf_struct_to_slow, sigwt, p->ligshoot, structout_surf, s->structsurfp, p->decayrate[0]);
 
     /* P flux surface structural pool -> active pool */
     f->p_surf_struct_to_active = sigwt * (1.0 - p->ligshoot) * 0.55;
@@ -1421,6 +1424,9 @@ void pfluxes_from_metabolic_pool(fluxes *f, params *p, state *s) {
     /* P flux soil metabolic pool  -> active pool */
     f->p_soil_metab_to_active = s->metabsoilp * p->decayrate[3];
 
+    //fprintf(stderr, "p_surf_metab_to_active %f, p_soil_metab_to_active %f, metabsurfp %f, metabsoilp %f, decayrate1 %f, decayrate2 %f\n", 
+    //        f->p_surf_metab_to_active, f->p_soil_metab_to_active, s->metabsurfp, s->metabsoilp, p->decayrate[1], p->decayrate[3]);
+    
     return;
 }
 
@@ -1509,12 +1515,12 @@ void calculate_p_mineralisation(fluxes *f) {
     Gross P mineralisation
     Unit: t/ha/d
     */
-    f->pgross =  (f->p_surf_struct_to_slow + f->p_surf_struct_to_active +
-                  f->p_soil_struct_to_slow + f->p_soil_struct_to_active +
-                  f->p_surf_metab_to_active + f->p_soil_metab_to_active +
-                  f->p_active_to_slow + f->p_active_to_passive +
-                  f->p_slow_to_active + f->p_slow_to_passive +
-                  f->p_passive_to_active);
+    f->pgross = (f->p_surf_struct_to_slow + f->p_surf_struct_to_active +
+      f->p_soil_struct_to_slow + f->p_soil_struct_to_active +
+      f->p_surf_metab_to_active + f->p_soil_metab_to_active +
+      f->p_active_to_slow + f->p_active_to_passive +
+      f->p_slow_to_active + f->p_slow_to_passive +
+      f->p_passive_to_active);
 
     return;
 }
@@ -1587,7 +1593,7 @@ void calc_p_net_mineralisation(fluxes *f) {
         P Net mineralisation from microbial activity,
         excluding the (- f->p_sorb_to_ssorb + f->p_ssorb_to_sorb activity)
     */
-    f->pmineralisation = f->pgross - f->pimmob + f->plittrelease;
+    f->pmineralisation = 0.000054; //f->pgross - f->pimmob + f->plittrelease;
 
     return;
 }
@@ -1694,46 +1700,27 @@ void calculate_p_biochemical_mineralisation(fluxes *f, params *p, state *s) {
 
 void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     /* Calculate the mineral P fluxes (in and out) */
-    double numer, denom1, denom2;
-    double lab_in, lab_out;
-    double p_sorb_to_lab;
-    double p_lab_to_sorb;
-    double sorb_in, sorb_out;
-    
-    /* Calculate lab P dynamics */
-    numer = p->smax * p->ks;
-    denom1 = (s->inorglabp + p->ks) * (s->inorglabp + p->ks);
-    p_sorb_to_lab = tot_in / (1.0 + numer / denom1);
-    p_lab_to_sorb = tot_out / (1.0 + numer / denom1);
-    
-    /* calculate sorb P dynamics */
-    denom2 = (s->inorsorbp + p->ks) * (s->inorgsorbp + p->ks) + numer;
-    p_lab_to_sorb = tot_in * (numer / denom2);
-    p_sorb_to_lab = tot_out * (numer / denom2);
 
-    // Note: pmineralisation can be negative, and therefore, during spinup,
-    // when sorbp stock is low, the current approach resulted in negative sorbp
-    // in some cases, but it does not affect the final equilibrated state, so
-    // leave as is until better method is found
-    lab_in = f->p_par_to_min + f->pmineralisation + f->p_fertilizer_to_min +
-             f->purine + f->p_slow_biochemical + p_sorb_to_lab;
-
+    /* total influx into the labile P pool */
+    f->p_lab_in = f->p_par_to_min + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_min +
+      f->purine + f->p_slow_biochemical + f->p_ssorb_to_min;
+    
+    //fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, s->inorglabp = %f\n", 
+    //        f->p_lab_in, f->p_lab_out, s->inorglabp);
+    //    
+    //fprintf(stderr, "p_par_to_min = %f, p_atm_dep = %f, pmineralisation = %f, p_slow_biochemical = %f, p_ssorb_to_min = %f\n", 
+    //        f->p_par_to_min, f->p_atm_dep, f->pmineralisation, f->p_slow_biochemical, f->p_ssorb_to_min);
+     
+    /* total outflux from labile P pool */
     if (s->inorglabp > 0) {
-        lab_out = f->puptake + f->ploss + p_lab_to_sorb;
+      f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
     } else {
-        f->puptake = 0.0;
-        f->ploss = 0.0;
-        f->p_lab_to_sorb = 0.0;
-        lab_out = f->puptake + f->ploss + p_lab_to_sorb;
+      f->puptake = 0.0;
+      f->ploss = 0.0;
+      f->p_min_to_ssorb = 0.0;
+      f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
     }
-
-    sorb_in = p_lab_to_sorb + f->p_ssorb_to_sorb;
-    sorb_out = p_sorb_to_lab + f->p_sorb_to_ssorb;
     
-    s->inorglabp += lab_in - lab_out;
-    s->inorgsorbp += sorb_in - sorb_out;
-    
-   
     return;
 
 }
@@ -1905,6 +1892,9 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     s->structsoilp += (f->p_soil_struct_litter -
                       (f->p_soil_struct_to_slow +
                        f->p_soil_struct_to_active));
+    
+    //fprintf(stderr, "plittrelease 0 = %f\n", f->plittrelease*1000000);
+    
 
     if (c->strpfloat == 0) {
         s->structsurfp += pc_limit(f, s->structsurf, s->structsurfp,
@@ -1912,18 +1902,25 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
         s->structsoilp += pc_limit(f, s->structsoil, s->structsoilp,
                                1.0/p->structcp, 1.0/p->structcp);
     }
+    
+    //fprintf(stderr, "plittrelease 1 = %f\n", f->plittrelease*1000000);
+    
 
     /* pcmin & pcmax from Parton 1989 fig 2 */
     s->metabsurfp += f->p_surf_metab_litter - f->p_surf_metab_to_active;
     s->metabsurfp += pc_limit(f, s->metabsurf, s->metabsurfp,
                               1.0/150.0, 1.0/80.0);
 
+    //fprintf(stderr, "plittrelease 2 = %f\n", f->plittrelease*1000000);
+    
+    
     /* pcmin & pcmax from Parton 1989 fig 2 */
     s->metabsoilp += (f->p_soil_metab_litter - f->p_soil_metab_to_active);
     s->metabsoilp += pc_limit(f, s->metabsoil, s->metabsoilp,
-                              1.0/4.0, 1.0/2.0);
+                              1.0/50.0, 1.0/25.0);
 
-
+    //fprintf(stderr, "plittrelease 3 = %f\n", f->plittrelease*1000000);
+    
     /* When nothing is being added to the metabolic pools, there is the
     potential scenario with the way the model works for tiny bits to be
     removed with each timestep. Effectively with time this value which is
@@ -1980,7 +1977,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
     s->inorglabp += f->p_lab_in - f->p_lab_out;
-    s->inorgsorbp += f->p_sorb_in - f->p_sorb_out;
+    s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
 
     /* Daily increment of soil inorganic available P pool (lab + sorb) */
     s->inorgavlp = s->inorglabp + s->inorgsorbp;
@@ -1992,7 +1989,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     s->inorgoccp += f->p_ssorb_to_occ;
 
     /* Daily increment of soil inorganic parent P pool */
-    s->inorgparp += f->p_atm_dep - f->p_par_to_min;
+    s->inorgparp -= f->p_par_to_min;
     
     /* Daily increment of fertilizer P pool */
     s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_min;
@@ -2070,7 +2067,7 @@ void precision_control_soil_p(fluxes *f, state *s) {
     /* Detect very low values in state variables and force to zero to
     avoid rounding and overflow errors */
 
-    double tolerance = 1E-08, excess;
+    double tolerance = 1E-14, excess;
 
     if (s->metabsurfp < tolerance) {
         excess = s->metabsurfp;
