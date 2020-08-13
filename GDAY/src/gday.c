@@ -527,7 +527,8 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             update_roots(c, p, s);
         }
     }
-    fprintf(stderr, "num_years = %d, puptake = %f\n", c->num_years, f->puptake*365);
+    
+    //fprintf(stderr, "num_years = %d, puptake = %f\n", c->num_years, f->puptake*365);
     /* ========================= **
     **   E N D   O F   Y E A R   **
     ** ========================= */
@@ -611,10 +612,13 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             }
             if (c->pcycle) {
                 /* Have we reached a steady state? */
+                //fprintf(stderr,
+                //        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, P gross - %f, P release - %f\n",
+                //        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, 
+                //        f->pgross*365*1000000, f->plittrelease*365*1000000);
                 fprintf(stderr,
-                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, P gross - %f, P release - %f\n",
-                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, 
-                        f->pgross*365*1000000, f->plittrelease*365*1000000);
+                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, Sorb P - %f, SSorb P - %f, Occ P - %f\n",
+                        s->lai, s->plantp, s->inorglabp, s->inorgsorbp, s->inorgssorbp, s->inorgoccp);
                 
             } else {
               /* Have we reached a steady state? */

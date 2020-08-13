@@ -172,7 +172,7 @@ void initialise_params(params *p) {
     p->kq10 = 0.08;
     p->kr = 0.5;          /* this value is 1.0 in Wang et al. 2007 Global Biogeochemical Cycles, Kn Michaelis-Menten constant for plant N uptake [g P m-2] */
     p->krp = 0.01;        /* Wang et al. 2007 Global Biogeochemical Cycles, Kp Michaelis-Menten constant for plant P uptake [g P m-2] */
-    p->ks = 0.5;          /* used intermediately weatherred soil value of 0.3 [g P m-2] in Yang et al. 2016 */
+    p->ks = 0.006;        /* unit in t ha-1, Yang et al. 2016 */
     p->lai_closed = 0.5;
     p->latitude = 35.9;
     p->leaf_width = 0.01;
@@ -269,7 +269,7 @@ void initialise_params(params *p) {
     p->slowncmin = 0.025;
     p->slowpcmax = 0.011111;
     p->slowpcmin = 0.005;
-    p->smax = 10.0;                 /* used intermediately weather soils value of 700 [g P m-2] in Yang et al. 2016 */
+    p->smax = 0.01;                 /* maximum pool size for sorbed P pool, in unit of t ha-1 */
     p->soilph = 6.7;               /* pft-specific parameter, century value */
     p->store_transfer_len = -999.9;
     p->structcn = 150.0;

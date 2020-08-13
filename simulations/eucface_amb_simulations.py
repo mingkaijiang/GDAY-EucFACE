@@ -222,10 +222,10 @@ def main(experiment_id, site,
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # 
                         "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
-                        "rate_sorb_ssorb": "0.0001",
-                        "rate_ssorb_occ": "0.048",
+                        "rate_sorb_ssorb": "0.001",   # fitted value, reasonable for EucFACE
+                        "rate_ssorb_occ": "0.048",    # fitted value, reasonable for EucFACE
                         # sorption calculation
-                        "smax": "0.1",               # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
+                        "smax": "0.01",               # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
                         "ks": "0.006",                # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
                         # biochemical P mineralization
                         "biochemical_p_constant": "150.0",
