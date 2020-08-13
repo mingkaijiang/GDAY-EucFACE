@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 109;  /* change with number of variables */
+    int ncols = 128;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -107,8 +107,24 @@ void write_output_header(control *c, FILE **fp) {
 
     /* P stuff 5 */
     fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,");
-
-    /* Misc 3 */
+    
+    /* P movement check pools 4 */
+    fprintf(*fp, "structsurfp,structsoilp,metabsurfp,metabsoilp,");
+    
+    /* P movement check fluxes 4 */
+    fprintf(*fp, "plittrelease,p_surf_struct_litter,p_surf_struct_to_slow,p_surf_struct_to_active,");
+    
+    /* P movement check fluxes 3 */
+    fprintf(*fp, "p_soil_struct_litter,p_soil_struct_to_slow,p_soil_struct_to_active,");
+    
+    /* P movement check fluxes 4 */
+    fprintf(*fp, "p_surf_metab_litter,p_surf_metab_to_active,p_soil_metab_litter,p_soil_metab_to_active,");
+    
+    /* P movement check fluxes 4 */
+    fprintf(*fp, "p_slow_to_active,p_passive_to_active,p_active_to_slow,p_active_to_passive,");
+    
+    
+    /* Retranslocation fluxes 2 */
     fprintf(*fp, "leafretransn,");
     fprintf(*fp, "leafretransp\n");
 
@@ -236,6 +252,28 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
     fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,",
                     f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical);
 
+    /* P check pools */
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
+            s->structsurfp,s->structsoilp,s->metabsurfp,s->metabsoilp);
+    
+    
+    /* P check fluxes */
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
+            f->plittrelease,f->p_surf_struct_litter,f->p_surf_struct_to_slow,f->p_surf_struct_to_active);
+    
+    
+    /* P check fluxes */
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,",
+            f->p_soil_struct_litter,f->p_soil_struct_to_slow,f->p_soil_struct_to_active);
+    
+    /* P check fluxes */
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
+            f->p_surf_metab_litter,f->p_surf_metab_to_active,f->p_soil_metab_litter,f->p_soil_metab_to_active);
+    
+    /* P check fluxes */
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
+            f->p_slow_to_active,f->p_passive_to_active,f->p_active_to_slow,f->p_active_to_passive);
+    
     /* Misc */
     fprintf(c->ofp, "%.10f,", f->leafretransn);
     fprintf(c->ofp, "%.10f\n", f->leafretransp);

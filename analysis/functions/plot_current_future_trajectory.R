@@ -28,19 +28,25 @@ plot_current_future_trajectory <- function() {
     myDF <- rbind(obsDF1, obsDF2, futDF1, futDF2, futDF3, futDF4, futDF5, futDF6)
     
     ### calculate annual mean and/or sum
+    ## pools
     sumDF1 <- summaryBy(shoot+lai+branch+stem+root+croot+shootn+branchn+stemn+rootn+crootn+
                             shootp+branchp+stemp+rootp+crootp+soilc+soiln+soilp+inorgn+inorgp+
                             inorgavlp+inorglabp+inorgsorbp+inorgssorbp+inorgoccp+inorgparp+fertilizerp+
                             litterc+littercag+littercbg+litternag+litternbg+litterpag+litterpbg+
                             activesoil+slowsoil+passivesoil+activesoiln+slowsoiln+passivesoiln+
-                            activesoilp+slowsoilp+passivesoilp~year+Trt, FUN=mean,
+                            activesoilp+slowsoilp+passivesoilp+
+                            structsurfp+structsoilp+metabsurfp+metabsoilp~year+Trt, FUN=mean,
                         data=myDF, na.rm=T, keep.names=T)
     
-    
+    ## fluxes
     sumDF2 <- summaryBy(et+transpiration+soil_evap+canopy_evap+runoff+nep+gpp+npp+hetero_resp+
                             auto_resp+cpleaf+cpbranch+cpstem+cproot+
                             nuptake+ngross+nmineralisation+nloss+puptake+pgross+
-                            pmineralisation+ploss+p_slow_biochemical+leafretransn+leafretransp~year+Trt,
+                            pmineralisation+ploss+p_slow_biochemical+leafretransn+leafretransp+
+                            plittrelease+p_surf_struct_litter+p_surf_struct_to_slow+p_surf_struct_to_active+
+                            p_soil_struct_litter+p_soil_struct_to_slow+p_soil_struct_to_active+
+                            p_surf_metab_litter+p_surf_metab_to_active+p_soil_metab_litter+p_soil_metab_to_active+
+                            p_slow_to_active+p_passive_to_active+p_active_to_slow+p_active_to_passive~year+Trt,
                         FUN=sum, data=myDF, na.rm=T, keep.names=T)
     
     ### merge

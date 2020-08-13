@@ -231,10 +231,12 @@ def main(experiment_id, site,
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
                         "crit_n_cost_of_p": "15.0",
-                        "passpcmin": "0.004",
-                        "passpcmax": "0.004",
+                        "actpcmin": "0.01",      # guess value based on microbial P
                         "actpcmax": "0.5",       # guess value based on microbial P
-                        "actpcmin": "0.25",      # guess value based on microbial P
+                        "slowpcmin": "0.005",      # guess range
+                        "slowpcmax": "0.011111",   # guess range
+                        "passpcmin": "0.0051",
+                        "passpcmax": "0.0051",
                         "pcbnew": "0.000286",    # same as sapwood
                         "pcbnewz": "0.000286",   # same as sapwood
                         "pccnew": "0.000286",    # same as sapwood
@@ -262,8 +264,6 @@ def main(experiment_id, site,
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
                         "prateuptake": "0.9",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
-                        "slowpcmin": "0.005",      # guess range
-                        "slowpcmax": "0.011111",   # guess range
                         "structcp": "5500.0",
                         "structratp": "0.0",
 
