@@ -107,7 +107,7 @@ void calc_day_growth(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma,
     if (c->exudation && c->alloc_model != GRASSES) {
         calc_root_exudation(c, f, p, s);
     }
-
+    
     /* If we didn't have enough N available to satisfy wood demand, NPP
        is down-regulated and thus so is GPP. We also need to recalculate the
        water balance given the lower GPP. */
@@ -563,7 +563,7 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
     f->retransp = phosphorus_retrans(c, f, p, s, fdecay, rdecay, doy);
     f->nuptake = calculate_nuptake(c, p, s);
     f->puptake = calculate_puptake(c, p, s, f);
-
+    
     /*  Ross's Root Model. */
     if (c->model_optroot) {
 
@@ -1134,31 +1134,19 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
     s->branchn += f->npbranch - p->bdecay * s->branchn;
     s->rootn += f->nproot - rdecay * s->rootn;
     s->crootn += f->npcroot - p->crdecay * s->crootn;
+    
     s->stemnimm += f->npstemimm - p->wdecay * s->stemnimm;
     s->stemnmob += (f->npstemmob - p->wdecay * s->stemnmob - p->retransmob *
                     s->stemnmob);
     s->stemn = s->stemnimm + s->stemnmob;
 
     s->branchp += f->ppbranch - p->bdecay * s->branchp;
-
     s->rootp += f->pproot - rdecay * s->rootp;
-
-    //fprintf(stderr, "nuptake %f\n", f->nuptake*100000);
-    //fprintf(stderr, "puptake %f\n", f->puptake*100000);
-    //fprintf(stderr, "nproot %f\n", f->nproot);
-    //fprintf(stderr, "pproot %f\n", f->pproot);
-    //fprintf(stderr, "rootc %f\n", s->root);
-    //fprintf(stderr, "rootn %f\n", s->rootn);
-    //fprintf(stderr, "rootp %f\n", s->rootp);
-    //fprintf(stderr, "ncrfac calc %f\n", (s->rootn/s->root)/(s->shootn/s->shoot));
-    //fprintf(stderr, "pcrfac calc %f\n", (s->rootp/s->root)/(s->shootp/s->shoot));
-
     s->crootp += f->ppcroot - p->crdecay * s->crootp;
+    
     s->stempimm += f->ppstemimm - p->wdecay * s->stempimm;
-
     s->stempmob += (f->ppstemmob - p->wdecay * s->stempmob - p->retransmob *
                     s->stempmob);
-
     s->stemp = s->stempimm + s->stempmob;
 
 
@@ -1660,9 +1648,10 @@ double calculate_puptake(control *c, params *p, state *s, fluxes *f) {
         /* Constant P uptake */
         puptake = p->puptakez;
     } else if (c->puptake_model == 1) {
-        // evaluate puptake : proportional to lab P pool that is
-        // available to plant uptake
+        // evaluate puptake : 
+        // proportional to lab P pool that is available to plant uptake
         puptake = p->prateuptake * s->inorglabp * p_lab_avail;
+              
     } else if (c->puptake_model == 2) {
         /* P uptake is a saturating function on root biomass, as N */
 

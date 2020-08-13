@@ -85,7 +85,7 @@ def main(experiment_id, site,
                         "inorgsorbp": "0.0",
                         "inorgssorbp": "0.0",
                         "inorgoccp": "0.0",
-                        "inorgparp": "0.054",
+                        "inorgparp": "0.1",
                         "fertilizerp": "0.0",         # Fertilizer P pool
                         "metabsoil": "0.0",
                         "metabsoiln": "0.0",
@@ -225,8 +225,8 @@ def main(experiment_id, site,
                         "rate_sorb_ssorb": "0.0001",
                         "rate_ssorb_occ": "0.048",
                         # sorption calculation
-                        "smax": "10",             # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
-                        "ks": "0.6",                # reduce to increase allocation to labile P pool, Yang et al., 2016, GRL, Table S2 
+                        "smax": "0.1",               # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
+                        "ks": "0.006",                # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
                         # biochemical P mineralization
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
@@ -261,7 +261,7 @@ def main(experiment_id, site,
                         "pmin0": "0.0",            # set to zero for now
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
-                        "prateuptake": "2.6",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "prateuptake": "0.9",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "slowpcmin": "0.005",      # guess range
                         "slowpcmax": "0.011111",   # guess range
                         "structcp": "5500.0",

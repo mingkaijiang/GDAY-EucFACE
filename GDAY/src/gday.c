@@ -448,7 +448,6 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                 hurricane(f, p, s);
             }
 
-
             calc_day_growth(cw, c, f, ma, m, nr, p, s, s->day_length[doy],
                             doy, fdecay, rdecay);
 
@@ -497,7 +496,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
             /* calculate C:N ratios and increment annual flux sum */
             day_end_calculations(c, p, s, c->num_days, FALSE);
-
+            
             if (c->print_options == SUBDAILY && c->spin_up == FALSE) {
                 write_daily_outputs_ascii(c, f, s, year, doy+1);
             } else if (c->print_options == DAILY && c->spin_up == FALSE) {
@@ -507,22 +506,6 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                     write_daily_outputs_binary(c, f, s, year, doy+1);
             }
             c->day_idx++;
-
-
-            //printf("%d %d %f", (int)year, doy, s->water_frac[0] * s->thickness[0] * M_TO_MM);
-            //printf("%d %d %f", (int)year, doy, s->water_frac[0]);
-            //for (i = 1; i < p->n_layers; i++) {
-            //
-            //    //printf(" %f", s->water_frac[i] * s->thickness[i] * M_TO_MM);
-            //    printf(" %f", s->water_frac[i]);
-            //
-            //}
-            //printf("\n");
-            //printf("%d %d %lf %lf %lf\n", (int)year, doy, s->saved_swp, s->wtfac_root, f->gpp*100);
-
-            //printf("%d %d %lf %lf %lf %lf\n", (int)year, doy, f->gpp*100, f->transpiration, s->wtfac_root, s->saved_swp);
-            //printf("%d %d %lf %lf %lf\n", (int)year, doy, f->gpp*100, f->transpiration, s->wtfac_root);
-
 
             /* ======================= **
             **   E N D   O F   D A Y   **
@@ -544,6 +527,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             update_roots(c, p, s);
         }
     }
+    fprintf(stderr, "num_years = %d, puptake = %f\n", c->num_years, f->puptake*365);
     /* ========================= **
     **   E N D   O F   Y E A R   **
     ** ========================= */
@@ -578,13 +562,13 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     */
     double tol_c = 5E-03;
     double tol_n = 5E-03;
-    double tol_p = 5E-03;
+    double tol_p = 5E-05;
     double prev_plantc = 99999.9;
     double prev_soilc = 99999.9;
     double prev_plantn = 99999.9;
     double prev_soiln = 99999.9;
     double prev_plantp = 99999.9;
-    double prev_soilavailp = 99999.9;
+    double prev_soillabp = 99999.9;
     int i, cntrl_flag;
     
     /* check for convergences in units of kg/m2 */
@@ -603,7 +587,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
         }
         c->disturbance = cntrl_flag;
     }
-
+    
     fprintf(stderr, "Spinning up the model...\n");
     while (TRUE) {
         if (fabs((prev_plantc) - (s->plantc)) < tol_c &&
@@ -611,7 +595,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             fabs((prev_plantn) - (s->plantn)) < tol_n &&
             fabs((prev_soiln) - (s->soiln)) < tol_n &&
             fabs((prev_plantp) - (s->plantp)) < tol_p &&
-            fabs((prev_soilavailp) - (s->inorgavlp)) < tol_p) {
+            fabs((prev_soillabp) - (s->inorglabp)) < tol_p) {
             break;
         } else {
             prev_plantc = s->plantc;
@@ -619,7 +603,7 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             prev_plantn = s->plantn;
             prev_soiln = s->soiln;
             prev_plantp = s->plantp;
-            prev_soilavailp = s->inorgavlp;
+            prev_soillabp = s->inorglabp;
 
             /* 1000 years (50 yrs x 20 cycles) */
             for (i = 0; i < 20; i++) {
@@ -628,11 +612,10 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (c->pcycle) {
                 /* Have we reached a steady state? */
                 fprintf(stderr,
-                        "Spinup: LAI - %f, N min - %f, P min - %f, P upt - %f, P gross - %f, P immob - %f, P release - %f\n",
-                        s->lai, f->nmineralisation*365*1000000, f->pmineralisation*365*1000000, f->puptake*365*1000000, f->pgross*365*1000000, f->pimmob*365*1000000, f->plittrelease*365*1000000);
-                //fprintf(stderr,
-                //        "check: p_surf_struct_to_slow - %f, p_surf_struct_to_active - %f, p_soil_struct_to_slow - %f, p_soil_struct_to_active - %f, p_surf_metab_to_active - %f, p_soil_metab_to_active - %f\n",
-                //        f->p_surf_struct_to_slow*365*1000000, f->p_surf_struct_to_active*365*1000000, f->p_soil_struct_to_slow*365*1000000, f->p_soil_struct_to_active*365*1000000, f->p_surf_metab_to_active*365*1000000, f->p_soil_metab_to_active*365*1000000);
+                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, P gross - %f, P release - %f\n",
+                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, 
+                        f->pgross*365*1000000, f->plittrelease*365*1000000);
+                
             } else {
               /* Have we reached a steady state? */
               fprintf(stderr,

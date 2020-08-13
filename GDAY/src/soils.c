@@ -1593,7 +1593,7 @@ void calc_p_net_mineralisation(fluxes *f) {
         P Net mineralisation from microbial activity,
         excluding the (- f->p_sorb_to_ssorb + f->p_ssorb_to_sorb activity)
     */
-    f->pmineralisation = f->pgross - f->pimmob + f->plittrelease;
+    f->pmineralisation = 0.000008; //f->pgross - f->pimmob + f->plittrelease;
 
     return;
 }
@@ -1703,7 +1703,7 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
 
     /* total influx into the labile P pool */
     f->p_lab_in = f->p_par_to_min + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_min +
-      f->purine + f->p_slow_biochemical + f->p_ssorb_to_min;
+      f->purine + f->p_slow_biochemical;
     
     //fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, s->inorglabp = %f\n", 
     //        f->p_lab_in, f->p_lab_out, s->inorglabp);
@@ -1831,7 +1831,8 @@ void calculate_p_sorb_to_ssorb(state *s, fluxes *f, params *p) {
 
     /* P flux from sorbed pool to strongly sorbed P pool */
     if (s->inorgsorbp > 0.0) {
-        f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorgsorbp;
+        //f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorgsorbp;
+        f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
     } else {
         f->p_min_to_ssorb = 0.0;
     }
@@ -1977,14 +1978,17 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
     s->inorglabp += f->p_lab_in - f->p_lab_out;
+    //s->inorglabp = 0.002;
+    
     s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
-
+    
     /* Daily increment of soil inorganic available P pool (lab + sorb) */
     s->inorgavlp = s->inorglabp + s->inorgsorbp;
 
     /* Daily increment of soil inorganic secondary P pool (strongly sorbed) */
-    s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_min;
-
+    //s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_min;
+    s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ;
+    
     /* Daily increment of soil inorganic occluded P pool */
     s->inorgoccp += f->p_ssorb_to_occ;
 
