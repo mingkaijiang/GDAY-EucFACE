@@ -95,7 +95,7 @@ void calculate_water_balance(control *c, fluxes *f, met *m, params *p,
   net_rad_am = calc_net_radiation(p, m->sw_rad_am, m->tair_am);
   net_rad_pm = calc_net_radiation(p, m->sw_rad_pm, m->tair_pm);
   soil_evap *= MOLE_WATER_2_G_WATER * G_TO_KG * (60.0 * 60.0 * daylen);
-  
+
   /* gC m-2 day-1 -> umol m-2 s-1 */
   conv = GRAMS_C_TO_MOL_C * MOL_TO_UMOL * DAY_2_SEC;
   gpp_am = f->gpp_am * conv;
@@ -155,6 +155,7 @@ void update_water_storage(control *c, fluxes *f, params *p, state *s,
   topsoil_loss = transpiration_topsoil + *soil_evap;
   s->pawater_topsoil += throughfall - topsoil_loss;
   
+  
   /* We have attempted to evap more water than we have */
   if (s->pawater_topsoil < 0.0) {
     /* make the layer completely dry */
@@ -168,6 +169,7 @@ void update_water_storage(control *c, fluxes *f, params *p, state *s,
       *soil_evap = previous;
       transpiration_topsoil = previous - *soil_evap;
       topsoil_loss = transpiration_topsoil + *soil_evap;
+      
     } else {
       *soil_evap = 0.0;
       transpiration_topsoil = 0.0;
@@ -459,7 +461,6 @@ void calc_interception(control *c, met *m, params *p, fluxes *f, state *s,
                             MIN(1.0, s->lai / p->max_intercep_lai));
             *throughfall = m->rain - *canopy_evap;
             *interception = 0.0;
-
 
         } else {
             *canopy_evap = 0.0;

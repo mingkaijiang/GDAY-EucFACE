@@ -173,7 +173,7 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
 
     /* water*/
     fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",
-            s->wtfac_root,s->wtfac_topsoil,s->pawater_root, s->pawater_topsoil);
+            s->wtfac_root,s->wtfac_topsoil,s->pawater_root,s->pawater_topsoil);
 
     /* plant */
     fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,",

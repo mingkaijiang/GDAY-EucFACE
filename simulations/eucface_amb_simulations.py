@@ -216,9 +216,9 @@ def main(experiment_id, site,
                         "croot0": "0.34",
                         "croot1": "0.84",
                         "targ_sens": "0.5",
-                        "density": "492.0",       # EucFACE parameter file
+                        "density": "492.0",                   # EucFACE parameter file
                         "nf_min": "0.005", 
-                        "sapturnover": "0.1",                 # guess value
+                        "sapturnover": "0.1",                 # guess value for EucFACE
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # 
                         "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
@@ -231,24 +231,24 @@ def main(experiment_id, site,
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
                         "crit_n_cost_of_p": "15.0",
-                        "actpcmin": "0.01",      # guess value based on microbial P
-                        "actpcmax": "0.5",       # guess value based on microbial P
-                        "slowpcmin": "0.005",      # guess range
-                        "slowpcmax": "0.011111",   # guess range
-                        "passpcmin": "0.0051",
-                        "passpcmax": "0.0051",
-                        "pcbnew": "0.000286",    # same as sapwood
-                        "pcbnewz": "0.000286",   # same as sapwood
-                        "pccnew": "0.000286",    # same as sapwood
-                        "pccnewz": "0.000286",   # same as sapwood
-                        "pcmaxfold": "0.0014",   # EucFACE parameter file
-                        "pcmaxfyoung": "0.002",  # EucFACE parameter file
-                        "pcmaxr": "0.0006",      # EucFACE parameter file
+                        "actpcmin": "0.01",         # empirical
+                        "actpcmax": "0.02",         # empirical
+                        "slowpcmin": "0.005",       # empirical
+                        "slowpcmax": "0.011111",    # empirical
+                        "passpcmin": "0.0051",      # empirical
+                        "passpcmax": "0.0051",      # empirical
+                        "pcbnew": "0.000286",       # same as sapwood
+                        "pcbnewz": "0.000286",      # same as sapwood
+                        "pccnew": "0.000286",       # same as sapwood
+                        "pccnewz": "0.000286",      # same as sapwood
+                        "pcmaxfold": "0.0014",      # EucFACE parameter file
+                        "pcmaxfyoung": "0.002",     # EucFACE parameter file
+                        "pcmaxr": "0.0006",         # EucFACE parameter file
                         "pcrfac": "0.8",
-                        "pcwimm": "0.00013",     # EucFACE parameter file
-                        "pcwimmz": "0.00013",    # EucFACE parameter file
-                        "pcwnew": "0.000286",    # EucFACE parameter file
-                        "pcwnewz": "0.000286",   # EucFACE parameter file
+                        "pcwimm": "0.00013",        # EucFACE parameter file
+                        "pcwimmz": "0.00013",       # EucFACE parameter file
+                        "pcwnew": "0.000286",       # EucFACE parameter file
+                        "pcwnewz": "0.000286",      # EucFACE parameter file
                         "pf_min": "0.0002",
                         # for calculate_p_ssorb_to_sorb function
                         "finesoil": "0.2",         # EucFACE parameter file
