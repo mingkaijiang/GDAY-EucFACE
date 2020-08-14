@@ -982,6 +982,9 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
         log_jmax = 1.246 + 0.886 * log_vcmax + 0.089 * log(P0);
         jmax25 = exp(log_jmax);
         
+        //fprintf(stderr, "Walker: N0 %f, P0 %f, vcmax25 %f, jmax25 %f\n",
+        //        N0, P0, vcmax25, jmax25);
+        
     } else if (c->aci_relationship == ELLSWORTH) {
         
         // Ellsworth et al. 2015 PCE EucFACE relationship without TPU limitation
@@ -992,6 +995,9 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
         vcmax25n =  p->vcmaxna * N0 + p->vcmaxnb;
         vcmax25p = p->vcmaxpa * P0 + p->vcmaxpb;
         vcmax25 = MIN(vcmax25n, vcmax25p);
+        
+        //fprintf(stderr, "Ellsworth: N0 %f, P0 %f, jmax25n %f, jmax25p %f, vcmax25n %f, vcmax25p %f, vcmax25 %f, jmax25 %f, sla %f\n",
+        //        N0, P0, jmax25n, jmax25p, vcmax25n, vcmax25p, vcmax25, jmax25, p->sla);
         
     } else if (c->aci_relationship == DOMINGUES) {
       
