@@ -202,8 +202,8 @@ def main(experiment_id, site,
                         "vcmaxpa": "516.83",     # forcing intercept to zero; if use all species df, 468.76
                         "vcmaxnb": "0.0",        # forcing intercept to zero
                         "vcmaxpb": "0.0",        # forcing intercept to zero
-                        #"jmax": "162.91",         # EucFACE parameter file
-                        #"vcmax": "92.85",         # EucFACE parameter file
+                        "jmax": "162.91",         # EucFACE parameter file
+                        "vcmax": "92.85",         # EucFACE parameter file
                         "measurement_temp": "25.0", # parameters obtained at 22 not 25 degrees
                         "heighto": "4.826",
                         "htpower": "0.35",
@@ -221,12 +221,12 @@ def main(experiment_id, site,
                         "sapturnover": "0.1",                 # guess value for EucFACE
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.005",        # 
-                        "p_rate_release_fertilizer": "1.2",   # 10 month release rate for slow-release fertilizer
-                        "rate_sorb_ssorb": "0.001",   # fitted value, reasonable for EucFACE
-                        "rate_ssorb_occ": "0.048",    # fitted value, reasonable for EucFACE
+                        "p_rate_release_fertilizer": "1.0",   # 10 - 15 month release rate for slow-release fertilizer
+                        "rate_sorb_ssorb": "0.001",           # fitted value, reasonable for EucFACE
+                        "rate_ssorb_occ": "0.048",            # fitted value, reasonable for EucFACE
                         # sorption calculation
-                        "smax": "0.01",               # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
-                        "ks": "0.006",                # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
+                        "smax": "0.01",                       # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
+                        "ks": "0.006",                        # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
                         # biochemical P mineralization
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
@@ -281,9 +281,9 @@ def main(experiment_id, site,
                         "fixleafpc": "false",
                         "grazing": "false",
                         "gs_model": "medlyn",
-                        "aci_relationship": "ellsworth",
+                        "aci_relationship": "domingues",
                         "model_optroot": "false",
-                        "modeljm": "1",
+                        "modeljm": "0",
                         "ncycle": "true",
                         "pcycle": "true",
                         "nuptake_model": "1",

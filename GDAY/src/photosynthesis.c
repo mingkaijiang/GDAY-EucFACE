@@ -869,15 +869,24 @@ void calculate_jmax_and_vcmax(control *c, params *p, state *s, double Tk,
 
         /* current unit for sla: m2 kg-1; convert into m2 g-1 for Walker relationship */
         if (c->aci_relationship == WALKER) {
+          
             log_vcmax = 1.993 + 2.555 * log(N0) - 0.372 * log(p->sla/1000.0) + 0.422 * log(N0) * log(p->sla/1000.0);
             vcmax25 = exp(log_vcmax);
             log_jmax = 1.197 + 0.847 * log_vcmax;
             jmax25 = exp(log_jmax);
+            
         } else if (c->aci_relationship == ELLSWORTH) {
+          
             jmax25 = p->jmaxna * N0 + p->jmaxnb;
             vcmax25 = p->vcmaxna * N0 + p->vcmaxnb;
             
+        } else if (c->aci_relationship == DOMINGUES) {
+          
+          fprintf(stderr, "no relationship included \n");
+          
+          
         } else if (c->aci_relationship == BASELINE) {
+          
             jmax25 = p->jmaxna * N0 + p->jmaxnb;
             vcmax25 = p->vcmaxna * N0 + p->vcmaxnb;
             
@@ -913,6 +922,7 @@ void calculate_jmax_and_vcmax(control *c, params *p, state *s, double Tk,
     /* reduce photosynthetic capacity with moisture stress */
     *jmax *= s->wtfac_root;
     *vcmax *= s->wtfac_root;
+    
     /*  Function allowing Jmax/Vcmax to be forced linearly to zero at low T */
     adj_for_low_temp(*(&jmax), Tk);
     adj_for_low_temp(*(&vcmax), Tk);
@@ -954,10 +964,15 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
   *jmax = 0.0;
 
   if (c->modeljm == 0) {
+    
     *jmax = p->jmax;
     *vcmax = p->vcmax;
+    
   } else if (c->modeljm == 1) {
+
+    
     if (c->aci_relationship == WALKER) {
+      
         // Walker et al. 2014 global synthesis relationship
         /* the maximum rate of electron transport at 25 degC */
         log_vcmax = 3.946 + 0.921 * log(N0) + 0.121 * log(P0) + 0.282 * log(N0) * log(P0);
@@ -970,17 +985,44 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
     } else if (c->aci_relationship == ELLSWORTH) {
         
         // Ellsworth et al. 2015 PCE EucFACE relationship without TPU limitation
-        /* need to convert SLA from m2 kg-1 to m2 g-1 */
         jmax25n = p->jmaxna * N0 + p->jmaxnb;
         jmax25p = p->jmaxpa * P0 + p->jmaxpb;
         jmax25 = MIN(jmax25n, jmax25p);
         
-        /* need to convert SLA from m2 kg-1 to m2 g-1 */
         vcmax25n =  p->vcmaxna * N0 + p->vcmaxnb;
         vcmax25p = p->vcmaxpa * P0 + p->vcmaxpb;
         vcmax25 = MIN(vcmax25n, vcmax25p);
-    }
-
+        
+    } else if (c->aci_relationship == DOMINGUES) {
+      
+      /* Domingues et al. 2010 PCE */
+      /* N and P in unit of mg g-1 */
+       
+      jmax25n = exp(0.92 * log(N0 * 1000 * (p->sla/1000)) - 1.22);
+      jmax25p = exp(0.66 * log(P0 * 1000 * (p->sla/1000)) - 0.11);
+      
+      jmax25 = MIN(jmax25n, jmax25p);
+      
+      /* need to convert SLA from m2 kg-1 to m2 g-1 */
+      vcmax25n =  exp(0.7 * log(N0) - 1.16);
+      vcmax25p = exp(0.85 * log(P0) - 0.3);
+      
+      vcmax25 = MIN(vcmax25n, vcmax25p);
+      
+      // convert vcmax and jmax from umol CO2 g-1 s-1 to umol CO2 m-2 s-1
+      vcmax25 /= (p->sla/1000);
+      jmax25 /= (p->sla/1000);
+      
+      //fprintf(stderr, "Domingues: N0 %f, P0 %f, jmax25n %f, jmax25p %f, vcmax25n %f, vcmax25p %f, vcmax25 %f, jmax25 %f, sla %f\n",
+      //        N0, P0, jmax25n, jmax25p, vcmax25n, vcmax25p, vcmax25, jmax25, p->sla);
+      
+      
+    } else if (c->aci_relationship == BASELINE) {
+      
+      fprintf(stderr, "no relationship included \n");
+      
+    } 
+    
     
     /* Temperature-dependent relationship ,
     this response is well-behaved for TLEAF < 0.0 */
@@ -990,6 +1032,7 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
     *vcmax = arrh(mt, vcmax25, p->eav, Tk);
 
   } else if (c->modeljm == 2) {
+    
     vcmax25 = p->vcmaxna * N0 + p->vcmaxnb;
     *vcmax = arrh(mt, vcmax25, p->eav, Tk);
 
@@ -998,6 +1041,7 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
                         p->edj);
 
   } else if (c->modeljm == 3) {
+    
     /* the maximum rate of electron transport at 25 degC */
     jmax25 = p->jmax;
 
@@ -1014,6 +1058,7 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
   /* reduce photosynthetic capacity with moisture stress */
   *jmax *= s->wtfac_root;
   *vcmax *= s->wtfac_root;
+  
   /*  Function allowing Jmax/Vcmax to be forced linearly to zero at low T */
   adj_for_low_temp(*(&jmax), Tk);
   adj_for_low_temp(*(&vcmax), Tk);

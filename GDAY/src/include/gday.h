@@ -38,7 +38,8 @@
 /* A Ci relationship */
 #define WALKER 0
 #define ELLSWORTH 1
-#define BASELINE 2
+#define DOMINGUES 2
+#define BASELINE 3
 
 /* Respiration models */
 #define FIXED 0
