@@ -528,8 +528,9 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
         }
     }
     
-    fprintf(stderr, "num_years = %d, puptake = %f, active P = %f\n", 
-            c->num_years, f->puptake*365, s->activesoilp);
+    //fprintf(stderr, "num_years = %d, puptake = %f, active P = %f\n", 
+    //        c->num_years, f->puptake*365, s->activesoilp);
+    
     /* ========================= **
     **   E N D   O F   Y E A R   **
     ** ========================= */

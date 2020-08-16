@@ -1123,8 +1123,6 @@ void calculate_npools(control *c, fluxes *f, params *p, state *s,
     s->inorgn += (f->ninflow + f->nurine + f->nmineralisation -
                   f->nloss - f->nuptake);
 
-    //fprintf(stderr, "inorgn = %f\n", s->inorgn);
-
     /*f->nmineralisation = f->ngross - f->nimmob + f->nlittrelease;*/
     return;
 }
@@ -1398,9 +1396,6 @@ void pfluxes_from_structural_pools(fluxes *f, params *p, state *s) {
     /* P flux from surface structural pool -> slow pool */
     f->p_surf_struct_to_slow = sigwt * p->ligshoot * 0.7;
     
-    //fprintf(stderr, "p_surf_struct_to_slow %f, sigwt %f, ligshoot %f, structout_surf %f, structsurfp %f, decayrate %f\n", 
-    //        f->p_surf_struct_to_slow, sigwt, p->ligshoot, structout_surf, s->structsurfp, p->decayrate[0]);
-
     /* P flux surface structural pool -> active pool */
     f->p_surf_struct_to_active = sigwt * (1.0 - p->ligshoot) * 0.55;
 
@@ -1424,9 +1419,6 @@ void pfluxes_from_metabolic_pool(fluxes *f, params *p, state *s) {
     /* P flux soil metabolic pool  -> active pool */
     f->p_soil_metab_to_active = s->metabsoilp * p->decayrate[3];
 
-    //fprintf(stderr, "p_surf_metab_to_active %f, p_soil_metab_to_active %f, metabsurfp %f, metabsoilp %f, decayrate1 %f, decayrate2 %f\n", 
-    //        f->p_surf_metab_to_active, f->p_soil_metab_to_active, s->metabsurfp, s->metabsoilp, p->decayrate[1], p->decayrate[3]);
-    
     return;
 }
 
@@ -1453,8 +1445,6 @@ void pfluxes_from_slow_pool(fluxes *f, params *p, state *s) {
 
     double slowout = s->slowsoilp * p->decayrate[5];
     double sigwt = slowout / 0.45;
-
-    //fprintf(stderr, "slowsoilp %f\n", s->slowsoilp);
 
     /* P flux slow pool -> active pool */
     f->p_slow_to_active = sigwt * 0.42;
@@ -1706,12 +1696,6 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     f->p_lab_in = f->p_par_to_min + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_min +
       f->purine + f->p_slow_biochemical;
     
-    //fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, s->inorglabp = %f\n", 
-    //        f->p_lab_in, f->p_lab_out, s->inorglabp);
-    //    
-    //fprintf(stderr, "p_par_to_min = %f, p_atm_dep = %f, pmineralisation = %f, p_slow_biochemical = %f, p_ssorb_to_min = %f\n", 
-    //        f->p_par_to_min, f->p_atm_dep, f->pmineralisation, f->p_slow_biochemical, f->p_ssorb_to_min);
-     
     /* total outflux from labile P pool */
     if (s->inorglabp > 0) {
       f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
@@ -1725,49 +1709,6 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
     return;
 
 }
-
-
-
-//void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
-//  /* Calculate the mineral P fluxes (in and out) */
-//  double numer, denom1, denom2;
-//  double tot_in, tot_out;
-//  
-//  // Note: pmineralisation can be negative, and therefore, during spinup,
-//  // when sorbp stock is low, the current approach resulted in negative sorbp
-//  // in some cases, but it does not affect the final equilibrated state, so
-//  // leave as is until better method is found
-//  tot_in = f->p_par_to_min + f->pmineralisation + f->p_fertilizer_to_min +
-//    f->purine + f->p_slow_biochemical +
-//    f->p_ssorb_to_min;
-//  
-//  if (s->inorglabp > 0) {
-//    tot_out = f->puptake + f->ploss + f->p_min_to_ssorb;
-//  } else {
-//    f->puptake = 0.0;
-//    f->ploss = 0.0;
-//    f->p_min_to_ssorb = 0.0;
-//    tot_out = f->puptake + f->ploss + f->p_min_to_ssorb;
-//  }
-//  
-//  /* Calculate lab P dynamics */
-//  numer = p->smax * p->ks;
-//  denom1 = (s->inorgavlp + p->ks) * (s->inorgavlp + p->ks);
-//  f->p_lab_in = tot_in / (1.0 + numer / denom1);
-//  f->p_lab_out = tot_out / (1.0 + numer / denom1);
-//  
-//  /* calculate sorb P dynamics */
-//  denom2 = (s->inorgavlp + p->ks) * (s->inorgavlp + p->ks) + numer;
-//  f->p_sorb_in = tot_in * (numer / denom2);
-//  f->p_sorb_out = tot_out * (numer / denom2);
-//  
-//  /*fprintf(stderr, "tot_in = %f, tot_out = %f, numer = %f, denom1 = %f, denom2 = %f, p_lab_in = %f, p_lab_out = %f, p_sorb_in = %f, p_sorb_out = %f, s->inorglabp = %f\n", 
-//   tot_in, tot_out, numer, denom1, denom2, f->p_lab_in, f->p_lab_out, f->p_sorb_in, f->p_sorb_out, s->inorglabp);
-//   */
-//  
-//  return;
-//  
-//}
 
   
 void calculate_p_ssorb_to_sorb(state *s, fluxes *f, params *p, control *c) {
