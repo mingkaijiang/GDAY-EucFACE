@@ -61,6 +61,10 @@ void write_output_header(control *c, FILE **fp) {
     /*
     ** STATE
     */
+    
+    /* met forcing */
+    //fprintf(*fp, "ninflow,"); 
+     
 
     /* water 4 */
     fprintf(*fp, "wtfac_root,wtfac_topsoil,pawater_root,pawater_topsoil,");

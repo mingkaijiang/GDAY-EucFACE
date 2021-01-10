@@ -109,7 +109,7 @@ def load_met_input_data(fname):
     air_temp = met_data["tair"]
     soil_temp = met_data["tsoil"]
     vpd = (met_data["vpd_am"] + met_data["vpd_pm"]) / 2.0
-    co2 = met_data["co2"]
+    co2 = met_data["CO2"]
     ndep = met_data["ndep"] * tonnes_per_ha_to_g_m2
 
     return {'CO2': co2, 'PREC':precip, 'PAR':par, 'TAIR':air_temp, 'TSOIL':soil_temp,
