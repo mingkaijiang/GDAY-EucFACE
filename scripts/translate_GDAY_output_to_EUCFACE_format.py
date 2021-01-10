@@ -242,22 +242,22 @@ def load_gday_output(fname):
     cfretransp = out["leafretransp"] * tonnes_per_ha_to_g_m2
 
     # extra traceability stuff
-    tfac_soil_decomp = out["tfac_soil_decomp"]
-    c_into_active = out["c_into_active"] * tonnes_per_ha_to_g_m2
-    c_into_slow = out["c_into_slow"] * tonnes_per_ha_to_g_m2
-    c_into_passive = out["c_into_passive"] * tonnes_per_ha_to_g_m2
-    active_to_slow = out["active_to_slow"] * tonnes_per_ha_to_g_m2
-    active_to_passive = out["active_to_passive"] * tonnes_per_ha_to_g_m2
-    slow_to_active = out["slow_to_active"] * tonnes_per_ha_to_g_m2
-    slow_to_passive = out["slow_to_passive"] * tonnes_per_ha_to_g_m2
-    passive_to_active = out["passive_to_active"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_surf_struct_litter = out["co2_rel_from_surf_struct_litter"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_soil_struct_litter = out["co2_rel_from_soil_struct_litter"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_surf_metab_litter = out["co2_rel_from_surf_metab_litter"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_soil_metab_litter = out["co2_rel_from_soil_metab_litter"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_active_pool = out["co2_rel_from_active_pool"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_slow_pool = out["co2_rel_from_slow_pool"] * tonnes_per_ha_to_g_m2
-    co2_rel_from_passive_pool = out["co2_rel_from_passive_pool"] * tonnes_per_ha_to_g_m2
+    #tfac_soil_decomp = out["tfac_soil_decomp"]
+    #c_into_active = out["c_into_active"] * tonnes_per_ha_to_g_m2
+    #c_into_slow = out["c_into_slow"] * tonnes_per_ha_to_g_m2
+    #c_into_passive = out["c_into_passive"] * tonnes_per_ha_to_g_m2
+    #active_to_slow = out["active_to_slow"] * tonnes_per_ha_to_g_m2
+    #active_to_passive = out["active_to_passive"] * tonnes_per_ha_to_g_m2
+    #slow_to_active = out["slow_to_active"] * tonnes_per_ha_to_g_m2
+    #slow_to_passive = out["slow_to_passive"] * tonnes_per_ha_to_g_m2
+    #passive_to_active = out["passive_to_active"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_surf_struct_litter = out["co2_rel_from_surf_struct_litter"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_soil_struct_litter = out["co2_rel_from_soil_struct_litter"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_surf_metab_litter = out["co2_rel_from_surf_metab_litter"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_soil_metab_litter = out["co2_rel_from_soil_metab_litter"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_active_pool = out["co2_rel_from_active_pool"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_slow_pool = out["co2_rel_from_slow_pool"] * tonnes_per_ha_to_g_m2
+    #co2_rel_from_passive_pool = out["co2_rel_from_passive_pool"] * tonnes_per_ha_to_g_m2
 
     # extra priming stuff
     rexc = [UNDEF] * len(doy)
@@ -360,23 +360,23 @@ def load_gday_output(fname):
             'PLEACH':pleach, 'PGL':ppleaf, 'PGW':pwood_growth, 
             'PGCR':ppcroot, 'PGFR':pproot, 'PLRETR':cfretransp, 
             'PWRETR':pwretr, 'PFRRETR':pcrretr, 'PFRRETR':pfrretr, 
-            'CTOACTIVE':c_into_active, 
-            'CTOSLOW':c_into_slow, 
-            'CTOPASSIVE':c_into_passive, 
-            'CACTIVETOSLOW':active_to_slow, 
-            'CACTIVETOPASSIVE':active_to_passive, 
-            'CSLOWTOACTIVE':slow_to_active, 
-            'CSLOWTOPASSIVE':slow_to_passive, 
-            'CPASSIVETOACTIVE':passive_to_active, 
+            #'CTOACTIVE':c_into_active, 
+            #'CTOSLOW':c_into_slow, 
+            #'CTOPASSIVE':c_into_passive, 
+            #'CACTIVETOSLOW':active_to_slow, 
+            #'CACTIVETOPASSIVE':active_to_passive, 
+            #'CSLOWTOACTIVE':slow_to_active, 
+            #'CSLOWTOPASSIVE':slow_to_passive, 
+            #'CPASSIVETOACTIVE':passive_to_active, 
             'CACTIVE':activesoil, 'CSLOW':slowsoil, 'CPASSIVE':passivesoil, 
-            'CO2SLITSURF':co2_rel_from_surf_struct_litter, 
-            'CO2SLITSOIL':co2_rel_from_soil_struct_litter, 
-            'CO2MLITSURF':co2_rel_from_surf_metab_litter, 
-            'CO2MLITSOIL':co2_rel_from_soil_metab_litter,
-            'CO2FSOM':co2_rel_from_active_pool, 
-            'CO2SSOM':co2_rel_from_slow_pool, 
-            'CO2PSOM':co2_rel_from_passive_pool, 
-            'TFACSOM':tfac_soil_decomp, 
+            #'CO2SLITSURF':co2_rel_from_surf_struct_litter, 
+            #'CO2SLITSOIL':co2_rel_from_soil_struct_litter, 
+            #'CO2MLITSURF':co2_rel_from_surf_metab_litter, 
+            #'CO2MLITSOIL':co2_rel_from_soil_metab_litter,
+            #'CO2FSOM':co2_rel_from_active_pool, 
+            #'CO2SSOM':co2_rel_from_slow_pool, 
+            #'CO2PSOM':co2_rel_from_passive_pool, 
+            #'TFACSOM':tfac_soil_decomp, 
             'REXC':rexc, 'REXN':rexn, 
             'CO2X':co2x, 
             'FACTIVE':factive, 
@@ -432,23 +432,23 @@ def setup_units():
                 'gP m-2 d-1', 'gP m-2 d-1', 'gP m-2 d-1',
                 'gP m-2 d-1', 'gP m-2 d-1', 'gP m-2 d-1', 
                 'gP m-2 d-1',
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1',
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1',
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1',
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1',
                 'gC m-2', 'gC m-2', 'gC m-2',
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1', 
-                'gC m-2 d-1',
-                'frac', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1', 
+                #'gC m-2 d-1',
+                #'frac', 
                 'gC m-2 d-1', 'gN m-2 d-1', 
                 'gC m-2 d-1', 'gC m-2 d-1', 
                 'years', 'frac', 
@@ -505,23 +505,23 @@ def setup_varnames():
                 'P Wood growth', 'P CR growth', 'P Fine Root growth', 
                 'P Foliage retranslocation', 'P Wood/Branch retranslocation', 'P Coarse Root retranslocation', 
                 'P Fine Root retranslocation',
-                'C fluxes from litter & slow/passive to active soil pool',
-                'C fluxes from litter & active soil pool to slow pool',
-                'C fluxes from active & slow soil pool to passive pool',
-                'C flux from active soil pool to slow soil pool',
-                'C flux from active soil pool to passive soil pool',
-                'C flux from slow soil pool to active soil pool',
-                'C flux from slow pool to passive soil pool',
-                'C flux from passive pool to active pool',
+                #'C fluxes from litter & slow/passive to active soil pool',
+                #'C fluxes from litter & active soil pool to slow pool',
+                #'C fluxes from active & slow soil pool to passive pool',
+                #'C flux from active soil pool to slow soil pool',
+                #'C flux from active soil pool to passive soil pool',
+                #'C flux from slow soil pool to active soil pool',
+                #'C flux from slow pool to passive soil pool',
+                #'C flux from passive pool to active pool',
                 'C Active SOM pool', 'C Slow SOM pool', 'C Passive SOM pool',
-                'CO2 efflux from surf structural litter',
-                'CO2 efflux from soil structural litter',
-                'CO2 efflux from surf metabolic litter',
-                'CO2 efflux from soil metabolic litter',
-                'CO2 efflux from fast SOM pool',
-                'CO2 efflux from slow SOM pool',
-                'CO2 efflux from passive SOM pool',
-                'Temperature scalar on C efflux from SOM pools',
+                #'CO2 efflux from surf structural litter',
+                #'CO2 efflux from soil structural litter',
+                #'CO2 efflux from surf metabolic litter',
+                #'CO2 efflux from soil metabolic litter',
+                #'CO2 efflux from fast SOM pool',
+                #'CO2 efflux from slow SOM pool',
+                #'CO2 efflux from passive SOM pool',
+                #'Temperature scalar on C efflux from SOM pools',
                 'Root Exudation of C', 'Root Exudation of N',
                 'CO2 released from exudation', 'Total C flux from the active pool',
                 'Residence time of slow pool',
@@ -577,21 +577,22 @@ def setup_varnames():
                       'PLEACH', 'PGL', 'PGW', 
                       'PGCR', 'PGFR', 'PLRETR', 
                       'PWRETR', 'PCRRETR', 'PFRRETR',
-                      'CTOACTIVE', 
-                      'CTOSLOW', 
-                      'CTOPASSIVE', 
-                      'CACTIVETOSLOW',
-                      'CACTIVETOPASSIVE', 
-                      'CSLOWTOACTIVE', 
-                      'CSLOWTOPASSIVE',
-                      'CPASSIVETOACTIVE', 
+                      #'CTOACTIVE', 
+                      #'CTOSLOW', 
+                      #'CTOPASSIVE', 
+                      #'CACTIVETOSLOW',
+                      #'CACTIVETOPASSIVE', 
+                      #'CSLOWTOACTIVE', 
+                      #'CSLOWTOPASSIVE',
+                      #'CPASSIVETOACTIVE', 
                       'CACTIVE', 'CSLOW', 'CPASSIVE',
-                      'CO2SLITSURF', 
-                      'CO2SLITSOIL', 
-                      'CO2MLITSURF',
-                      'CO2MLITSOIL', 
-                      'CO2FSOM', 'CO2SSOM', 'CO2PSOM',
-                      'TFACSOM','REXC','REXN',
+                      #'CO2SLITSURF', 
+                      #'CO2SLITSOIL', 
+                      #'CO2MLITSURF',
+                      #'CO2MLITSOIL', 
+                      #'CO2FSOM', 'CO2SSOM', 'CO2PSOM',
+                      #'TFACSOM',
+                      'REXC','REXN',
                       'CO2X',
                       'FACTIVE','RTSLOW','REXCUE',
                       'CSLO','NSLO',
