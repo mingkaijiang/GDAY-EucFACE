@@ -98,7 +98,7 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
 
     active_CN = s->activesoil / s->activesoiln;
 
-    if (p->root_exu_CUE < -0.5) {
+    if (p->root_exu_CUE < 0.5) {
         /*
             flexible cue
              - The constraint of 0.3<=REXCUE<=0.6 is based on observations of
