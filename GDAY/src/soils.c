@@ -78,6 +78,8 @@ void calculate_csoil_flows(control *c, fluxes *f, params *p, state *s,
     if (c->exudation && c->alloc_model != GRASSES) {
         calc_root_exudation_uptake_of_C(f, p, s);
     }
+    
+    f->co2_rel_from_active_pool += f->co2_released_exud;
 
     return;
 }
@@ -112,7 +114,7 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
     } else {
         f->rexc_cue = p->root_exu_CUE;
     }
-
+    
     C_to_active_pool = f->root_exc * f->rexc_cue;
     s->activesoil += C_to_active_pool;
 
@@ -120,10 +122,12 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
 
     /*
     ** CUE of microbial rhizodeposition uptake is constant, so the fraction
-    ** of the rhizodeposition will be used for immediate respiration
+    ** of the rhizodeposition will be used for immediate respiration,
+    ** this flux will be added to flux coming out from active soil pool,
+    ** then passed on to heterotrophic respiration.
     */
     f->co2_released_exud = (1.0 - f->rexc_cue) * f->root_exc;
-    f->hetero_resp += f->co2_released_exud;
+    
 
     return;
 }
@@ -480,6 +484,12 @@ void calculate_soil_respiration(control *c, fluxes *f, params *p, state *s) {
                           f->slow_to_passive - s->passivesoil *
                           p->decayrate[6]);
     }
+    
+    /* if exudation is turned on */
+    f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
+                      f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
+                      f->co2_to_air[6] + f->co2_released_exud);  
+     
 
     return;
 }
