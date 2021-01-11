@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 109;  /* change with number of variables */
+    int ncols = 110;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -130,7 +130,10 @@ void write_output_header(control *c, FILE **fp) {
     
     /* Retranslocation fluxes 2 */
     fprintf(*fp, "leafretransn,");
-    fprintf(*fp, "leafretransp\n");
+    fprintf(*fp, "leafretransp");
+    
+    /* Root exudation flux 1 */
+    fprintf(*fp, "root_exc\n");
 
     if (c->output_ascii == FALSE) {
         fprintf(*fp, "nrows=%d\n", nrows);
@@ -280,7 +283,9 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
     
     /* Misc */
     fprintf(c->ofp, "%.10f,", f->leafretransn);
-    fprintf(c->ofp, "%.10f\n", f->leafretransp);
+    fprintf(c->ofp, "%.10f", f->leafretransp);
+    fprintf(c->ofp, "%.10f\n", f->root_exc);
+    
 
     return;
 }
