@@ -130,7 +130,7 @@ void write_output_header(control *c, FILE **fp) {
     
     /* Retranslocation fluxes 2 */
     fprintf(*fp, "leafretransn,");
-    fprintf(*fp, "leafretransp");
+    fprintf(*fp, "leafretransp,");
     
     /* Root exudation flux 1 */
     fprintf(*fp, "root_exc\n");
@@ -283,7 +283,7 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
     
     /* Misc */
     fprintf(c->ofp, "%.10f,", f->leafretransn);
-    fprintf(c->ofp, "%.10f", f->leafretransp);
+    fprintf(c->ofp, "%.10f,", f->leafretransp);
     fprintf(c->ofp, "%.10f\n", f->root_exc);
     
 
