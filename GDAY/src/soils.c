@@ -49,6 +49,15 @@ void calculate_csoil_flows(control *c, fluxes *f, params *p, state *s,
 
     /* input from faeces */
     flux_from_grazers(c, f, p);
+    
+    /* exudation */
+    if (c->exudation && c->alloc_model != GRASSES) {
+      calc_root_exudation_uptake_of_C(f, p, s);
+      
+      f->co2_rel_from_active_pool += f->co2_released_exud;
+    }
+    
+    /* calculate fluxes and pools */
     partition_plant_litter(f, p);
     cfluxes_from_structural_pool(f, p, s);
     cfluxes_from_metabolic_pool(f, p, s);
@@ -74,12 +83,6 @@ void calculate_csoil_flows(control *c, fluxes *f, params *p, state *s,
 
     /* switch off grazing if this was just activated as an annual event */
     c->grazing = cntrl_grazing;
-
-    if (c->exudation && c->alloc_model != GRASSES) {
-        calc_root_exudation_uptake_of_C(f, p, s);
-    }
-    
-    f->co2_rel_from_active_pool += f->co2_released_exud;
 
     return;
 }
@@ -476,14 +479,6 @@ void calculate_soil_respiration(control *c, fluxes *f, params *p, state *s) {
     f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
                       f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
                       f->co2_to_air[6]);
-
-    /* insert following line so value of respiration obeys c conservation if
-       assuming a fixed passive pool */
-    if (c->passiveconst == TRUE) {
-        f->hetero_resp = (f->hetero_resp + f->active_to_passive +
-                          f->slow_to_passive - s->passivesoil *
-                          p->decayrate[6]);
-    }
     
     /* if exudation is turned on */
     if (c->exudation == TRUE) {
@@ -491,6 +486,14 @@ void calculate_soil_respiration(control *c, fluxes *f, params *p, state *s) {
                         f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
                         f->co2_to_air[6] + f->co2_released_exud);  
     } 
+    
+    /* insert following line so value of respiration obeys c conservation if
+     assuming a fixed passive pool */
+    if (c->passiveconst == TRUE) {
+      f->hetero_resp = (f->hetero_resp + f->active_to_passive +
+        f->slow_to_passive - s->passivesoil *
+        p->decayrate[6]);
+    }
       
     return;
 }
