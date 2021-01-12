@@ -486,11 +486,12 @@ void calculate_soil_respiration(control *c, fluxes *f, params *p, state *s) {
     }
     
     /* if exudation is turned on */
-    f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
-                      f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
-                      f->co2_to_air[6] + f->co2_released_exud);  
-     
-
+    if (c->exudation == TRUE) {
+      f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
+                        f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
+                        f->co2_to_air[6] + f->co2_released_exud);  
+    } 
+      
     return;
 }
 
