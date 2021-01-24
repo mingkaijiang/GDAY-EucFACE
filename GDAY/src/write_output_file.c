@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 110;  /* change with number of variables */
+    int ncols = 118;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -128,9 +128,9 @@ void write_output_header(control *c, FILE **fp) {
     //fprintf(*fp, "p_slow_to_active,p_passive_to_active,p_active_to_slow,p_active_to_passive,");
     
     
-    /* Retranslocation fluxes 2 */
-    fprintf(*fp, "leafretransn,");
-    fprintf(*fp, "leafretransp,");
+    /* Retranslocation fluxes 10 */
+    fprintf(*fp, "leafretransn,leafretransp,rootretransn,rootretransp,crootretransn,crootretransp,branchretransn,branchretransp,stemretransn,stemretransp,");
+
     
     /* Root exudation flux 1 */
     fprintf(*fp, "root_exc\n");
@@ -282,8 +282,10 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
     //        f->p_slow_to_active,f->p_passive_to_active,f->p_active_to_slow,f->p_active_to_passive);
     
     /* Misc */
-    fprintf(c->ofp, "%.10f,", f->leafretransn);
-    fprintf(c->ofp, "%.10f,", f->leafretransp);
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,", 
+            f->leafretransn,f->leafretransp,f->rootretransn,f->rootretransp,f->crootretransn,f->crootretransp,
+            f->branchretransn,f->branchretransp,f->stemretransn,f->stemretransp);
+    
     fprintf(c->ofp, "%.10f\n", f->root_exc);
     
 

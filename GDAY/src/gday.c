@@ -243,6 +243,8 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     double fdecay, rdecay, current_limitation, npitfac, year;
     int   *disturbance_yrs = NULL;
 
+    //printf("fdecay1 = %f\n", fdecay);
+    
     if (c->deciduous_model) {
         /* Are we reading in last years average growing season? */
         if (float_eq(s->avg_alleaf, 0.0) &&
@@ -545,6 +547,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
         free(disturbance_yrs);
     }
 
+    
     return;
 
 

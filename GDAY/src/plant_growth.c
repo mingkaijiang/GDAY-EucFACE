@@ -1526,6 +1526,11 @@ double nitrogen_retrans(control *c, fluxes *f, params *p, state *s,
 
     /* store for NCEAS output */
     f->leafretransn = leafretransn;
+    f->rootretransn = rootretransn;
+    f->crootretransn = crootretransn;
+    f->branchretransn = branchretransn;
+    f->stemretransn = stemretransn;
+    
 
     return (leafretransn + rootretransn + crootretransn + branchretransn +
             stemretransn);
@@ -1566,7 +1571,11 @@ double phosphorus_retrans(control *c, fluxes *f, params *p, state *s,
 
     /* store for NCEAS output */
     f->leafretransp = leafretransp;
-
+    f->rootretransp = rootretransp;
+    f->crootretransp = crootretransp;
+    f->branchretransp = branchretransp;
+    f->stemretransp = stemretransp;
+    
     return (leafretransp + rootretransp + crootretransp + branchretransp +
             stemretransp);
 }

@@ -650,8 +650,16 @@ typedef struct {
 
     double leafretransn;    /* N retranslocation leaf */
     double leafretransp;    /* P version of leafretransn */
+    double rootretransn;    /* N retranslocation fineroot */
+    double rootretransp;    /* P retranslocation fineroot */
+    double crootretransn;    /* N retranslocation croot */
+    double crootretransp;    /* P retranslocation croot */
+    double branchretransn;    /* N retranslocation branch */
+    double branchretransp;    /* P retranslocation branch */
+    double stemretransn;    /* N retranslocation stem */
+    double stemretransp;    /* P retranslocation stem */
 
-
+    
     /* C, N & P Surface litter */
     double surf_struct_litter;
     double surf_metab_litter;
