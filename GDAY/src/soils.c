@@ -1722,7 +1722,8 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
       f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
     }
     
-    fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, \n", f->p_lab_in, f->p_lab_out);
+    //fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, pmineralisation %f, inorglabp %f, \n", 
+    //        f->p_lab_in, f->p_lab_out, f->pmineralisation, s->inorglabp);
     
     
     return;
@@ -1791,8 +1792,8 @@ void calculate_p_ssorb_to_sorb(state *s, fluxes *f, params *p, control *c) {
 void calculate_p_sorb_to_ssorb(state *s, fluxes *f, params *p) {
 
     /* P flux from sorbed pool to strongly sorbed P pool */
-    if (s->inorgsorbp > 0.0) {
-        f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorgsorbp;
+    if (s->inorglabp > 0.0) {
+        f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorglabp;
         //f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
     } else {
         f->p_min_to_ssorb = 0.0;

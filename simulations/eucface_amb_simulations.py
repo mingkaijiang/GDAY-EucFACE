@@ -126,7 +126,7 @@ def main(experiment_id, site,
 
                         # parameters
                         "resp_coeff": "0.2",      
-                        "alpha_j": "0.308",  # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
+                        "alpha_j": "0.308",       # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",
                         "latitude": "-33.61",     # EucFACE parameter file
@@ -139,7 +139,7 @@ def main(experiment_id, site,
                         "c_alloc_fmin": "0.44",  # EucFACE parameter file
                         "c_alloc_rmax": "0.32",  # EucFACE parameter file
                         "c_alloc_rmin": "0.22",  # EucFACE parameter file
-                        "c_alloc_bmax": "0.1",  # guess
+                        "c_alloc_bmax": "0.1",   # guess
                         "c_alloc_bmin": "0.05",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
                         "fretransn": "0.0",#31",     # EucFACE parameter file
@@ -223,7 +223,7 @@ def main(experiment_id, site,
                         "p_atm_deposition": "0.0",            # read in from met data now. 
                         "p_rate_par_weather": "0.00001",        # 
                         "p_rate_release_fertilizer": "1.0",   # 10 - 15 month release rate for slow-release fertilizer
-                        "rate_sorb_ssorb": "0.001",           # fitted value, reasonable for EucFACE
+                        "rate_sorb_ssorb": "0.01",           # fitted value, reasonable for EucFACE
                         "rate_ssorb_occ": "0.048",            # fitted value, reasonable for EucFACE
                         # sorption calculation
                         "smax": "0.01",                       # convert to unit in t ha-1, Yang et al., 2016, GRL, Table S2 
