@@ -348,7 +348,7 @@ void initialise_fluxes(fluxes *f) {
     f->nep = 0.0;
     f->auto_resp = 0.0;
     f->hetero_resp = 0.0;
-    f->retrans = 0.0;
+    f->retransn = 0.0;
     f->retransp = 0.0;
     f->apar = 0.0;
 

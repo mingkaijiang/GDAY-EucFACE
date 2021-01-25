@@ -557,7 +557,7 @@ typedef struct {
     double nep;
     double auto_resp;
     double hetero_resp;
-    double retrans;         /* plnat n retranslocation */
+    double retransn;         /* plnat n retranslocation */
     double retransp;        /* plant p retranslocation */
     double apar;
 

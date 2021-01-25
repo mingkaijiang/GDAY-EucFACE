@@ -559,7 +559,7 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
 
     /* N and P retranslocated proportion from dying plant tissue and stored within
        the plant */
-    f->retrans = nitrogen_retrans(c, f, p, s, fdecay, rdecay, doy);
+    f->retransn = nitrogen_retrans(c, f, p, s, fdecay, rdecay, doy);
     f->retransp = phosphorus_retrans(c, f, p, s, fdecay, rdecay, doy);
     f->nuptake = calculate_nuptake(c, p, s);
     f->puptake = calculate_puptake(c, p, s, f);
@@ -585,7 +585,8 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
         /* covert from kg DM N m-2 to t ha-1 */
         f->deadroots = p->rdecay * f->rabove * p->cfracts * KG_M2_2_TONNES_HA;
         f->deadrootn = s->rootnc * (1.0 - p->rretrans) * f->deadroots;
-
+        f->deadrootp = s->rootpc * (1.0 - p->rretrans) * f->deadroots;
+        
     }
 
     /* Mineralised nitrogen lost from the system by volatilisation/leaching */
@@ -599,7 +600,7 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
     }
 
     /* total nitrogen/phosphorus to allocate */
-    ntot = MAX(0.0, f->nuptake + f->retrans);
+    ntot = MAX(0.0, f->nuptake + f->retransn);
     ptot = MAX(0.0, f->puptake + f->retransp);
 
     if (c->deciduous_model) {
@@ -1127,8 +1128,8 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
         s->shootp += (f->ppleaf - (f->lprate * s->remaining_days[doy]) -
                       f->peaten);
     } else {
-        s->shootn += f->npleaf - fdecay * s->shootn - f->neaten;
-        s->shootp += f->ppleaf - fdecay * s->shootp - f->peaten;
+        s->shootn += f->npleaf - (fdecay * s->shootn) - f->neaten;
+        s->shootp += f->ppleaf - (fdecay * s->shootp) - f->peaten;
     }
 
     s->branchn += f->npbranch - p->bdecay * s->branchn;
@@ -1343,7 +1344,7 @@ void calculate_cnp_store(control *c, fluxes *f, state *s) {
 
 
     s->cstore += f->npp;
-    s->nstore += f->nuptake + f->retrans;
+    s->nstore += f->nuptake + f->retransn;
     s->pstore += f->puptake + f->retransp;
     s->anpp += f->npp;
 
