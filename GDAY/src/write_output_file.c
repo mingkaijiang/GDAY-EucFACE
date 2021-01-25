@@ -49,7 +49,7 @@ void write_output_header(control *c, FILE **fp) {
         script to translate the outputs to a nice CSV file with input met
         data, units and nice header information.
     */
-    int ncols = 118;  /* change with number of variables */
+    int ncols = 119;  /* change with number of variables */
     int nrows = c->num_days;
 
     /* Git version */
@@ -109,8 +109,8 @@ void write_output_header(control *c, FILE **fp) {
     /* N stuff 4 */
     fprintf(*fp, "nuptake,ngross,nmineralisation,nloss,");
 
-    /* P stuff 5 */
-    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,");
+    /* P stuff 6 */
+    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,p_par_to_min,");
     
     /* P movement check pools 4 */
     //fprintf(*fp, "structsurfp,structsoilp,metabsurfp,metabsoilp,");
@@ -256,8 +256,8 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
                     f->nuptake,f->ngross,f->nmineralisation,f->nloss);
 
     /* P stuff */
-    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,",
-                    f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical);
+    fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,",
+                    f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical,f->p_par_to_min);
 
     /* P check pools */
     //fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",

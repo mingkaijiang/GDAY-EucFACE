@@ -672,6 +672,27 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
           } else {
             recalc_wb = recalc_wb1;
           }
+          
+        } else if (arg1 < ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle && c->pcycle) {
+          /* If we have allocated more P than we have avail, cut back C prodn */
+          arg2 = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
+          
+          if (arg2 > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
+            recalc_wb2 = cut_back_production_with_p(c, f, p, s, 
+                                                    ntot, ptot, 
+                                                    ncbnew, nccnew,
+                                                    ncwimm, ncwnew,
+                                                    pcbnew, pccnew, 
+                                                    pcwimm, pcwnew, doy);
+            
+          }
+          
+          /* Find the minimum */
+          if (c->pcycle) {
+            recalc_wb = recalc_wb2;
+          } else {
+            recalc_wb = recalc_wb1;
+          }
         }
 
         

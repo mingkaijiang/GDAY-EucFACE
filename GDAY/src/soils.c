@@ -1487,7 +1487,7 @@ void calculate_p_parent_fluxes(fluxes *f, params *p, state *s) {
     */
 
     /* parent material weathering */
-    f->p_par_to_min = p->p_rate_par_weather * s->inorgparp;
+    f->p_par_to_min = p->p_rate_par_weather;// * s->inorgparp;
 
     return;
 }
@@ -1948,8 +1948,10 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     /* Daily increment of soil inorganic occluded P pool */
     s->inorgoccp += f->p_ssorb_to_occ;
 
-    /* Daily increment of soil inorganic parent P pool */
-    s->inorgparp -= f->p_par_to_min;
+    /* Daily increment of soil inorganic parent P pool 
+     * no longer needed, because we can considering it as an infinite pool
+     */
+    //s->inorgparp -= f->p_par_to_min;
     
     /* Daily increment of fertilizer P pool */
     s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_min;

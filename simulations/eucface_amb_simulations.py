@@ -221,7 +221,7 @@ def main(experiment_id, site,
                         "nf_min": "0.005", 
                         "sapturnover": "0.1",                 # guess value for EucFACE
                         "p_atm_deposition": "0.0",            # read in from met data now. 
-                        "p_rate_par_weather": "0.005",        # 
+                        "p_rate_par_weather": "0.00001",        # 
                         "p_rate_release_fertilizer": "1.0",   # 10 - 15 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.001",           # fitted value, reasonable for EucFACE
                         "rate_ssorb_occ": "0.048",            # fitted value, reasonable for EucFACE
@@ -275,7 +275,7 @@ def main(experiment_id, site,
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
                         "deciduous_model": "false",
                         "disturbance": "false",
-                        "exudation": "true",
+                        "exudation": "false",
                         "fixed_stem_nc": "true",
                         "fixed_stem_pc": "true",
                         "fixleafnc": "false",
