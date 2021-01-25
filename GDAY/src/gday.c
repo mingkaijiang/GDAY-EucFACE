@@ -803,6 +803,10 @@ void reset_all_n_pools_and_fluxes(fluxes *f, state *s) {
     f->neaten = 0.0;
     f->nurine = 0.0;
     f->leafretransn = 0.0;
+    f->rootretransn = 0.0;
+    f->crootretransn = 0.0;
+    f->branchretransn = 0.0;
+    f->stemretransn = 0.0;
     f->n_surf_struct_litter = 0.0;
     f->n_surf_metab_litter = 0.0;
     f->n_soil_struct_litter = 0.0;
@@ -882,6 +886,10 @@ void reset_all_p_pools_and_fluxes(fluxes *f, state *s) {
     f->peaten = 0.0;
     f->purine = 0.0;
     f->leafretransp = 0.0;
+    f->rootretransp = 0.0;
+    f->crootretransp = 0.0;
+    f->branchretransp = 0.0;
+    f->stemretransp = 0.0;
     f->p_surf_struct_litter = 0.0;
     f->p_surf_metab_litter = 0.0;
     f->p_soil_struct_litter = 0.0;

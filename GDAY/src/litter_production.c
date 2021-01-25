@@ -28,7 +28,7 @@ void calculate_litterfall(control *c, fluxes *f, params *p, state *s,
     *rdecay = decay_in_dry_soils(p->rdecay, p->rdecaydry, p, s);
 
     /* litter N:C ratios, roots and shoot */
-    ncflit = s->shootnc * (1.0 - p->fretrans);
+    ncflit = s->shootnc * (1.0 - p->fretransn);
     ncrlit = s->rootnc * (1.0 - p->rretrans);
 
     /* litter P:C ratios, roots and shoot */

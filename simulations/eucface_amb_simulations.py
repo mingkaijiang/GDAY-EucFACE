@@ -142,7 +142,7 @@ def main(experiment_id, site,
                         "c_alloc_bmax": "0.1",  # guess
                         "c_alloc_bmin": "0.05",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
-                        "fretrans": "0.31",     # EucFACE parameter file
+                        "fretransn": "0.31",     # EucFACE parameter file
                         "fretransp": "0.53",    # EucFACE parameter file
                         "rretrans": "0.3",      # EucFACE parameter file
                         "bretrans": "0.7",      # EucFACE parameter file

@@ -140,7 +140,7 @@ void initialise_params(params *p) {
     p->fractosoil = 0.85;
     p->fractosoilp = 0.85;
     p->fractup_soil = 0.5;
-    p->fretrans = 0.5;
+    p->fretransn = 0.5;
     p->fretransp = 0.6;
     p->g1 = 2.74;
     p->gamstar25 = 42.75;
@@ -438,7 +438,16 @@ void initialise_fluxes(fluxes *f) {
 
     f->leafretransn = 0.0;
     f->leafretransp = 0.0;
-
+    f->rootretransn = 0.0;
+    f->rootretransp = 0.0;
+    f->crootretransn = 0.0;
+    f->crootretransp = 0.0;
+    f->branchretransn = 0.0;
+    f->branchretransp = 0.0;
+    f->stemretransn = 0.0;
+    f->stemretransp = 0.0;
+    
+    
     /* C N & P Surface litter */
     f->surf_struct_litter = 0.0;
     f->surf_metab_litter = 0.0;

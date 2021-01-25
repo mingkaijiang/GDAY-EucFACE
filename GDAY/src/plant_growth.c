@@ -1513,9 +1513,9 @@ double nitrogen_retrans(control *c, fluxes *f, params *p, state *s,
            stemretransn;
 
     if (c->deciduous_model) {
-        leafretransn = p->fretrans * f->lnrate * s->remaining_days[doy];
+        leafretransn = p->fretransn * f->lnrate * s->remaining_days[doy];
     } else {
-        leafretransn = p->fretrans * fdecay * s->shootn;
+        leafretransn = p->fretransn * fdecay * s->shootn;
     }
 
     rootretransn = p->rretrans * rdecay * s->rootn;
