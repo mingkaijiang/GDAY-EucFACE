@@ -1276,7 +1276,9 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
 
     /* SIM phosphorus dynamics */
     calculate_p_ssorb_to_sorb(s, f, p, c);
+    
     calculate_p_ssorb_to_occ(s, f, p);
+    
     calculate_p_sorb_to_ssorb(s, f, p);
 
     /* calculate P lab and sorb fluxes from gross P flux */
@@ -1708,7 +1710,7 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
 
     /* total influx into the labile P pool */
     f->p_lab_in = f->p_par_to_min + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_min +
-      f->purine + f->p_slow_biochemical;
+      f->purine + f->p_slow_biochemical + f->p_ssorb_to_min;
     
     /* total outflux from labile P pool */
     if (s->inorglabp > 0) {
@@ -1719,6 +1721,9 @@ void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
       f->p_min_to_ssorb = 0.0;
       f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
     }
+    
+    fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, \n", f->p_lab_in, f->p_lab_out);
+    
     
     return;
 
@@ -1787,8 +1792,8 @@ void calculate_p_sorb_to_ssorb(state *s, fluxes *f, params *p) {
 
     /* P flux from sorbed pool to strongly sorbed P pool */
     if (s->inorgsorbp > 0.0) {
-        //f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorgsorbp;
-        f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
+        f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorgsorbp;
+        //f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
     } else {
         f->p_min_to_ssorb = 0.0;
     }
@@ -1934,25 +1939,18 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
     s->inorglabp += f->p_lab_in - f->p_lab_out;
-    //s->inorglabp = 0.002;
-    
-    s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
-    
-    /* Daily increment of soil inorganic available P pool (lab + sorb) */
-    s->inorgavlp = s->inorglabp + s->inorgsorbp;
 
-    /* Daily increment of soil inorganic secondary P pool (strongly sorbed) */
-    //s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_min;
-    s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ;
+    /* assume incoming flux from P lab pool = outgoing flux from sorb to ssorb */
+    s->inorgsorbp += f->p_min_to_ssorb + f->p_ssorb_to_min - f->p_min_to_ssorb;
     
+    //s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
+    
+    /* Daily increment of soil inorganic secondary P pool (strongly sorbed) */
+    s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_min;
+
     /* Daily increment of soil inorganic occluded P pool */
     s->inorgoccp += f->p_ssorb_to_occ;
 
-    /* Daily increment of soil inorganic parent P pool 
-     * no longer needed, because we can considering it as an infinite pool
-     */
-    //s->inorgparp -= f->p_par_to_min;
-    
     /* Daily increment of fertilizer P pool */
     s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_min;
 
