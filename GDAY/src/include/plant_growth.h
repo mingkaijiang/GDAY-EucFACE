@@ -59,6 +59,10 @@ double phosphorus_retrans(control *, fluxes *, params *, state *,
 int cut_back_production(control *, fluxes *, params *, state *, double,
                         double, double, double, double, int);
 
+int cut_back_production_with_p(control *, fluxes *, params *, state *, 
+                               double,double,double, double, double, double, 
+                               double, double, double, double, int);
+
 /* Priming/Exudation stuff */
 void   calc_root_exudation(control *c, fluxes *, params *p, state *);
 

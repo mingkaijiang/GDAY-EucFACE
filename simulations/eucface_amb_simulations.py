@@ -142,11 +142,12 @@ def main(experiment_id, site,
                         "c_alloc_bmax": "0.1",  # guess
                         "c_alloc_bmin": "0.05",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
-                        "fretransn": "0.31",     # EucFACE parameter file
-                        "fretransp": "0.53",    # EucFACE parameter file
-                        "rretrans": "0.3",      # EucFACE parameter file
-                        "bretrans": "0.7",      # EucFACE parameter file
-                        "wretrans": "0.82",     # EucFACE parameter file
+                        "fretransn": "0.0",#31",     # EucFACE parameter file
+                        "fretransp": "0.0",#53",    # EucFACE parameter file
+                        "rretrans": "0.0",#3",      # EucFACE parameter file
+                        "bretrans": "0.0",#7",      # EucFACE parameter file
+                        "wretrans": "0.0",#82",     # EucFACE parameter file
+                        "retransmob": "0.0",#82",     # EucFACE parameter file
                         "cretrans": "0.0",
                         "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
                         "ncwnew": "0.003",           #New stem ring N:C at critical leaf N:C (mob)
@@ -269,7 +270,7 @@ def main(experiment_id, site,
 
                         # control
                         "adjust_rtslow": "false",  # priming, off
-                        "alloc_model": "allometric",
+                        "alloc_model": "fixed",
                         "assim_model": "mate",
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
                         "deciduous_model": "false",
@@ -277,8 +278,8 @@ def main(experiment_id, site,
                         "exudation": "true",
                         "fixed_stem_nc": "true",
                         "fixed_stem_pc": "true",
-                        "fixleafnc": "true",
-                        "fixleafpc": "true",
+                        "fixleafnc": "false",
+                        "fixleafpc": "false",
                         "grazing": "false",
                         "gs_model": "medlyn",
                         "aci_relationship": "walker",

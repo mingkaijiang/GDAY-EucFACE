@@ -171,6 +171,7 @@ void calc_root_exudation(control *c, fluxes *f, params *p, state *s) {
 
     /* Rhizodeposition */
     f->root_exc = frac_to_rexc * f->cproot;
+    
     if (float_eq(f->cproot, 0.0)) {
         f->root_exn = 0.0;
     } else {
@@ -548,8 +549,8 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
             fine root decay rate
     */
 
-    int    recalc_wb;
-    double nsupply, psupply, rtot, ntot, ptot, arg;
+    int    recalc_wb1, recalc_wb2, recalc_wb;
+    double nsupply, psupply, rtot, ntot, ptot, arg1, arg2;
     double depth_guess = 1.0;
 
     /* default is we don't need to recalculate the water balance,
@@ -644,20 +645,36 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
         f->ppcroot = f->npp * f->alcroot * pccnew;
 
         /* If we have allocated more N than we have avail, cut back C prodn */
-        arg = f->npstemimm + f->npstemmob + f->npbranch + f->npcroot;
-        if (arg > ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle) {
-            recalc_wb = cut_back_production(c, f, p, s, ntot, ncbnew, nccnew,
-                                            ncwimm, ncwnew, doy);
-            fprintf(stderr, "in cut back N \n");
+        arg1 = f->npstemimm + f->npstemmob + f->npbranch + f->npcroot;
+        
+        if (arg1 > ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle) {
+          
+          /* cut back production based on N only */
+          recalc_wb1 = cut_back_production(c, f, p, s, ntot, ncbnew, nccnew,
+                                           ncwimm, ncwnew, doy);
+          
+          /* If we have allocated more P than we have avail, cut back C prodn */
+          arg2 = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
+          
+          if (arg2 > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
+            recalc_wb2 = cut_back_production_with_p(c, f, p, s, 
+                                                    ntot, ptot, 
+                                                    ncbnew, nccnew,
+                                                    ncwimm, ncwnew,
+                                                    pcbnew, pccnew, 
+                                                    pcwimm, pcwnew, doy);
+            
+          }
+          
+          /* Find the minimum */
+          if (c->pcycle) {
+            recalc_wb = recalc_wb2;
+          } else {
+            recalc_wb = recalc_wb1;
+          }
         }
 
-        /* If we have allocated more P than we have avail, cut back C prodn */
-        arg = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
-        if (arg > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
-            recalc_wb = cut_back_production(c, f, p, s, ptot, pcbnew, pccnew,
-                                            pcwimm, pcwnew, doy);
-        }
-
+        
         /* Nitrogen reallocation to flexible-ratio pools */
         ntot -= f->npbranch + f->npstemimm + f->npstemmob + f->npcroot;
         ntot = MAX(0.0, ntot);
@@ -686,7 +703,6 @@ int cut_back_production(control *c, fluxes *f, params *p, state *s,
                         double xcwimm, double xcwnew, int doy) {
 
     double lai_inc, conv;
-    double pcbnew, pccnew, pcwimm, pcwnew;
     /* default is we don't need to recalculate the water balance,
        however if we cut back on NPP due to available N and P below then we do
        need to do this */
@@ -704,8 +720,7 @@ int cut_back_production(control *c, fluxes *f, params *p, state *s,
                    (f->deadleaves + f->ceaten) * s->lai / s->shoot);
     }
 
-    f->npp *= tot / (f->npstemimm + f->npstemmob + \
-                      f->npbranch + f->npcroot);
+    f->npp *= tot / (f->npstemimm + f->npstemmob + f->npbranch + f->npcroot);
 
     /* need to adjust growth values accordingly as well */
     f->cpleaf = f->npp * f->alleaf;
@@ -714,19 +729,11 @@ int cut_back_production(control *c, fluxes *f, params *p, state *s,
     f->cpbranch = f->npp * f->albranch;
     f->cpstem = f->npp * f->alstem;
 
-
-
-    if (c->pcycle) {
-        f->ppbranch = f->npp * f->albranch * xcbnew;
-        f->ppstemimm = f->npp * f->alstem * xcwimm;
-        f->ppstemmob = f->npp * f->alstem * (xcwnew - xcwimm);
-        f->ppcroot = f->npp * f->alcroot * xccnew;
-    } else {
-        f->npbranch = f->npp * f->albranch * xcbnew;
-        f->npstemimm = f->npp * f->alstem * xcwimm;
-        f->npstemmob = f->npp * f->alstem * (xcwnew - xcwimm);
-        f->npcroot = f->npp * f->alcroot * xccnew;
-    }
+    f->npbranch = f->npp * f->albranch * xcbnew;
+    f->npstemimm = f->npp * f->alstem * xcwimm;
+    f->npstemmob = f->npp * f->alstem * (xcwnew - xcwimm);
+    f->npcroot = f->npp * f->alcroot * xccnew;
+    
 
     /* Save WUE before cut back */
     f->wue = f->gpp_gCm2 / f->transpiration;
@@ -770,6 +777,107 @@ int cut_back_production(control *c, fluxes *f, params *p, state *s,
     }
 
     return (recalc_wb);
+}
+
+int cut_back_production_with_p(control *c, fluxes *f, params *p, state *s,
+                               double totn, double totp, 
+                               double ncbnew, double nccnew,
+                               double ncwimm, double ncwnew, 
+                               double pcbnew, double pccnew,
+                               double pcwimm, double pcwnew, 
+                               int doy) {
+  
+  double lai_inc, conv, npp1, npp2;
+  
+  
+  /* default is we don't need to recalculate the water balance,
+   however if we cut back on NPP due to available N and P below then we do
+   need to do this */
+  int recalc_wb = FALSE;
+  
+  /* Need to readjust the LAI for the reduced growth as this will
+   have already been increased. First we need to figure out how
+   much we have increased LAI by, important it is done here
+   before cpleaf is reduced! */
+  if (float_eq(s->shoot, 0.0)) {
+    lai_inc = 0.0;
+  } else {
+    lai_inc = (f->cpleaf *
+      (p->sla * M2_AS_HA / (KG_AS_TONNES * p->cfracts)) -
+      (f->deadleaves + f->ceaten) * s->lai / s->shoot);
+  }
+  
+  /* check the minimum of N and P limited growth */
+  npp1 *= totn / (f->npstemimm + f->npstemmob + f->npbranch + f->npcroot);
+  npp2 *= totp / (f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot);
+  
+  
+  if (npp1 < npp2) {
+    f->npp = npp1;
+  } else {
+    f->npp = npp2;
+  }
+  
+  /* need to adjust growth values accordingly as well */
+  f->cpleaf = f->npp * f->alleaf;
+  f->cproot = f->npp * f->alroot;
+  f->cpcroot = f->npp * f->alcroot;
+  f->cpbranch = f->npp * f->albranch;
+  f->cpstem = f->npp * f->alstem;
+  
+  f->npbranch = f->npp * f->albranch * ncbnew;
+  f->npstemimm = f->npp * f->alstem * ncwimm;
+  f->npstemmob = f->npp * f->alstem * (ncwnew - ncwimm);
+  f->npcroot = f->npp * f->alcroot * nccnew;
+  
+  f->ppbranch = f->npp * f->albranch * pcbnew;
+  f->ppstemimm = f->npp * f->alstem * pcwimm;
+  f->ppstemmob = f->npp * f->alstem * (pcwnew - pcwimm);
+  f->ppcroot = f->npp * f->alcroot * pccnew;
+  
+  
+  /* Save WUE before cut back */
+  f->wue = f->gpp_gCm2 / f->transpiration;
+  
+  /* Also need to recalculate GPP and thus Ra and return a flag
+   so that we know to recalculate the water balance. */
+  f->gpp = f->npp / p->cue;
+  conv = G_AS_TONNES / M2_AS_HA;
+  f->gpp_gCm2 = f->gpp / conv;
+  f->gpp_am = f->gpp_gCm2 / 2.0;
+  f->gpp_pm = f->gpp_gCm2 / 2.0;
+  
+  /* New respiration flux */
+  f->auto_resp =  f->gpp - f->npp;
+  recalc_wb = TRUE;
+  
+  /* Now reduce LAI for down-regulated growth. */
+  if (c->deciduous_model) {
+    if (float_eq(s->shoot, 0.0)) {
+      s->lai = 0.0;
+    } else if (s->leaf_out_days[doy] > 0.0) {
+      s->lai -= lai_inc;
+      s->lai += (f->cpleaf *
+        (p->sla * M2_AS_HA / \
+        (KG_AS_TONNES * p->cfracts)) -
+        (f->deadleaves + f->ceaten) * s->lai / s->shoot);
+    } else {
+      s->lai = 0.0;
+    }
+  } else {
+    /* update leaf area [m2 m-2] */
+    if (float_eq(s->shoot, 0.0)) {
+      s->lai = 0.0;
+    } else {
+      s->lai -= lai_inc;
+      s->lai += (f->cpleaf *
+        (p->sla * M2_AS_HA / \
+        (KG_AS_TONNES * p->cfracts)) -
+        (f->deadleaves + f->ceaten) * s->lai / s->shoot);
+    }
+  }
+  
+  return (recalc_wb);
 }
 
 double calculate_growth_stress_limitation(params *p, state *s, control *c) {
@@ -1187,11 +1295,12 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
                 extrasn = s->shootn - s->shoot * ncmaxf;
 
                 /* Ensure N uptake cannot be reduced below zero. */
-                if (extrasn >  f->nuptake)
-                    extrasn = f->nuptake;
+                if (extrasn >  f->nuptake) {
+                  extrasn = f->nuptake;
+                }
 
                 s->shootn -= extrasn;
-                //f->nuptake -= extrasn;
+                f->nuptake -= extrasn;
             }
         }
 
@@ -1202,11 +1311,12 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
             extrasp = s->shootp - s->shoot * pcmaxf;
 
             /* Ensure P uptake cannot be reduced below zero. */
-            if (extrasp >  f->puptake)
+            if (extrasp >  f->puptake) {
               extrasp = f->puptake;
-
+            }
+            
             s->shootp -= extrasp;
-            //f->puptake -= extrasp;
+            f->puptake -= extrasp;
           }
         }
 
@@ -1221,9 +1331,11 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
             extrarn = s->rootn - s->root * ncmaxr;
 
             /* Ensure N uptake cannot be reduced below zero. */
-            if ((extrasn + extrarn) > f->nuptake)
-                extrarn = f->nuptake - extrasn;
-
+            if ((extrasn + extrarn) > f->nuptake) {
+              extrarn = f->nuptake - extrasn;
+              
+            }
+            
             s->rootn -= extrarn;
             f->nuptake -= (extrarn+extrasn);
         }
@@ -1235,8 +1347,10 @@ void update_plant_state(control *c, fluxes *f, params *p, state *s,
             extrarp = s->rootp - s->root * pcmaxr;
 
             /* Ensure P uptake cannot be reduced below zero. */
-            if ((extrasp + extrarp) > f->puptake)
-                extrarp = f->puptake - extrasp;
+            if ((extrasp + extrarp) > f->puptake) {
+              extrarp = f->puptake - extrasp;
+              
+            }
 
             s->rootp -= extrarp;
             f->puptake -= (extrarp + extrasp);

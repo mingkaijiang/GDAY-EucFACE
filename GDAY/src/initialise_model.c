@@ -140,8 +140,8 @@ void initialise_params(params *p) {
     p->fractosoil = 0.85;
     p->fractosoilp = 0.85;
     p->fractup_soil = 0.5;
-    p->fretransn = 0.5;
-    p->fretransp = 0.6;
+    p->fretransn = 0.0;
+    p->fretransp = 0.0;
     p->g1 = 2.74;
     p->gamstar25 = 42.75;
     p->growth_efficiency = 0.7;
