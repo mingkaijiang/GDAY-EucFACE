@@ -1793,8 +1793,8 @@ void calculate_p_sorb_to_ssorb(state *s, fluxes *f, params *p) {
 
     /* P flux from sorbed pool to strongly sorbed P pool */
     if (s->inorglabp > 0.0) {
-        f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorglabp;
-        //f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
+        //f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorglabp;
+        f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
     } else {
         f->p_min_to_ssorb = 0.0;
     }

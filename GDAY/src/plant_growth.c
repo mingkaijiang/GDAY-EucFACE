@@ -908,7 +908,7 @@ double calculate_growth_stress_limitation(params *p, state *s, control *c) {
     //
     double nlim, plim, current_limitation, nutrient_lim;
     double nc_opt = 0.04;
-    double pc_opt = 0.004;
+    double pc_opt = 0.001;
 
     /* N limitation based on leaf NC ratio */
     if (s->shootnc < p->nf_min) {
@@ -933,7 +933,7 @@ double calculate_growth_stress_limitation(params *p, state *s, control *c) {
      */
     current_limitation = MAX(0.1, MIN(nlim,s->wtfac_root));
 
-    if(c->pcycle == TRUE) {
+    if(c->pcycle) {
         /* P limitation based on leaf PC ratio */
         if (s->shootpc < p->pf_min) {
             plim = 0.0;
