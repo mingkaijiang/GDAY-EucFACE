@@ -729,15 +729,13 @@ typedef struct {
     double c_into_passive;
 
     /* inorganic P flux exchanges */
-    double p_lab_in;
-    double p_lab_out;
-    double p_sorb_in;
-    double p_sorb_out;
-    double p_min_to_ssorb;
-    double p_ssorb_to_min;
+    double p_avl_in;
+    double p_avl_out;
+    double p_sorb_to_ssorb;
+    double p_ssorb_to_sorb;
     double p_ssorb_to_occ;
-    double p_par_to_min;
-    double p_fertilizer_to_min;
+    double p_par_to_lab;
+    double p_fertilizer_to_lab;
     double p_atm_dep;
     double p_fertilizer_input;
 

@@ -110,7 +110,7 @@ void write_output_header(control *c, FILE **fp) {
     fprintf(*fp, "nuptake,ngross,nmineralisation,nloss,");
 
     /* P stuff 6 */
-    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,p_par_to_min,");
+    fprintf(*fp, "puptake,pgross,pmineralisation,ploss,p_slow_biochemical,p_par_to_lab,");
     
     /* P movement check pools 4 */
     //fprintf(*fp, "structsurfp,structsoilp,metabsurfp,metabsoilp,");
@@ -257,7 +257,7 @@ void write_daily_outputs_ascii(control *c, fluxes *f, state *s, int year,
 
     /* P stuff */
     fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,",
-                    f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical,f->p_par_to_min);
+                    f->puptake,f->pgross,f->pmineralisation,f->ploss,f->p_slow_biochemical,f->p_par_to_lab);
 
     /* P check pools */
     //fprintf(c->ofp, "%.10f,%.10f,%.10f,%.10f,",

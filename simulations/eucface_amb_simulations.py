@@ -265,6 +265,7 @@ def main(experiment_id, site,
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
                         "prateuptake": "0.9",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "puptakez": "0.002",     # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "structcp": "5500.0",
                         "structratp": "0.0",
 
@@ -865,7 +866,7 @@ if __name__ == "__main__":
     main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
     OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
     PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
-    #
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    #OBS_DRY=True, OBS_WET=False, PRD_DRY_NOP=True, PRD_WET_NOP=False,
+
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
+    #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
     #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

@@ -1282,8 +1282,7 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
     calculate_p_sorb_to_ssorb(s, f, p);
 
     /* calculate P lab and sorb fluxes from gross P flux */
-    calculate_p_min_fluxes(f, p, s);
-
+    calculate_p_avl_fluxes(f, p, s);
 
     /* Update model soil P pools */
     calculate_ppools(c, f, p, s, active_pc_slope, slow_pc_slope,
@@ -1489,7 +1488,7 @@ void calculate_p_parent_fluxes(fluxes *f, params *p, state *s) {
     */
 
     /* parent material weathering */
-    f->p_par_to_min = p->p_rate_par_weather;// * s->inorgparp;
+    f->p_par_to_lab = p->p_rate_par_weather;// * s->inorgparp;
 
     return;
 }
@@ -1502,7 +1501,7 @@ void calculate_p_fertilization_fluxes(fluxes *f, params *p, state *s) {
    */
   
   /* fertilizer release rate into the mineral P pool */
-  f->p_fertilizer_to_min = p->p_rate_release_fertilizer * s->fertilizerp;
+  f->p_fertilizer_to_lab = p->p_rate_release_fertilizer * s->fertilizerp;
    
    
   return;
@@ -1705,25 +1704,26 @@ void calculate_p_biochemical_mineralisation(fluxes *f, params *p, state *s) {
   return;
 }
 
-void calculate_p_min_fluxes(fluxes *f, params *p, state *s) {
-    /* Calculate the mineral P fluxes (in and out) */
+void calculate_p_avl_fluxes(fluxes *f, params *p, state *s) {
+    
+     
+    /* Calculate the labile and sorbed P fluxes (in and out) */
+    
 
     /* total influx into the labile P pool */
-    f->p_lab_in = f->p_par_to_min + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_min +
-      f->purine + f->p_slow_biochemical + f->p_ssorb_to_min;
+    f->p_avl_in = f->p_par_to_lab + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_lab + f->purine + f->p_slow_biochemical + f->p_ssorb_to_sorb;
     
-    /* total outflux from labile P pool */
     if (s->inorglabp > 0) {
-      f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
+      f->p_avl_out = f->puptake + f->ploss + f->p_sorb_to_ssorb;
     } else {
       f->puptake = 0.0;
       f->ploss = 0.0;
-      f->p_min_to_ssorb = 0.0;
-      f->p_lab_out = f->puptake + f->ploss + f->p_min_to_ssorb;
+      f->p_sorb_to_ssorb = 0.0;
+      f->p_avl_out = f->puptake + f->ploss + f->p_sorb_to_ssorb;
     }
     
     //fprintf(stderr, "p_lab_in = %f, p_lab_out = %f, pmineralisation %f, inorglabp %f, \n", 
-    //        f->p_lab_in, f->p_lab_out, f->pmineralisation, s->inorglabp);
+    //        f->p_avl_in, f->p_avl_out, f->pmineralisation, s->inorglabp);
     
     
     return;
@@ -1775,14 +1775,14 @@ void calculate_p_ssorb_to_sorb(state *s, fluxes *f, params *p, control *c) {
             phtextint = xslope * p->soilph + yint;
         }
 
-        f->p_ssorb_to_min = MAX(0.0, (phtextint + p->phtextslope *
+        f->p_ssorb_to_sorb = MAX(0.0, (phtextint + p->phtextslope *
                                      (1.0 - p->finesoil)) * s->inorgssorbp);
 
     } else {
         if (s->inorgssorbp > 0.0) {
-            f->p_ssorb_to_min = p->psecmnp * s->inorgssorbp;
+            f->p_ssorb_to_sorb = p->psecmnp * s->inorgssorbp;
         } else {
-            f->p_ssorb_to_min = 0.0;
+            f->p_ssorb_to_sorb = 0.0;
         }
 
     }
@@ -1794,9 +1794,9 @@ void calculate_p_sorb_to_ssorb(state *s, fluxes *f, params *p) {
     /* P flux from sorbed pool to strongly sorbed P pool */
     if (s->inorglabp > 0.0) {
         //f->p_min_to_ssorb = p->rate_sorb_ssorb * s->inorglabp;
-        f->p_min_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
+        f->p_sorb_to_ssorb = p->rate_sorb_ssorb * (p->smax * s->inorglabp/(p->ks + s->inorglabp));
     } else {
-        f->p_min_to_ssorb = 0.0;
+        f->p_sorb_to_ssorb = 0.0;
     }
 
     return;
@@ -1813,7 +1813,6 @@ void calculate_p_ssorb_to_occ(state *s, fluxes *f, params *p) {
 
     return;
 }
-
 
 void calculate_ppools(control *c, fluxes *f, params *p, state *s,
                       double active_pc_slope, double slow_pc_slope,
@@ -1939,21 +1938,22 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     s->passivesoilp += p_into_passive + fixp - p_out_of_passive;
 
     /* Daily increment of soil inorganic labile and sorbed P pool */
-    s->inorglabp += f->p_lab_in - f->p_lab_out;
-
-    /* assume incoming flux from P lab pool = outgoing flux from sorb to ssorb */
-    s->inorgsorbp += f->p_min_to_ssorb + f->p_ssorb_to_min - f->p_min_to_ssorb;
+    s->inorglabp += f->p_avl_in - f->p_avl_out;
     
+    /* assume incoming flux from P lab pool = outgoing flux from sorb to ssorb */
+    /* I am effectively turning this sorbed p pool to zero (or default value),
+     * because there is a mass balance issue if I use the following equation. 
+     */ 
     //s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
     
     /* Daily increment of soil inorganic secondary P pool (strongly sorbed) */
-    s->inorgssorbp += f->p_min_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_min;
+    s->inorgssorbp += f->p_sorb_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_sorb;
 
     /* Daily increment of soil inorganic occluded P pool */
     s->inorgoccp += f->p_ssorb_to_occ;
 
     /* Daily increment of fertilizer P pool */
-    s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_min;
+    s->fertilizerp += f->p_fertilizer_input - f->p_fertilizer_to_lab;
 
     return;
 }

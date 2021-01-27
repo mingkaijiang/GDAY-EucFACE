@@ -594,7 +594,7 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
     f->nloss = p->rateloss * s->inorgn;
 
     /* Mineralised P lost from the system by leaching */
-    if (s->inorgsorbp > 0.0) {
+    if (s->inorglabp > 0.0) {
         f->ploss = p->prateloss * s->inorglabp;
     } else {
         f->ploss = 0.0;
@@ -644,56 +644,28 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
         f->ppbranch = f->npp * f->albranch * pcbnew;
         f->ppcroot = f->npp * f->alcroot * pccnew;
 
-        /* If we have allocated more N than we have avail, cut back C prodn */
+        /* check how much N and P has been allocated to fixed stoichiometric pools */
         arg1 = f->npstemimm + f->npstemmob + f->npbranch + f->npcroot;
+        arg2 = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
         
-        if (arg1 > ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle) {
+        /* If we have allocated more N than we have avail, cut back C prodn */
+        if (arg1 > ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle && c->pcycle == FALSE) {
           
           /* cut back production based on N only */
-          recalc_wb1 = cut_back_production(c, f, p, s, ntot, ncbnew, nccnew,
+          recalc_wb = cut_back_production(c, f, p, s, ntot, ncbnew, nccnew,
                                            ncwimm, ncwnew, doy);
-          
-          /* If we have allocated more P than we have avail, cut back C prodn */
-          arg2 = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
-          
-          if (arg2 > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
-            recalc_wb2 = cut_back_production_with_p(c, f, p, s, 
-                                                    ntot, ptot, 
-                                                    ncbnew, nccnew,
-                                                    ncwimm, ncwnew,
-                                                    pcbnew, pccnew, 
-                                                    pcwimm, pcwnew, doy);
             
           }
+        
+        if (arg2 > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
+          recalc_wb = cut_back_production_with_p(c, f, p, s, 
+                                                 ntot, ptot, 
+                                                 ncbnew, nccnew,
+                                                 ncwimm, ncwnew,
+                                                 pcbnew, pccnew, 
+                                                 pcwimm, pcwnew, doy);
           
-          /* Find the minimum */
-          if (c->pcycle) {
-            recalc_wb = recalc_wb2;
-          } else {
-            recalc_wb = recalc_wb1;
-          }
-          
-        } else if (arg1 < ntot && c->fixleafnc == FALSE && c->fixed_lai && c->ncycle && c->pcycle) {
-          /* If we have allocated more P than we have avail, cut back C prodn */
-          arg2 = f->ppstemimm + f->ppstemmob + f->ppbranch + f->ppcroot;
-          
-          if (arg2 > ptot && c->fixleafpc == FALSE && c->fixed_lai && c->pcycle) {
-            recalc_wb2 = cut_back_production_with_p(c, f, p, s, 
-                                                    ntot, ptot, 
-                                                    ncbnew, nccnew,
-                                                    ncwimm, ncwnew,
-                                                    pcbnew, pccnew, 
-                                                    pcwimm, pcwnew, doy);
-            
-          }
-          
-          /* Find the minimum */
-          if (c->pcycle) {
-            recalc_wb = recalc_wb2;
-          } else {
-            recalc_wb = recalc_wb1;
-          }
-        }
+        } 
 
         
         /* Nitrogen reallocation to flexible-ratio pools */
@@ -1781,13 +1753,15 @@ double calculate_puptake(control *c, params *p, state *s, fluxes *f) {
     double min_frac_p_available_to_plant = 0.4;
     double max_frac_p_available_to_plant = 0.8;
     double mineral_n_with_max_p = 0.02;              /* Unit [t N ha-1] */
+    double arg1, arg2;
+    
+    arg1 = (max_frac_p_available_to_plant - min_frac_p_available_to_plant) / mineral_n_with_max_p; // 20, fixed value
+    arg2 = min_frac_p_available_to_plant + s->inorgn * arg1;
   
-  /* calculating fraction of labile P available for plant uptake */
-  p_lab_avail = MAX(min_frac_p_available_to_plant,
-                    MIN(min_frac_p_available_to_plant + s->inorgn *
-                      (max_frac_p_available_to_plant - min_frac_p_available_to_plant) /
-                        mineral_n_with_max_p, max_frac_p_available_to_plant));
-  
+    /* calculating fraction of labile P available for plant uptake */
+    p_lab_avail = MAX(min_frac_p_available_to_plant, MIN(arg2, max_frac_p_available_to_plant));
+
+    //fprintf(stderr, "p_lab_avail %f, arg2 %f, inorgn %f\n", p_lab_avail, arg2, s->inorgn);
   
     if (c->puptake_model == 0) {
         /* Constant P uptake */
@@ -1801,10 +1775,10 @@ double calculate_puptake(control *c, params *p, state *s, fluxes *f) {
         /* P uptake is a saturating function on root biomass, as N */
 
         /* supply rate of available mineral P */
-        if (s->inorgsorbp > 0.0) {
+        if (s->inorglabp > 0.0) {
             U0 = p->prateuptake * s->inorglabp * p_lab_avail;
         } else {
-            U0 = MIN((f->p_par_to_min + f->pmineralisation +
+            U0 = MIN((f->p_par_to_lab + f->pmineralisation +
                      f->purine + f->p_slow_biochemical),
                      (p->prateuptake * s->inorglabp * p_lab_avail));
         }

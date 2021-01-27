@@ -906,15 +906,13 @@ void reset_all_p_pools_and_fluxes(fluxes *f, state *s) {
     f->p_slow_to_passive = 0.0;
     f->p_slow_biochemical = 0.0;
     f->p_passive_to_active = 0.0;
-    f->p_lab_in = 0.0;
-    f->p_lab_out = 0.0;
-    f->p_sorb_in = 0.0;
-    f->p_sorb_out = 0.0;
-    f->p_min_to_ssorb = 0.0;
-    f->p_ssorb_to_min = 0.0;
+    f->p_avl_in = 0.0;
+    f->p_avl_out = 0.0;
+    f->p_sorb_to_ssorb = 0.0;
+    f->p_ssorb_to_sorb = 0.0;
     f->p_ssorb_to_occ = 0.0;
-    f->p_par_to_min = 0.0;
-    f->p_fertilizer_to_min = 0.0;
+    f->p_par_to_lab = 0.0;
+    f->p_fertilizer_to_lab = 0.0;
     f->p_atm_dep = 0.0;
     f->p_fertilizer_input = 0.0;
 
