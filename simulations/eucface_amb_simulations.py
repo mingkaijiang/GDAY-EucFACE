@@ -150,22 +150,22 @@ def main(experiment_id, site,
                         "wretrans": "0.82",     # EucFACE parameter file
                         "retransmob": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
-                        "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
-                        "ncwnew": "0.003",           #New stem ring N:C at critical leaf N:C (mob)
-                        "ncwimmz": "0.003",          #Immobile stem N C at zero leaf N C
-                        "ncwimm": "0.003",           #Immobile stem N C at critical leaf N C
-                        "ncbnewz": "0.003",          #new branch N C at zero leaf N C
-                        "ncbnew": "0.003",           #new branch N C at critical leaf N C
-                        "nccnewz": "0.003",          #new coarse root N C at zero leaf N C
-                        "nccnew": "0.003",           #new coarse root N C at critical leaf N C
+                        "ncwnewz": "0.008",          #New stem ring N:C at zero leaf N:C (mobile)
+                        "ncwnew": "0.008",           #New stem ring N:C at critical leaf N:C (mob)
+                        "ncwimmz": "0.008",          #Immobile stem N C at zero leaf N C
+                        "ncwimm": "0.008",           #Immobile stem N C at critical leaf N C
+                        "ncbnewz": "0.008",          #new branch N C at zero leaf N C
+                        "ncbnew": "0.008",           #new branch N C at critical leaf N C
+                        "nccnewz": "0.008",          #new coarse root N C at zero leaf N C
+                        "nccnew": "0.008",           #new coarse root N C at critical leaf N C
                         "ncrfac": "0.8",
-                        "ncmaxfyoung": "0.03",
-                        "ncmaxfold": "0.03",
-                        "ncmaxr": "0.018",
-                        "fdecay": "0.83",            # foliage decay rate, guess parameter
-                        "fdecaydry": "0.83",         # foliage decay rate, guess parameter
-                        "rdecay": "0.6",             # EucFACE parameter file
-                        "rdecaydry": "0.6",          # as above
+                        "ncmaxfyoung": "0.5",
+                        "ncmaxfold": "0.05",
+                        "ncmaxr": "0.05",
+                        "fdecay": "1.1",            # foliage decay rate, guess parameter
+                        "fdecaydry": "1.1",         # foliage decay rate, guess parameter
+                        "rdecay": "0.9",             # EucFACE parameter file
+                        "rdecaydry": "0.9",          # as above
                         "crdecay": "0.00",           # turn off coarse roots!
                         "bdecay": "0.1",            # no idea, assuming 25 years
                         "wdecay": "0.01",            # no idea, assuming 25 years
@@ -173,8 +173,8 @@ def main(experiment_id, site,
                         "watdecaywet": "0.1",
                         "ligshoot": "0.15",          # EucFACE parameter file
                         "ligroot": "0.2",            # Same as Medlyn 2016
-                        "rateuptake": "0.4",
-                        "rateloss": "0.05",           # guess value
+                        "rateuptake": "0.6",
+                        "rateloss": "0.02",           # guess value
                         "topsoil_depth": "450.0",    # Not needed as I have supplied the root zone water and topsoil water available
                         "rooting_depth": "2500.0",   # Not needed as I have supplied the root zone water and topsoil water available
                         "wcapac_root": "300.0",      # [mm] (FC-WP)*rooting_depth. But using 2.0 m, site_description_stuff/EucFACE_Plot_Summary.doc
@@ -185,7 +185,8 @@ def main(experiment_id, site,
                         "ntheta_root": "5.5",        # Derive based on soil type sandy_clay_loam
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
-                        "kp": "0.3",
+                        "kn": "0.1",                # extinction coefficient for top canopy N 
+                        "kp": "0.1",               # extinction coefficient for top canopy P 
                         "krp": "0.00001",
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
@@ -231,24 +232,30 @@ def main(experiment_id, site,
                         "biochemical_p_constant": "150.0",
                         "max_p_biochemical": "0.001",
                         "crit_n_cost_of_p": "15.0",
-                        "actpcmin": "0.01",         # empirical
-                        "actpcmax": "0.02",         # empirical
+                        "actncmax": "0.1",
+                        "actncmin": "0.006",
+                        "slowncmax": "0.006",
+                        "slowncmin": "0.0025",
+                        "passncmax": "0.0025",
+                        "passncmin": "0.001",
+                        "actpcmax": "0.01",         # empirical
+                        "actpcmin": "0.005",       # empirical
+                        "slowpcmax": "0.05",    # empirical
                         "slowpcmin": "0.005",       # empirical
-                        "slowpcmax": "0.011111",    # empirical
-                        "passpcmin": "0.0051",      # empirical
                         "passpcmax": "0.0051",      # empirical
-                        "pcbnew": "0.000286",       # same as sapwood
-                        "pcbnewz": "0.000286",      # same as sapwood
-                        "pccnew": "0.000286",       # same as sapwood
-                        "pccnewz": "0.000286",      # same as sapwood
-                        "pcmaxfold": "0.0014",      # EucFACE parameter file
-                        "pcmaxfyoung": "0.002",     # EucFACE parameter file
-                        "pcmaxr": "0.0006",         # EucFACE parameter file
+                        "passpcmin": "0.0051",      # empirical
+                        "pcbnew": "0.00013",       # same as sapwood
+                        "pcbnewz": "0.00013",      # same as sapwood
+                        "pccnew": "0.00013",       # same as sapwood
+                        "pccnewz": "0.00013",      # same as sapwood
+                        "pcmaxfold": "0.01",      # EucFACE parameter file
+                        "pcmaxfyoung": "0.1",      # EucFACE parameter file
+                        "pcmaxr": "0.06",         # EucFACE parameter file
                         "pcrfac": "0.8",
                         "pcwimm": "0.00013",        # EucFACE parameter file
                         "pcwimmz": "0.00013",       # EucFACE parameter file
-                        "pcwnew": "0.000286",       # EucFACE parameter file
-                        "pcwnewz": "0.000286",      # EucFACE parameter file
+                        "pcwnew": "0.00013",       # EucFACE parameter file
+                        "pcwnewz": "0.00013",      # EucFACE parameter file
                         "pf_min": "0.0002",
                         # for calculate_p_ssorb_to_sorb function
                         "finesoil": "0.2",         # EucFACE parameter file
@@ -263,7 +270,7 @@ def main(experiment_id, site,
                         "pmin0": "0.0",            # set to zero for now
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
-                        "prateuptake": "0.7",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "prateuptake": "0.9",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
                         "puptakez": "0.002",       # EucFACE value
                         "structcp": "5500.0",
                         "structratp": "0.0",
@@ -862,10 +869,10 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    #OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
-    #PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
+    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
 
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
-    OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
-    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
+    #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
+    #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

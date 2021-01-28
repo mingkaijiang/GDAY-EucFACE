@@ -983,6 +983,9 @@ void calculate_n_immobilisation(fluxes *f, params *p, state *s, double *nimmob,
     arg3 = f->c_into_active * *active_nc_slope;
     denom = arg1 + arg2 + arg3;
 
+    //fprintf(stderr, "nmin %f, numer1 %f, numer2 %f, denom %f, nimmob %f\n", nmin, numer1, numer2, denom, *nimmob);
+      
+      
     /* evaluate N immobilisation in new SOM */
     *nimmob = numer1 + denom * s->inorgn;
     if (*nimmob > numer2)
