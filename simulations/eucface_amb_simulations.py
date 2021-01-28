@@ -85,7 +85,7 @@ def main(experiment_id, site,
                         "inorgsorbp": "0.0",
                         "inorgssorbp": "0.0",
                         "inorgoccp": "0.0",
-                        "inorgparp": "0.1",
+                        "inorgparp": "0.0",
                         "fertilizerp": "0.0",         # Fertilizer P pool
                         "metabsoil": "0.0",
                         "metabsoiln": "0.0",
@@ -135,19 +135,20 @@ def main(experiment_id, site,
                         "sla": "5.57",       # EucFACE parameter file
                         "slazero": "5.57",   # EucFACE parameter file
                         "lai_closed": "0.5", # I am effectively turning this feature off by setting it so low
-                        "c_alloc_fmax": "0.52",  # EucFACE parameter file
-                        "c_alloc_fmin": "0.44",  # EucFACE parameter file
+                        "c_alloc_fmax": "0.48",  # EucFACE parameter file
+                        "c_alloc_fmin": "0.40",  # EucFACE parameter file
                         "c_alloc_rmax": "0.32",  # EucFACE parameter file
                         "c_alloc_rmin": "0.22",  # EucFACE parameter file
                         "c_alloc_bmax": "0.1",   # guess
-                        "c_alloc_bmin": "0.05",  # guess
+                        "c_alloc_bmin": "0.1",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
-                        "fretransn": "0.0",#31",     # EucFACE parameter file
-                        "fretransp": "0.0",#53",    # EucFACE parameter file
-                        "rretrans": "0.0",#3",      # EucFACE parameter file
-                        "bretrans": "0.0",#7",      # EucFACE parameter file
-                        "wretrans": "0.0",#82",     # EucFACE parameter file
-                        "retransmob": "0.0",#82",     # EucFACE parameter file
+                        "cue": "0.35",            # cue
+                        "fretransn": "0.31",     # EucFACE parameter file
+                        "fretransp": "0.53",    # EucFACE parameter file
+                        "rretrans": "0.3",      # EucFACE parameter file
+                        "bretrans": "0.7",      # EucFACE parameter file
+                        "wretrans": "0.82",     # EucFACE parameter file
+                        "retransmob": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
                         "ncwnewz": "0.003",          #New stem ring N:C at zero leaf N:C (mobile)
                         "ncwnew": "0.003",           #New stem ring N:C at critical leaf N:C (mob)
@@ -161,19 +162,18 @@ def main(experiment_id, site,
                         "ncmaxfyoung": "0.03",
                         "ncmaxfold": "0.03",
                         "ncmaxr": "0.018",
-                        "retransmob": "0.0",
                         "fdecay": "0.83",            # foliage decay rate, guess parameter
                         "fdecaydry": "0.83",         # foliage decay rate, guess parameter
                         "rdecay": "0.6",             # EucFACE parameter file
                         "rdecaydry": "0.6",          # as above
                         "crdecay": "0.00",           # turn off coarse roots!
                         "bdecay": "0.1",            # no idea, assuming 25 years
-                        "wdecay": "0.1",            # no idea, assuming 25 years
+                        "wdecay": "0.01",            # no idea, assuming 25 years
                         "watdecaydry": "0.0",
                         "watdecaywet": "0.1",
                         "ligshoot": "0.15",          # EucFACE parameter file
                         "ligroot": "0.2",            # Same as Medlyn 2016
-                        "rateuptake": "1.8",
+                        "rateuptake": "0.4",
                         "rateloss": "0.05",           # guess value
                         "topsoil_depth": "450.0",    # Not needed as I have supplied the root zone water and topsoil water available
                         "rooting_depth": "2500.0",   # Not needed as I have supplied the root zone water and topsoil water available
@@ -220,8 +220,7 @@ def main(experiment_id, site,
                         "density": "492.0",                   # EucFACE parameter file
                         "nf_min": "0.005", 
                         "sapturnover": "0.1",                 # guess value for EucFACE
-                        "p_atm_deposition": "0.0",            # read in from met data now. 
-                        "p_rate_par_weather": "0.00001",        # 
+                        "p_rate_par_weather": "0.00004",        # 
                         "p_rate_release_fertilizer": "1.0",   # 10 - 15 month release rate for slow-release fertilizer
                         "rate_sorb_ssorb": "0.01",           # fitted value, reasonable for EucFACE
                         "rate_ssorb_occ": "0.048",            # fitted value, reasonable for EucFACE
@@ -264,8 +263,8 @@ def main(experiment_id, site,
                         "pmin0": "0.0",            # set to zero for now
                         "pmincrit": "2.0",
                         "prateloss": "0.05",       # set it to be the same as N rate loss
-                        "prateuptake": "0.9",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
-                        "puptakez": "0.002",     # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "prateuptake": "0.7",      # Fitted value to obtain balance between uptake N:P ratio and reasonable P labile pool
+                        "puptakez": "0.002",       # EucFACE value
                         "structcp": "5500.0",
                         "structratp": "0.0",
 
@@ -863,10 +862,10 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
-    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
+    #OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    #PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
 
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
-    #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
-    #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
+    OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
+    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

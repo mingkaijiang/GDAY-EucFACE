@@ -603,6 +603,9 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
     /* total nitrogen/phosphorus to allocate */
     ntot = MAX(0.0, f->nuptake + f->retransn);
     ptot = MAX(0.0, f->puptake + f->retransp);
+    
+    //fprintf(stderr, "ntot %f, nuptake %f, retransn %f, ptot %f, puptake %f, retransp %f\n",
+    //        ntot, f->nuptake, f->retransn, ptot, f->puptake, f->retransp);
 
     if (c->deciduous_model) {
         /* allocate N to pools with fixed N:C ratios */
@@ -654,6 +657,8 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
           /* cut back production based on N only */
           recalc_wb = cut_back_production(c, f, p, s, ntot, ncbnew, nccnew,
                                            ncwimm, ncwnew, doy);
+          
+          fprintf(stderr, "in cut back based on N \n");
             
           }
         
@@ -664,6 +669,9 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
                                                  ncwimm, ncwnew,
                                                  pcbnew, pccnew, 
                                                  pcwimm, pcwnew, doy);
+          
+          fprintf(stderr, "in cut back based on P \n");
+          
           
         } 
 
@@ -683,6 +691,9 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
         /* allocate remaining P to flexible-ratio pools */
         f->ppleaf = ptot * f->alleaf / (f->alleaf + f->alroot * p->pcrfac);
         f->pproot = ptot - f->ppleaf;
+        
+        //fprintf(stderr, "ntot2 %f, ptot2 %f\n",
+        //        ntot, ptot);
     }
 
     return (recalc_wb);

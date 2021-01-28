@@ -1944,7 +1944,7 @@ void calculate_ppools(control *c, fluxes *f, params *p, state *s,
     /* I am effectively turning this sorbed p pool to zero (or default value),
      * because there is a mass balance issue if I use the following equation. 
      */ 
-    //s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
+     //s->inorgsorbp = ((p->smax * s->inorglabp) / (p->ks + s->inorglabp));
     
     /* Daily increment of soil inorganic secondary P pool (strongly sorbed) */
     s->inorgssorbp += f->p_sorb_to_ssorb - f->p_ssorb_to_occ - f->p_ssorb_to_sorb;

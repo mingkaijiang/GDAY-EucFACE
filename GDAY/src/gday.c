@@ -508,11 +508,16 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                     write_daily_outputs_binary(c, f, s, year, doy+1);
             }
             c->day_idx++;
+            
+            //fprintf(stderr, "pmin %f, labp %f, pup %f, lai %f, p_avl_in %f, inorgn %f, pdep %f\n", 
+            //        f->pmineralisation, s->inorglabp, f->puptake, s->lai, f->p_avl_in, s->inorgn,
+            //        (f->p_par_to_lab + f->p_atm_dep));
 
             /* ======================= **
             **   E N D   O F   D A Y   **
             ** ======================= */
         }
+        
 
 
         /* Allocate stored C,N and P for the following year */
@@ -618,8 +623,8 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (c->pcycle) {
                 /* Have we reached a steady state? */
                 fprintf(stderr,
-                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f\n",
-                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365);
+                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, nuptake - %f，inorgn - %f, nmin - %f, ngross - %f, nimm - %f, nlit - %f\n",
+                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, f->nuptake*365, s->inorgn, f->nmineralisation*365, f->ngross*365, f->nimmob*365, f->nlittrelease*365);
                 
             } else {
               /* Have we reached a steady state? */
