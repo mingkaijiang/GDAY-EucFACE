@@ -872,6 +872,7 @@ void calculate_jmax_and_vcmax(control *c, params *p, state *s, double Tk,
           
             log_vcmax = 1.993 + 2.555 * log(N0) - 0.372 * log(p->sla/1000.0) + 0.422 * log(N0) * log(p->sla/1000.0);
             vcmax25 = exp(log_vcmax);
+            
             log_jmax = 1.197 + 0.847 * log_vcmax;
             jmax25 = exp(log_jmax);
             
@@ -975,8 +976,8 @@ void calculate_jmax_and_vcmax_with_p(control *c, params *p, state *s, double Tk,
       
         // Walker et al. 2014 global synthesis relationship
         /* the maximum rate of electron transport at 25 degC */
-        log_vcmax = 3.946 + 0.921 * log(N0) + 0.121 * log(P0) + 0.282 * log(N0) * log(P0);
-        //log_vcmax = 1.993 + 2.555 * log(N0) - 0.372 * log(p->sla/1000) + 0.422 * log(N0) * log(p->sla/1000);
+        //log_vcmax = 3.946 + 0.921 * log(N0) + 0.121 * log(P0) + 0.282 * log(N0) * log(P0);
+        log_vcmax = 1.993 + 2.555 * log(N0) - 0.372 * log(p->sla/1000) + 0.422 * log(N0) * log(p->sla/1000);
         
         vcmax25 = exp(log_vcmax);
         
