@@ -78,12 +78,14 @@ void calculate_water_balance(control *c, fluxes *f, met *m, params *p,
   total canopy rnet (Dummy argument, only passed for sub-daily model)
   
   */
-  double soil_evap, et, interception, runoff, conv,
+  double et, interception, runoff, conv,
   transpiration, net_rad, SEC_2_DAY, DAY_2_SEC,
   transpiration_am, transpiration_pm, gs_am, gs_pm, LE_am,
   LE_pm, ga_am, ga_pm, net_rad_am, net_rad_pm, omega_am,
   gpp_am, gpp_pm, omega_pm, throughfall,
   canopy_evap;
+  
+  double soil_evap = 0.0;
   
   SEC_2_DAY = 60.0 * 60.0 * daylen;
   DAY_2_SEC = 1.0 / SEC_2_DAY;
