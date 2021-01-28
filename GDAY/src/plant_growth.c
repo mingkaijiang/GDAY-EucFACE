@@ -94,19 +94,23 @@ void calc_day_growth(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma,
 
     /* Distribute new C, N and P through the system */
     carbon_allocation(c, f, p, s, npitfac, doy);
+    
+    /* updatea C allocation with inclusion of exudation flux */
+    if (c->exudation && c->alloc_model != GRASSES) {
+      calc_root_exudation(c, f, p, s);
+    }
 
+    /* calcualte CNP for wood */
     calculate_cnp_wood_ratios(c, p, s, npitfac, nitfac, pitfac,
                               &ncbnew, &nccnew, &ncwimm,
                               &ncwnew, &pcbnew, &pccnew, &pcwimm,
                               &pcwnew);
 
+    /* allocate N and P */                          
     recalc_wb = np_allocation(c, f, p, s, ncbnew, nccnew, ncwimm, ncwnew,
                               pcbnew, pccnew, pcwimm, pcwnew,
                               fdecay, rdecay, doy);
 
-    if (c->exudation && c->alloc_model != GRASSES) {
-        calc_root_exudation(c, f, p, s);
-    }
     
     /* If we didn't have enough N available to satisfy wood demand, NPP
        is down-regulated and thus so is GPP. We also need to recalculate the
@@ -142,54 +146,68 @@ void calc_root_exudation(control *c, fluxes *f, params *p, state *s) {
     /*
         Rhizodeposition (f->root_exc) is assumed to be a fraction of the
         current root growth rate (f->cproot), which increases with increasing
-        N stress of the plant.
+        nutrient stress of the plant.
+     
+        But given that we have fixed CUE, 
+        exudation flux will consume part of C allocated to root,
+        which is not ideal, but OK for now. 
+     
     */
-    double CN_leaf, frac_to_rexc, CN_ref, arg;
+    
+    double CN_leaf, frac_to_rexc1, CN_ref, arg1;
+    double CP_leaf, frac_to_rexc2, CP_ref, arg2;
+    double frac_to_rexc;
 
-    if (float_eq(s->shoot, 0.0) || float_eq(s->shootn, 0.0)) {
+    /* checking CN ratios to determine N limitation */
+    if (float_eq(s->shoot, 0.0) || float_eq(s->shootn, 0.0) || float_eq(s->shootp, 0.0)) {
         /* nothing happens during leaf off period */
         CN_leaf = 0.0;
+        CP_leaf = 0.0;
         frac_to_rexc = 0.0;
     } else {
 
         if (c->deciduous_model) {
             /* broadleaf */
             CN_ref = 25.0;
+            CP_ref = 400.0;
+          
         } else {
             /* conifer */
             CN_ref = 42.0;
+            CP_ref = 700.0;
         }
 
         /*
         ** The fraction of growth allocated to rhizodeposition, constrained
         ** to solutions lower than 0.5
+        ** We can possibly make it a function of plant CUE, check back later.
         */
         CN_leaf = 1.0 / s->shootnc;
-        arg = MAX(0.0, (CN_leaf - CN_ref) / CN_ref);
-        frac_to_rexc = MIN(0.5, p->a0rhizo + p->a1rhizo * arg);
+        CP_leaf = 1.0 / s->shootpc;
+        
+        arg1 = MAX(0.0, (CN_leaf - CN_ref) / CN_ref);
+        arg2 = MAX(0.0, (CP_leaf - CP_ref) / CP_ref);
+        
+        
+        frac_to_rexc1 = MIN(0.5, p->a0rhizo + p->a1rhizo * arg1);
+        frac_to_rexc2 = MIN(0.5, p->a0rhizo + p->a1rhizo * arg2);
+        
+        /* checking the maximum root exudation fraction, 
+         * determined by N and P limitation */
+        p->frac_to_rexc = MAX(frac_to_rexc1, frac_to_rexc2);
+        
     }
-
-    /* Rhizodeposition */
-    f->root_exc = frac_to_rexc * f->cproot;
     
-    if (float_eq(f->cproot, 0.0)) {
-        f->root_exn = 0.0;
-    } else {
-        /*
-        ** N flux associated with rhizodeposition is based on the assumption
-        ** that the CN ratio of rhizodeposition is equal to that of fine root
-        ** growth
-        */
-        f->root_exn = f->root_exc * (f->nproot / f->cproot);
-    }
-
+  
+    /* Rhizodeposition */
+    f->root_exc = p->frac_to_rexc * f->cproot;
+    
     /*
-    ** Need to remove exudation C & N fluxes from fine root growth fluxes so
+    ** Need to remove exudation C flux from fine root growth fluxes so
     ** that things balance.
     */
     f->cproot -= f->root_exc;
-    f->nproot -= f->root_exn;
-
+    
     return;
 }
 
@@ -674,14 +692,13 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
           
           
         } 
-
         
         /* Nitrogen reallocation to flexible-ratio pools */
         ntot -= f->npbranch + f->npstemimm + f->npstemmob + f->npcroot;
         ntot = MAX(0.0, ntot);
 
         /* allocate remaining N to flexible-ratio pools */
-        f->npleaf = ntot * f->alleaf / (f->alleaf + f->alroot * p->ncrfac);
+        f->npleaf = ntot * f->alleaf / (f->alleaf + (f->alroot * (1.0 - p->frac_to_rexc)) * p->ncrfac);
         f->nproot = ntot - f->npleaf;
 
         /* Phosphorus reallocation to flexible-ratio pools */
@@ -689,11 +706,9 @@ int np_allocation(control *c, fluxes *f, params *p, state *s, double ncbnew,
         ptot = MAX(0.0, ptot);
 
         /* allocate remaining P to flexible-ratio pools */
-        f->ppleaf = ptot * f->alleaf / (f->alleaf + f->alroot * p->pcrfac);
+        f->ppleaf = ptot * f->alleaf / (f->alleaf + (f->alroot * (1.0 - p->frac_to_rexc)) * p->pcrfac);
         f->pproot = ptot - f->ppleaf;
         
-        //fprintf(stderr, "ntot2 %f, ptot2 %f\n",
-        //        ntot, ptot);
     }
 
     return (recalc_wb);
@@ -1562,7 +1577,7 @@ void allocate_stored_cnp(fluxes *f, params *p, state *s) {
 
     /* allocate remaining N to flexible-ratio pools */
     s->n_to_alloc_shoot = (ntot * f->alleaf /
-                            (f->alleaf + f->alroot * p->ncrfac));
+                            (f->alleaf + (f->alroot * (1.0 - p->frac_to_rexc)) * p->ncrfac));
     s->n_to_alloc_root = ntot - s->n_to_alloc_shoot;
 
     /*
@@ -1602,7 +1617,7 @@ void allocate_stored_cnp(fluxes *f, params *p, state *s) {
 
     /* allocate remaining P to flexible-ratio pools */
     s->p_to_alloc_shoot = (ptot * f->alleaf /
-                             (f->alleaf + f->alroot * p->pcrfac));
+                             (f->alleaf + (f->alroot * (1.0 - p->frac_to_rexc)) * p->pcrfac));
     s->p_to_alloc_root = ptot - s->p_to_alloc_shoot;
 
 

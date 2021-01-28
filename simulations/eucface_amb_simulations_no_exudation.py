@@ -282,7 +282,7 @@ def main(experiment_id, site,
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
                         "deciduous_model": "false",
                         "disturbance": "false",
-                        "exudation": "true",
+                        "exudation": "false",
                         "fixed_stem_nc": "true",
                         "fixed_stem_pc": "true",
                         "fixleafnc": "false",

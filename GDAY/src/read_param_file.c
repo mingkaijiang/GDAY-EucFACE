@@ -764,6 +764,8 @@ int handler(char *section, char *name, char *value, control *c,
         p->finesoil = atof(value);
     } else if (MATCH("params", "fix_lai")) {
         p->fix_lai = atof(value);
+    } else if (MATCH("params", "frac_to_rexc")) {
+      p->frac_to_rexc = atof(value);
     } else if (MATCH("params", "fracfaeces")) {
         p->fracfaeces = atof(value);
     } else if (MATCH("params", "fracteaten")) {

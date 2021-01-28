@@ -264,6 +264,7 @@ typedef struct {
     double eao;                             /* Activation energy for oxygenation [J mol-1] */
     double eav;                             /* Activation energy for Rubisco (J mol-1) */
     double edj;                             /* Deactivation energy for electron transport (J mol-1) */
+    double frac_to_rexc;                    /* FFraction of root allocation to exudation, this value will be calculated within the model */
     double faecescn;                        /* Faeces C:N ratio */
     double faecesn;                         /* Faeces N content */
     double faecescp;                        /* Faeces C:P ratio */

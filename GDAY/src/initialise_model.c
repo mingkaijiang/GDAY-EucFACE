@@ -135,6 +135,7 @@ void initialise_params(params *p) {
     p->fmleaf = 0.0;
     p->fmroot = 0.0;
     p->fmfaeces = 0.0;
+    p->frac_to_rexc = 0.0;
     p->fracfaeces = 0.3;
     p->fracteaten = 0.5;
     p->fractosoil = 0.85;
