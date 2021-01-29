@@ -338,6 +338,8 @@ void calc_autotrophic_respiration(control *c, fluxes *f, met_arrays *ma, met *m,
     /* leaf dark respiration ~ leaf P, N, vcmax, and TWQ 
        where TWQ is the mean temperature of the warmest quarter */
     Rml = 1.2636 + (0.0728 * shootn) + (0.015 * shootp) + (0.0095 * s->vcmax) - (0.0358 * s->twq);
+    
+    //fprintf(stderr, "vcmax %f, twq %f\n", s->vcmax, s->twq);
 
     Rmw = 0.2 * rk * stemn * lloyd_and_taylor(m->tair); // should really be sapwood
     Rmr = rk * rootn * lloyd_and_taylor(m->tsoil);

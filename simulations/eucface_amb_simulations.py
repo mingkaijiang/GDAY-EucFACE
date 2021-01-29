@@ -125,7 +125,7 @@ def main(experiment_id, site,
                         "structsurfp": "0.0000024",
 
                         # parameters
-                        "resp_coeff": "0.2",      
+                        "resp_coeff": "1.0",      
                         "alpha_j": "0.308",       # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",
@@ -301,7 +301,7 @@ def main(experiment_id, site,
                         "passiveconst": "false",
                         "print_options": "end",
                         "ps_pathway": "c3",
-                        "respiration_model": "fixed",
+                        "respiration_model": "vary",
                         "strfloat": "0",
                         "strpfloat": "0",
                         "sw_stress_model": "1",  # Sands and Landsberg
