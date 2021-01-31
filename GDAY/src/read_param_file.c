@@ -529,6 +529,8 @@ int handler(char *section, char *name, char *value, control *c,
         s->avg_alroot = atof(value);
     } else if (MATCH("state", "avg_alstem")) {
         s->avg_alstem = atof(value);
+    } else if (MATCH("state", "avg_alexc")) {
+      s->avg_alexc = atof(value);
     } else if (MATCH("state", "branch")) {
         s->branch = atof(value);
     } else if (MATCH("state", "branchn")) {

@@ -473,6 +473,9 @@ int ohandler(char *section, char *name, char *value, control *c, params *p,
     } else if (MATCH("state", "avg_alstem")) {
         fprintf(c->ofp, "avg_alstem = %.10f\n", s->avg_alstem);
         *match = TRUE;
+    } else if (MATCH("state", "avg_alexc")) {
+        fprintf(c->ofp, "avg_alexc = %.10f\n", s->avg_alexc);
+        *match = TRUE;
     } else if (MATCH("state", "branch")) {
         fprintf(c->ofp, "branch = %.10f\n", s->branch);
         *match = TRUE;

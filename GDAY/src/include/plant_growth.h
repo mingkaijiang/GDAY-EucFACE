@@ -26,8 +26,8 @@ void    update_plant_state(control *, fluxes *, params *, state *,
                            double, double, int);
 void    precision_control(fluxes *, state *);
 void    calculate_cnp_store(control *, fluxes *, state *);
-void    calculate_average_alloc_fractions(fluxes *, state *, int );
-void    allocate_stored_cnp(fluxes *f, params *p, state *s);
+void    calculate_average_alloc_fractions(control *, fluxes *, state *, int );
+void    allocate_stored_cnp(control *, fluxes *, params *, state *);
 void    carbon_daily_production(control *, fluxes *, met_arrays *ma, met *m, params *, state *,
                                 double);
 void    calculate_subdaily_production(control *, fluxes *, met *m, params *,
@@ -35,13 +35,13 @@ void    calculate_subdaily_production(control *, fluxes *, met *m, params *,
 void   calc_autotrophic_respiration(control *, fluxes *, met_arrays *, met *, params *,
                                     state *);
 double lloyd_and_taylor(double);
-void    calculate_cnp_wood_ratios(control *c, params *, state *, double, double,
+void    calculate_cnp_wood_ratios(control *, params *, state *, double, double,
                                   double, double *, double *, double *,
                                   double *, double *,double *, double *,
                                   double *);
 
 /* N stuff */
-int    np_allocation(control *c, fluxes *, params *, state *, double,
+int    np_allocation(control *, fluxes *, params *, state *, double,
                      double, double, double, double,
                      double, double, double, double, double, int);
 double calculate_nuptake(control *, params *, state *);

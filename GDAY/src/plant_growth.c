@@ -85,6 +85,10 @@ void calc_day_growth(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma,
             s->avg_alstem += f->alstem;
             s->avg_alroot += f->alroot;
             s->avg_alcroot += f->alcroot;
+            
+            if (c->exudation) {
+              s->avg_alexc += f->alexc;
+            }
 
         }
     } else {
@@ -95,10 +99,6 @@ void calc_day_growth(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma,
     /* Distribute new C, N and P through the system */
     carbon_allocation(c, f, p, s, npitfac, doy);
     
-    /* updatea C allocation with inclusion of exudation flux */
-    if (c->exudation && c->alloc_model != GRASSES) {
-      calc_root_exudation(c, f, p, s);
-    }
 
     /* calcualte CNP for wood */
     calculate_cnp_wood_ratios(c, p, s, npitfac, nitfac, pitfac,
@@ -163,7 +163,7 @@ void calc_root_exudation(control *c, fluxes *f, params *p, state *s) {
         /* nothing happens during leaf off period */
         CN_leaf = 0.0;
         CP_leaf = 0.0;
-        frac_to_rexc = 0.0;
+        p->frac_to_rexc = 0.0;
     } else {
 
         if (c->deciduous_model) {
@@ -197,16 +197,6 @@ void calc_root_exudation(control *c, fluxes *f, params *p, state *s) {
         p->frac_to_rexc = MAX(frac_to_rexc1, frac_to_rexc2);
         
     }
-    
-  
-    /* Rhizodeposition */
-    f->root_exc = p->frac_to_rexc * f->cproot;
-    
-    /*
-    ** Need to remove exudation C flux from fine root growth fluxes so
-    ** that things balance.
-    */
-    f->cproot -= f->root_exc;
     
     return;
 }
@@ -749,6 +739,10 @@ int cut_back_production(control *c, fluxes *f, params *p, state *s,
     f->cpcroot = f->npp * f->alcroot;
     f->cpbranch = f->npp * f->albranch;
     f->cpstem = f->npp * f->alstem;
+    
+    if (c->exudation) {
+      f->root_exc = f->npp * f->alexc;
+    }
 
     f->npbranch = f->npp * f->albranch * xcbnew;
     f->npstemimm = f->npp * f->alstem * xcwimm;
@@ -846,6 +840,10 @@ int cut_back_production_with_p(control *c, fluxes *f, params *p, state *s,
   f->cpbranch = f->npp * f->albranch;
   f->cpstem = f->npp * f->alstem;
   
+  if (c->exudation) {
+    f->root_exc = f->npp * f->alexc;
+  }
+
   f->npbranch = f->npp * f->albranch * ncbnew;
   f->npstemimm = f->npp * f->alstem * ncwimm;
   f->npstemmob = f->npp * f->alstem * (ncwnew - ncwimm);
@@ -983,6 +981,12 @@ void calc_carbon_allocation_fracs(control *c, fluxes *f, params *p, state *s,
 
     /* this is obviously arbitary */
     double min_stem_alloc = 0.01;
+    
+    /* calculate allocation fraction to exudation */
+    if (c->exudation && c->alloc_model != GRASSES) {
+      calc_root_exudation(c, f, p, s);
+    }
+     
 
     if (c->alloc_model == FIXED){
         f->alleaf = (p->c_alloc_fmax + npitfac *
@@ -990,12 +994,23 @@ void calc_carbon_allocation_fracs(control *c, fluxes *f, params *p, state *s,
 
         f->alroot = (p->c_alloc_rmax + npitfac *
                      (p->c_alloc_rmax - p->c_alloc_rmin));
-
+        
         f->albranch = (p->c_alloc_bmax + npitfac *
                        (p->c_alloc_bmax - p->c_alloc_bmin));
 
         /* allocate remainder to stem */
-        f->alstem = 1.0 - f->alleaf - f->alroot - f->albranch;
+          if (c->exudation) {
+            
+            f->alexc = f->alroot * p->frac_to_rexc;
+            
+            f->alstem = 1.0 - f->alleaf - f->alroot - f->albranch - f->alexc;
+            
+          } else {
+            
+            f->alstem = 1.0 - f->alleaf - f->alroot - f->albranch;
+            
+          }
+         
 
         f->alcroot = p->c_alloc_cmax * f->alstem;
         f->alstem -= f->alcroot;
@@ -1091,9 +1106,20 @@ void calc_carbon_allocation_fracs(control *c, fluxes *f, params *p, state *s,
         f->alroot = (p->c_alloc_rmax * p->c_alloc_rmin /
                      (p->c_alloc_rmin + (p->c_alloc_rmax - p->c_alloc_rmin) *
                       s->prev_sma));
-
-        f->alstem = 1.0 - f->alroot - f->albranch - f->alleaf - f->alcroot;
-
+        
+        /* update allocation to stem */
+        if (c->exudation) {
+          
+          f->alexc = f->alroot * p->frac_to_rexc;
+          
+          f->alstem = 1.0 - f->alroot - f->albranch - f->alleaf - f->alcroot - f->alexc;
+          
+        } else {
+          
+          f->alstem = 1.0 - f->alroot - f->albranch - f->alleaf - f->alcroot;
+          
+        }
+        
         /* minimum allocation to leaves - without it tree would die, as this
            is done annually. */
         if (c->deciduous_model) {
@@ -1115,7 +1141,12 @@ void calc_carbon_allocation_fracs(control *c, fluxes *f, params *p, state *s,
     //       f->alleaf, f->albranch + f->alstem, f->alroot, s->canht);
 
     /* Total allocation should be one, if not print warning */
-    total_alloc = f->alroot + f->alleaf + f->albranch + f->alstem + f->alcroot;
+    if (c->exudation) {
+      total_alloc = f->alroot + f->alleaf + f->albranch + f->alstem + f->alcroot + f->alexc;
+    } else {
+      total_alloc = f->alroot + f->alleaf + f->albranch + f->alstem + f->alcroot;
+      
+    }
     if (total_alloc > 1.0+EPSILON) {
         fprintf(stderr, "Allocation fracs > 1: %.13f\n", total_alloc);
         exit(EXIT_FAILURE);
@@ -1153,6 +1184,7 @@ void carbon_allocation(control *c, fluxes *f, params *p, state *s,
         f->cpbranch = f->brate * days_left;
         f->cpstem = f->wrate * days_left;
         f->cproot = s->c_to_alloc_root * 1.0 / c->num_days;
+        f->root_exc = s->c_to_alloc_exc * 1.0 / c->num_days;
         f->cpcroot = f->crate * days_left;
     } else {
         f->cpleaf = f->npp * f->alleaf;
@@ -1160,6 +1192,7 @@ void carbon_allocation(control *c, fluxes *f, params *p, state *s,
         f->cpcroot = f->npp * f->alcroot;
         f->cpbranch = f->npp * f->albranch;
         f->cpstem = f->npp * f->alstem;
+        f->root_exc = f->npp * f->alexc;
     }
 
     /* evaluate SLA of new foliage accounting for variation in SLA
@@ -1196,8 +1229,6 @@ void carbon_allocation(control *c, fluxes *f, params *p, state *s,
     if (c->fixed_lai) {
         s->lai = p->fix_lai;
     }
-
-    //fprintf(stderr, "lai %f\n", s->lai);
 
     return;
 }
@@ -1518,7 +1549,7 @@ void calculate_cnp_store(control *c, fluxes *f, state *s) {
 }
 
 
-void calculate_average_alloc_fractions(fluxes *f, state *s, int days) {
+void calculate_average_alloc_fractions(control *c, fluxes *f, state *s, int days) {
     double excess;
 
     s->avg_alleaf /= (float) days;
@@ -1526,25 +1557,39 @@ void calculate_average_alloc_fractions(fluxes *f, state *s, int days) {
     s->avg_alcroot /= (float) days;
     s->avg_albranch /= (float) days;
     s->avg_alstem /= (float) days;
+    
+    if (c->exudation) {
+      s->avg_alexc /= (float) days;
+    }
 
     f->alleaf = s->avg_alleaf;
     f->alroot = s->avg_alroot;
     f->alcroot = s->avg_alcroot;
     f->albranch = s->avg_albranch;
     f->alstem = s->avg_alstem;
+    
+    if (c->exudation) {
+      f->alexc = s->avg_alexc;
+    }
 
     /*
         Because we are taking the average growing season fracs the total may
         end up being just under 1, due to rounding. So put the missing
         bit into the leaves - arbitary decision there
     */
-    excess = 1.0 - f->alleaf - f->alroot - f->alcroot - f->albranch - f->alstem;
+    
+    if (c->exudation) {
+      excess = 1.0 - f->alleaf - f->alroot - f->alcroot - f->albranch - f->alstem - f->alexc;
+    } else {
+      excess = 1.0 - f->alleaf - f->alroot - f->alcroot - f->albranch - f->alstem;
+      
+    }
     f->alleaf += excess;
 
     return;
 }
 
-void allocate_stored_cnp(fluxes *f, params *p, state *s) {
+void allocate_stored_cnp(control *c, fluxes *f, params *p, state *s) {
     /*
     Allocate stored C,N and P. This is either down as the model is initialised
     for the first time or at the end of each year.
@@ -1559,6 +1604,11 @@ void allocate_stored_cnp(fluxes *f, params *p, state *s) {
     s->c_to_alloc_croot = f->alcroot * s->cstore;
     s->c_to_alloc_branch = f->albranch * s->cstore;
     s->c_to_alloc_stem = f->alstem * s->cstore;
+    
+    if (c->exudation) {
+      s->c_to_alloc_exc = f->alexc * s->cstore;
+    }    
+
 
     /* =========================================================
         Nitrogen - Fixed ratios N allocation to woody components.

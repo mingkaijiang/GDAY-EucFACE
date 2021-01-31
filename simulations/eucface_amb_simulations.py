@@ -125,7 +125,7 @@ def main(experiment_id, site,
                         "structsurfp": "0.0000024",
 
                         # parameters
-                        "resp_coeff": "1.0",      
+                        "resp_coeff": "1.0",      # controlling the rate of respiration and CUE. to be used when vary respiration flag is on. 
                         "alpha_j": "0.308",       # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",

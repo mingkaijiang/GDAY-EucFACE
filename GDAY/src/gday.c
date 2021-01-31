@@ -252,6 +252,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             float_eq(s->avg_albranch, 0.0) &&
             float_eq(s->avg_alleaf, 0.0) &&
             float_eq(s->avg_alroot, 0.0) &&
+            float_eq(s->avg_alexc, 0.0) &&
             float_eq(s->avg_alcroot, 0.0)) {
             npitfac = 0.0;
             calc_carbon_allocation_fracs(c, f, p, s, npitfac);
@@ -261,8 +262,9 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             f->albranch = s->avg_albranch;
             f->alroot = s->avg_alroot;
             f->alcroot = s->avg_alcroot;
+            f->alexc = s->avg_alexc;
         }
-        allocate_stored_cnp(f, p, s);
+        allocate_stored_cnp(c, f, p, s);
     }
 
     /* Setup output file */
@@ -522,8 +524,8 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
         /* Allocate stored C,N and P for the following year */
         if (c->deciduous_model) {
-            calculate_average_alloc_fractions(f, s, p->growing_seas_len);
-            allocate_stored_cnp(f, p, s);
+            calculate_average_alloc_fractions(c, f, s, p->growing_seas_len);
+            allocate_stored_cnp(c, f, p, s);
         }
 
         // Adjust rooting distribution at the end of the year to account for
@@ -942,6 +944,7 @@ void zero_stuff(control *c, state *s) {
         s->avg_alcroot = 0.0;
         s->avg_albranch  = 0.0;
         s->avg_alstem = 0.0;
+        s->avg_alexc = 0.0;
     }
     return;
 }

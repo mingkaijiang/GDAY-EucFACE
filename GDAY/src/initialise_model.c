@@ -538,7 +538,8 @@ void initialise_fluxes(fluxes *f) {
     f->alcroot = 0.0;
     f->albranch = 0.0;
     f->alstem = 0.0;
-
+    f->alexc = 0.0;
+    
     /* Misc stuff */
     f->cica_avg = 0.0; /* used in water balance, only when running mate model */
 
@@ -583,6 +584,7 @@ void initialise_state(state *s) {
     s->avg_alleaf = 0.0;
     s->avg_alroot = 0.0;
     s->avg_alstem = 0.0;
+    s->avg_alexc= 0.0;
     s->branch = 14.5137000708;
     s->branchn = 0.0442890661217;
     s->branchp = 0.00580548;

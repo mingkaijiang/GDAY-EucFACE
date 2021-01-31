@@ -78,6 +78,7 @@ typedef struct {
     double avg_alleaf;                  /* Average leaf growing season allocation fractions */
     double avg_alroot;                  /* Average fine root growing season allocation fractions */
     double avg_alstem;                  /* Average stem growing season allocation fractions */
+    double avg_alexc;                   /* Average exudation growing season allocation fractions */
     double branch;                      /* branch c (t/ha) */
     double branchn;                     /* branch n (t/ha) */
     double branchp;                     /* branch p (t/ha) */
@@ -169,6 +170,7 @@ typedef struct {
     double n_to_alloc_stemimm;
     double p_to_alloc_stemmob;
     double p_to_alloc_stemimm;
+    double c_to_alloc_exc;
     double anpp;                    /* aboveground NPP */
     double litterc;                 /* litter carbon */
     double littern;                 /* litter nitrogen */
@@ -750,6 +752,7 @@ typedef struct {
     double alcroot;            /* allocation to coarse root */
     double albranch;           /* allocation to branch */
     double alstem;             /* allocation to stems */
+    double alexc;              /* allocation to exudation */
 
     /* Misc stuff */
     double cica_avg; /* used in water balance, only when running mate model */
