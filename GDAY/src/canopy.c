@@ -359,7 +359,7 @@ void sum_hourly_carbon_fluxes(canopy_wk *cw, fluxes *f, params *p) {
 
     /* umol m-2 s-1 -> gC m-2 30 min-1 */
     f->gpp_gCm2 += cw->an_canopy * UMOL_TO_MOL * MOL_C_TO_GRAMS_C * SEC_2_HLFHR;
-    f->npp_gCm2 = f->gpp_gCm2 * p->cue;
+    f->npp_gCm2 = f->gpp_gCm2 * p->cue;  // exudation not implemented to hourly model yet!
     f->gpp = f->gpp_gCm2 * GRAM_C_2_TONNES_HA;
     f->npp = f->npp_gCm2 * GRAM_C_2_TONNES_HA;
     f->auto_resp = f->gpp - f->npp;

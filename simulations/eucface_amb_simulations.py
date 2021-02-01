@@ -137,8 +137,8 @@ def main(experiment_id, site,
                         "lai_closed": "0.5", # I am effectively turning this feature off by setting it so low
                         "c_alloc_fmax": "0.48",  # EucFACE parameter file
                         "c_alloc_fmin": "0.40",  # EucFACE parameter file
-                        "c_alloc_rmax": "0.32",  # EucFACE parameter file
-                        "c_alloc_rmin": "0.22",  # EucFACE parameter file
+                        "c_alloc_rmax": "0.22",  # EucFACE parameter file
+                        "c_alloc_rmin": "0.12",  # EucFACE parameter file
                         "c_alloc_bmax": "0.1",   # guess
                         "c_alloc_bmin": "0.1",  # guess
                         "c_alloc_cmax": "0.0",   # turn off coarse roots!
@@ -282,7 +282,7 @@ def main(experiment_id, site,
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
                         "deciduous_model": "false",
                         "disturbance": "false",
-                        "exudation": "true",
+                        "exudation": "true",       # note that exudation not implemented in hourly model. 
                         "fixed_stem_nc": "true",
                         "fixed_stem_pc": "true",
                         "fixleafnc": "false",

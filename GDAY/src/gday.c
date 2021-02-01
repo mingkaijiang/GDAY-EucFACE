@@ -252,7 +252,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             float_eq(s->avg_albranch, 0.0) &&
             float_eq(s->avg_alleaf, 0.0) &&
             float_eq(s->avg_alroot, 0.0) &&
-            float_eq(s->avg_alexc, 0.0) &&
+            //float_eq(s->avg_alexc, 0.0) &&
             float_eq(s->avg_alcroot, 0.0)) {
             npitfac = 0.0;
             calc_carbon_allocation_fracs(c, f, p, s, npitfac);
@@ -262,7 +262,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             f->albranch = s->avg_albranch;
             f->alroot = s->avg_alroot;
             f->alcroot = s->avg_alcroot;
-            f->alexc = s->avg_alexc;
+            //f->alexc = s->avg_alexc;
         }
         allocate_stored_cnp(c, f, p, s);
     }
@@ -321,7 +321,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
      * units of days not years
      */
     correct_rate_constants(p, FALSE);
-    day_end_calculations(c, p, s, -99, TRUE);
+    day_end_calculations(c, p, s, f, -99, TRUE);
 
     if (c->sub_daily) {
         initialise_soils_sub_daily(c, f, p, s);
@@ -499,7 +499,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                 reset_all_p_pools_and_fluxes(f, s);
 
             /* calculate C:N ratios and increment annual flux sum */
-            day_end_calculations(c, p, s, c->num_days, FALSE);
+            day_end_calculations(c, p, s, f, c->num_days, FALSE);
             
             if (c->print_options == SUBDAILY && c->spin_up == FALSE) {
                 write_daily_outputs_ascii(c, f, s, year, doy+1);
@@ -949,7 +949,7 @@ void zero_stuff(control *c, state *s) {
     return;
 }
 
-void day_end_calculations(control *c, params *p, state *s, int days_in_year,
+void day_end_calculations(control *c, params *p, state *s, fluxes *f, int days_in_year,
                           int init) {
     /* Calculate derived values from state variables.
 
@@ -1021,6 +1021,12 @@ void day_end_calculations(control *c, params *p, state *s, int days_in_year,
     if (init == FALSE)
         /* Required so max leaf & root N:C can depend on Age */
         s->age += 1.0 / days_in_year;
+    
+    /* add back root exudation C flux to NPP to close mass balance */
+    if (c->exudation) {
+        f->npp += f->root_exc;
+        f->npp_gCm2 = f->npp * TONNES_HA_2_G_M2;
+    }
 
     return;
 }
