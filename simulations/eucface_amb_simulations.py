@@ -194,6 +194,7 @@ def main(experiment_id, site,
                         # root exudation
                         "a0rhizo": "0.01",
                         "a1rhizo": "0.6",
+                        "prime_km": "0.3",
 
                         "g1": "3.04",            # EucFACE parameter
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
@@ -276,7 +277,7 @@ def main(experiment_id, site,
                         "structratp": "0.0",
 
                         # control
-                        "adjust_rtslow": "false",  # priming, off
+                        "adjust_rtslow": "true",  # priming, off
                         "alloc_model": "fixed",
                         "assim_model": "mate",
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
@@ -869,10 +870,10 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
-    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
+    #OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    #PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
 
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
-    #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
-    #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
+    OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
+    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

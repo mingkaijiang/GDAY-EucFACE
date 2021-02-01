@@ -36,7 +36,7 @@ void calculate_csoil_flows(control *c, fluxes *f, params *p, state *s,
     f->tfac_soil_decomp = calc_soil_temp_factor(tsoil);
 
     /* calculate model decay rates */
-    calculate_decay_rates(f, p, s);
+    calculate_decay_rates(c, f, p, s);
 
     /*
      * plant litter inputs to the metabolic and structural pools determined
@@ -70,14 +70,18 @@ void calculate_csoil_flows(control *c, fluxes *f, params *p, state *s,
     calculate_cpools(f, s);
 
     /* calculate NEP */
-    f->nep = f->npp - f->hetero_resp - f->ceaten * (1.0 - p->fracfaeces);
-
+    if (c->exudation) {
+      f->nep = f->npp + f->root_exc - f->hetero_resp - f->ceaten * (1.0 - p->fracfaeces);
+    } else {
+      f->nep = f->npp - f->hetero_resp - f->ceaten * (1.0 - p->fracfaeces);
+    }
+     
     /* save fluxes for NCEAS output */
     f->co2_rel_from_surf_struct_litter = f->co2_to_air[0];
     f->co2_rel_from_soil_struct_litter = f->co2_to_air[1];
     f->co2_rel_from_surf_metab_litter = f->co2_to_air[2];
     f->co2_rel_from_soil_metab_litter = f->co2_to_air[3];
-    f->co2_rel_from_active_pool = f->co2_to_air[4];
+    f->co2_rel_from_active_pool += f->co2_to_air[4];
     f->co2_rel_from_slow_pool = f->co2_to_air[5];
     f->co2_rel_from_passive_pool = f->co2_to_air[6];
 
@@ -137,7 +141,7 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
     return;
 }
 
-void calculate_decay_rates(fluxes *f, params *p, state *s) {
+void calculate_decay_rates(control *c, fluxes *f, params *p, state *s) {
     /* Model decay rates - decomposition rates have a strong temperature
     and moisture dependency. Note same temperature is assumed for all 3
     SOM pools, found by Knorr et al (2005) to be untrue. N mineralisation
@@ -161,7 +165,7 @@ void calculate_decay_rates(fluxes *f, params *p, state *s) {
     /* Impact of lignin content */
     lignin_cont_leaf = exp(-3.0 * p->ligshoot);
     lignin_cont_root = exp(-3.0 * p->ligroot);
-
+    
     /* decay rate of surface structural pool */
     p->decayrate[0] = p->kdec1 * lignin_cont_leaf * adfac;
 
@@ -178,8 +182,15 @@ void calculate_decay_rates(fluxes *f, params *p, state *s) {
     p->decayrate[4] = p->kdec5 * soil_text * adfac;
 
     /* decay rate of slow pool */
-    p->decayrate[5] = p->kdec6 * adfac;
-
+    if (c->exudation && c->adjust_rtslow) {
+      /* adjust slow soil pool residence time */
+      adjust_residence_time_of_slow_pool(f, p);
+      p->decayrate[5] = p->kdec6rev * adfac;
+      
+    } else {
+      p->decayrate[5] = p->kdec6 * adfac;
+    }
+     
     /* decay rate of passive pool */
     p->decayrate[6] = p->kdec7 * adfac;
 
@@ -478,23 +489,23 @@ void calculate_soil_respiration(control *c, fluxes *f, params *p, state *s) {
     the amount of CO2 released back to the atmosphere */
 
     /* total CO2 production */
-    f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
-                      f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
-                      f->co2_to_air[6]);
-    
     /* if exudation is turned on */
-    if (c->exudation == TRUE) {
+    if (c->exudation) {
       f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
                         f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
                         f->co2_to_air[6] + f->co2_released_exud);  
-    } 
+    } else {
+      f->hetero_resp = (f->co2_to_air[0] + f->co2_to_air[1] + f->co2_to_air[2] +
+                        f->co2_to_air[3] + f->co2_to_air[4] + f->co2_to_air[5] +
+                        f->co2_to_air[6]);
+    }
     
     /* insert following line so value of respiration obeys c conservation if
      assuming a fixed passive pool */
     if (c->passiveconst == TRUE) {
       f->hetero_resp = (f->hetero_resp + f->active_to_passive +
-        f->slow_to_passive - s->passivesoil *
-        p->decayrate[6]);
+                        f->slow_to_passive - s->passivesoil *
+                        p->decayrate[6]);
     }
       
     return;
@@ -518,11 +529,13 @@ void calculate_cpools(fluxes *f, state *s) {
     s->metabsoil += (f->soil_metab_litter -
                      (f->soil_metab_to_active + f->co2_to_air[3]));
 
-    /* store the C SOM fluxes for Nitrogen/Phosphorus calculations */
+    /* store the C SOM fluxes for Nitrogen/Phosphorus calculations 
+     * This flux doesn't include exudation, which was already included in activesoil C calculation
+     */
     f->c_into_active = (f->surf_struct_to_active + f->soil_struct_to_active +
                         f->surf_metab_to_active + f->soil_metab_to_active +
                         f->slow_to_active + f->passive_to_active);
-
+    
     f->c_into_slow = (f->surf_struct_to_slow + f->soil_struct_to_slow +
                       f->active_to_slow);
 
@@ -613,17 +626,6 @@ void calculate_nsoil_flows(control *c, fluxes *f, params *p, state *s,
 
     if (c->exudation && c->alloc_model != GRASSES) {
         calc_root_exudation_effect_on_active_N(f, s);
-      
-        calc_root_exudation_effect_on_active_P(f, s);
-      
-      /* adjust slow soil pool residence time */
-      if (c->adjust_rtslow) {
-        adjust_residence_time_of_slow_pool(f, p);
-      } else {
-        /* Need to correct units of rate constant */
-        f->rtslow = 1.0 / (p->kdec6 * NDAYS_IN_YR);
-      }
-      
     }
 
     /* Update model soil N pools */
@@ -677,14 +679,14 @@ void calc_root_exudation_effect_on_active_N(fluxes *f, state *s) {
         ** changes.
         */
         if (N_miss > N_available) {
-            N_to_active_pool = N_available; // + f->root_exn;
+            N_to_active_pool = N_available; 
             f->nmineralisation -= N_available;
         } else {
             /*
             ** Enough N to meet demand, so takes N from the mineralisation
             ** and the active pool maintains the same C:N ratio.
             */
-            N_to_active_pool = N_miss; // + f->root_exn;
+            N_to_active_pool = N_miss; 
             f->nmineralisation -= N_miss;
         }
     }
@@ -746,33 +748,28 @@ void calc_root_exudation_effect_on_active_P(fluxes *f, state *s) {
 }
 
 void adjust_residence_time_of_slow_pool(fluxes *f, params *p) {
-    /* Priming simulations the residence time of the slow pool is flexible,
-    as the flux out of the active pool (factive) increases the residence
-    time of the slow pool decreases.
-    */
-    double rt_slow_pool;
-
+    /* Priming effect:
+     * The residence time of the slow pool is flexible.
+     * As the flux out of the active pool (factive) increases,
+     * the residence time of the slow pool decreases,
+     * hence more C and nutrient released from slow pool.
+     */
+    double arg0, arg1, arg2;
+    
+    /* convert unit from t ha-1 d-1 to g m-2 yr-1 */
+    arg0 = f->root_exc * NDAYS_IN_YR * TONNES_HA_2_G_M2;
+    
     /* total flux out of the factive pool */
-    f->factive = (f->active_to_slow + f->active_to_passive + \
-                  f->co2_to_air[4] + f->co2_released_exud);
-
-    if (float_eq(f->factive, 0.0)) {
-        /* Need to correct units of rate constant */
-        rt_slow_pool = 1.0 / (p->kdec6 * NDAYS_IN_YR);
-    } else {
-        rt_slow_pool = (1.0 / p->prime_y) / \
-                        MAX(0.3, (f->factive / (f->factive + p->prime_z)));
-
-        /* GDAY uses decay rates rather than residence times... */
-        p->kdec6 = 1.0 / rt_slow_pool;
-
-        /* rate constant needs to be per day inside GDAY */
-        p->kdec6 /= NDAYS_IN_YR;
-
-    }
-
-    /* Save for outputting purposes only */
-    f->rtslow = rt_slow_pool;
+    arg1 = arg0 / (arg0 + p->prime_km);
+    
+    /* set boundary of maximum priming effect */
+    arg2 = 1 + MIN(0.5, p->prime_km * arg1);
+    
+    /* update decomposition coefficient of slow pool */
+    p->kdec6rev = p->kdec6 * arg2;
+    
+    //fprintf(stderr, "root_exc %f, prime_km %f, arg1 %f, arg2 %f, kdec6old %f, kdec6 %f\n",
+    //        arg0, p->prime_km, arg1, arg2, p->kdec6, p->kdec6rev);
 
     return;
 }
@@ -1342,6 +1339,11 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
     calculate_p_ssorb_to_occ(s, f, p);
     
     calculate_p_sorb_to_ssorb(s, f, p);
+    
+    /* recalculate exudation effect on active P */
+    if (c->exudation && c->alloc_model != GRASSES) {
+      calc_root_exudation_effect_on_active_P(f, s);
+    }
 
     /* calculate P lab and sorb fluxes from gross P flux */
     calculate_p_avl_fluxes(f, p, s);

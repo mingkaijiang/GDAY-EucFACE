@@ -308,6 +308,7 @@ typedef struct {
     double kdec4;                           /* soil metabolic decay rate(1/yr) */
     double kdec5;                           /* active pool decay rate (1/yr) */
     double kdec6;                           /* slow pool decay rate (1/yr) */
+    double kdec6rev;                        /* slow pool decay rate (1/yr), taking exudation effect into account */
     double kdec7;                           /* passive pool decay rate (1/yr) */
     double kext;                            /* extinction coefficient for light  */
     double kn;                              /* extinction coefficient of nitrogen in the canopy, assumed to be 0.3 by default which comes half from Belinda's head and is supported by fig 10 in Lloyd et al. Biogeosciences, 7, 1833–1859, 2010 */
@@ -447,8 +448,7 @@ typedef struct {
     double wretrans;                        /* mobile wood N retranslocation fraction */
     double z0h_z0m;                         /* Assume z0m = z0h, probably a big assumption [as z0h often < z0m.], see comment in code!! But 0.1 might be a better assumption */
     int    growing_seas_len;
-    double prime_y;
-    double prime_z;
+    double prime_km;                        /* coefficient for priming effect */
     int    return_interval;                 /* years */
     int    burn_specific_yr;
     int    hurricane_doy;
@@ -790,8 +790,6 @@ typedef struct {
     /* priming/exudation */
     double root_exc;
     double co2_released_exud;
-    double factive;
-    double rtslow;
     double rexc_cue;
 
     double ninflow;

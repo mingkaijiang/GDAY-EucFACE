@@ -828,6 +828,8 @@ int handler(char *section, char *name, char *value, control *c,
         p->kdec5 = atof(value);
     } else if (MATCH("params", "kdec6")) {
         p->kdec6 = atof(value);
+    } else if (MATCH("params", "kdec6rev")) {
+      p->kdec6rev = atof(value);
     } else if (MATCH("params", "kdec7")) {
         p->kdec7 = atof(value);
     } else if (MATCH("params", "ko25")) {
@@ -992,10 +994,8 @@ int handler(char *section, char *name, char *value, control *c,
         p->psi_sat_root = atof(value);
     } else if (MATCH("params", "psi_sat_topsoil")) {
         p->psi_sat_topsoil = atof(value);
-    } else if (MATCH("params", "prime_y")) {
-        p->prime_y = atof(value);
-    } else if (MATCH("params", "prime_z")) {
-        p->prime_z = atof(value);
+    } else if (MATCH("params", "prime_km")) {
+        p->prime_km = atof(value);
     } else if (MATCH("params", "qs")) {
         p->qs = atof(value);
     } else if (MATCH("params", "r0")) {

@@ -455,7 +455,6 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             calc_day_growth(cw, c, f, ma, m, nr, p, s, s->day_length[doy],
                             doy, fdecay, rdecay);
 
-            //printf("%d %f %f\n", doy, f->gpp*100, s->lai);
             calculate_csoil_flows(c, f, p, s, m->tsoil, doy);
             calculate_nsoil_flows(c, f, p, s, doy);
 
@@ -491,14 +490,16 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             }
 
             /* Turn off all N calculations */
-            if (c->ncycle == FALSE)
+            if (c->ncycle == FALSE) {
                 reset_all_n_pools_and_fluxes(f, s);
+            }
 
             /* Turn off all P calculations */
-            if (c->pcycle == FALSE)
+            if (c->pcycle == FALSE) {
                 reset_all_p_pools_and_fluxes(f, s);
+            }
 
-            /* calculate C:N ratios and increment annual flux sum */
+            /* calculate C:nutrient ratios and increment annual flux sum */
             day_end_calculations(c, p, s, f, c->num_days, FALSE);
             
             if (c->print_options == SUBDAILY && c->spin_up == FALSE) {
@@ -625,8 +626,8 @@ void spin_up_pools(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (c->pcycle) {
                 /* Have we reached a steady state? */
                 fprintf(stderr,
-                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, nuptake - %f，inorgn - %f, nmin - %f, ngross - %f, nimm - %f, nlit - %f\n",
-                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, f->nuptake*365, s->inorgn, f->nmineralisation*365, f->ngross*365, f->nimmob*365, f->nlittrelease*365);
+                        "Spinup: LAI - %f, Plant P - %f, Lab P - %f, P min - %f, P upt - %f, nuptake - %f，inorgn - %f, nmin - %f, root_exc - %f\n",
+                        s->lai, s->plantp, s->inorglabp, f->pmineralisation*365, f->puptake*365, f->nuptake*365, s->inorgn, f->nmineralisation*365, f->root_exc*365);
                 
             } else {
               /* Have we reached a steady state? */
@@ -712,6 +713,7 @@ void correct_rate_constants(params *p, int output) {
         p->kdec4 *= NDAYS_IN_YR;
         p->kdec5 *= NDAYS_IN_YR;
         p->kdec6 *= NDAYS_IN_YR;
+        p->kdec6rev *= NDAYS_IN_YR;
         p->kdec7 *= NDAYS_IN_YR;
         p->nuptakez *= NDAYS_IN_YR;
         p->puptakez *= NDAYS_IN_YR;
@@ -741,6 +743,7 @@ void correct_rate_constants(params *p, int output) {
         p->kdec4 /= NDAYS_IN_YR;
         p->kdec5 /= NDAYS_IN_YR;
         p->kdec6 /= NDAYS_IN_YR;
+        p->kdec6rev /= NDAYS_IN_YR;
         p->kdec7 /= NDAYS_IN_YR;
         p->nuptakez /= NDAYS_IN_YR;
         p->puptakez /= NDAYS_IN_YR;

@@ -9,7 +9,7 @@
 double calc_soil_temp_factor(double);
 void   calculate_csoil_flows(control *, fluxes *, params *, state *,
                              double, int);
-void   calculate_decay_rates(fluxes *, params *, state *);
+void   calculate_decay_rates(control *, fluxes *, params *, state *);
 void   flux_from_grazers(control *c, fluxes *, params *);
 double calc_ligin_nratio_leaves(control *c, fluxes *f, params *);
 double calc_ligin_nratio_fine_roots(control *c, fluxes *f, params *);

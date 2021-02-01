@@ -165,6 +165,7 @@ void initialise_params(params *p) {
     p->kdec4 = 18.262499;
     p->kdec5 = 7.305;
     p->kdec6 = 0.198279;
+    p->kdec6rev = 0.0;
     p->kdec7 = 0.006783;
     p->kext = 0.5;
     p->kn = 0.3;         /* extinction coefficient of nitrogen in the canopy, assumed to be 0.3 by defaul which comes half from Belinda's head and is supported by fig 10 in Lloyd et al. Biogeosciences, 7, 1833–1859, 2010 */
@@ -245,6 +246,7 @@ void initialise_params(params *p) {
     p->psecmnp = 0.000022;
     p->psi_sat_root = -999.9;
     p->psi_sat_topsoil = -999.9;
+    p->prime_km = 0.3;                /* guess */
     p->puptakez = 0.0255;             /* calculated based on prateuptake 0.5 and inorglabp 0.051 */
     p->qs = 1.0;                      /* exponent in water stress modifier, =1.0 JULES type representation, the smaller the values the more curved the depletion. */
     p->r0 = 0.1325;
