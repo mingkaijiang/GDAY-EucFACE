@@ -137,17 +137,17 @@ def main(experiment_id, site,
                         "lai_closed": "0.5", # I am effectively turning this feature off by setting it so low
                         "c_alloc_fmax": "0.48",  # EucFACE parameter file
                         "c_alloc_fmin": "0.40",  # EucFACE parameter file
-                        "c_alloc_rmax": "0.22",  # EucFACE parameter file
-                        "c_alloc_rmin": "0.12",  # EucFACE parameter file
-                        "c_alloc_bmax": "0.1",   # guess
-                        "c_alloc_bmin": "0.1",  # guess
-                        "c_alloc_cmax": "0.0",   # turn off coarse roots!
+                        "c_alloc_rmax": "0.26",  # EucFACE parameter file
+                        "c_alloc_rmin": "0.16",  # EucFACE parameter file
+                        "c_alloc_bmax": "0.05",    # guess
+                        "c_alloc_bmin": "0.05",    # guess
+                        "c_alloc_cmax": "0.0",    # turn off coarse roots!
                         "cue": "0.35",            # cue
-                        "fretransn": "0.31",     # EucFACE parameter file
-                        "fretransp": "0.53",    # EucFACE parameter file
-                        "rretrans": "0.3",      # EucFACE parameter file
-                        "bretrans": "0.7",      # EucFACE parameter file
-                        "wretrans": "0.82",     # EucFACE parameter file
+                        "fretransn": "0.31",      # EucFACE parameter file
+                        "fretransp": "0.53",      # EucFACE parameter file
+                        "rretrans": "0.3",        # EucFACE parameter file
+                        "bretrans": "0.7",        # EucFACE parameter file
+                        "wretrans": "0.82",       # EucFACE parameter file
                         "retransmob": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
                         "ncwnewz": "0.008",          #New stem ring N:C at zero leaf N:C (mobile)
@@ -186,7 +186,7 @@ def main(experiment_id, site,
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
                         "kn": "0.1",                # extinction coefficient for top canopy N 
-                        "kp": "0.1",               # extinction coefficient for top canopy P 
+                        "kp": "0.1",                # extinction coefficient for top canopy P 
                         "krp": "0.00001",
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
@@ -240,8 +240,8 @@ def main(experiment_id, site,
                         "passncmax": "0.0025",
                         "passncmin": "0.001",
                         "actpcmax": "0.01",         # empirical
-                        "actpcmin": "0.005",       # empirical
-                        "slowpcmax": "0.05",    # empirical
+                        "actpcmin": "0.005",        # empirical
+                        "slowpcmax": "0.05",        # empirical
                         "slowpcmin": "0.005",       # empirical
                         "passpcmax": "0.0051",      # empirical
                         "passpcmin": "0.0051",      # empirical
@@ -249,9 +249,9 @@ def main(experiment_id, site,
                         "pcbnewz": "0.00013",      # same as sapwood
                         "pccnew": "0.00013",       # same as sapwood
                         "pccnewz": "0.00013",      # same as sapwood
-                        "pcmaxfold": "0.01",      # EucFACE parameter file
-                        "pcmaxfyoung": "0.1",      # EucFACE parameter file
-                        "pcmaxr": "0.06",         # EucFACE parameter file
+                        "pcmaxfold": "0.01",       # EucFACE parameter file
+                        "pcmaxfyoung": "0.05",      # EucFACE parameter file
+                        "pcmaxr": "0.06",          # EucFACE parameter file
                         "pcrfac": "0.8",
                         "pcwimm": "0.00013",        # EucFACE parameter file
                         "pcwimmz": "0.00013",       # EucFACE parameter file
@@ -309,6 +309,7 @@ def main(experiment_id, site,
                         "use_eff_nc": "0",
                         "text_effect_p": "1",
                         "water_stress": "true",
+                        "water_balance": "1",
 
         }
         ad.adjust_param_file(cfg_fname, replace_dict)
@@ -870,10 +871,10 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    #OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
-    #PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
+    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
+    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
 
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
-    OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
-    PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)
+    #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
+    #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
+    #PRD_DRY_MDP=False, PRD_WET_MDP=False, PRD_DRY_HIP=False, PRD_WET_HIP=False)

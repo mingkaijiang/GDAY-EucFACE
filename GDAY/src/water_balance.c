@@ -234,6 +234,7 @@ void update_water_storage(control *c, fluxes *f, params *p, state *s,
   } else if (s->pawater_root > p->wcapac_root) {
     *runoff = s->pawater_root - p->wcapac_root;
     s->pawater_root = p->wcapac_root;
+    
   }
   
   /* Update transpiration & et accounting for the actual available water */

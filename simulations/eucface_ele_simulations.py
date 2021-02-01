@@ -125,7 +125,7 @@ def main(experiment_id, site,
                         "structsurfp": "0.0000024",
 
                         # parameters
-                        "resp_coeff": "0.2",      
+                        "resp_coeff": "0.9",      # controlling the rate of respiration and CUE. to be used when vary respiration flag is on. 
                         "alpha_j": "0.308",       # Taking the theoretical maximum (from Belinda) 0.385 x 0.8 (leaf absorptance) = 0.308
                         "intercep_frac": "0.15",
                         "max_intercep_lai": "3.0",
@@ -137,17 +137,17 @@ def main(experiment_id, site,
                         "lai_closed": "0.5", # I am effectively turning this feature off by setting it so low
                         "c_alloc_fmax": "0.48",  # EucFACE parameter file
                         "c_alloc_fmin": "0.40",  # EucFACE parameter file
-                        "c_alloc_rmax": "0.32",  # EucFACE parameter file
-                        "c_alloc_rmin": "0.22",  # EucFACE parameter file
-                        "c_alloc_bmax": "0.1",   # guess
-                        "c_alloc_bmin": "0.1",  # guess
-                        "c_alloc_cmax": "0.0",   # turn off coarse roots!
+                        "c_alloc_rmax": "0.26",  # EucFACE parameter file
+                        "c_alloc_rmin": "0.16",  # EucFACE parameter file
+                        "c_alloc_bmax": "0.05",    # guess
+                        "c_alloc_bmin": "0.05",    # guess
+                        "c_alloc_cmax": "0.0",    # turn off coarse roots!
                         "cue": "0.35",            # cue
-                        "fretransn": "0.31",     # EucFACE parameter file
-                        "fretransp": "0.53",    # EucFACE parameter file
-                        "rretrans": "0.3",      # EucFACE parameter file
-                        "bretrans": "0.7",      # EucFACE parameter file
-                        "wretrans": "0.82",     # EucFACE parameter file
+                        "fretransn": "0.31",      # EucFACE parameter file
+                        "fretransp": "0.53",      # EucFACE parameter file
+                        "rretrans": "0.3",        # EucFACE parameter file
+                        "bretrans": "0.7",        # EucFACE parameter file
+                        "wretrans": "0.82",       # EucFACE parameter file
                         "retransmob": "0.82",     # EucFACE parameter file
                         "cretrans": "0.0",
                         "ncwnewz": "0.008",          #New stem ring N:C at zero leaf N:C (mobile)
@@ -186,14 +186,15 @@ def main(experiment_id, site,
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
                         "kn": "0.1",                # extinction coefficient for top canopy N 
-                        "kp": "0.1",               # extinction coefficient for top canopy P 
+                        "kp": "0.1",                # extinction coefficient for top canopy P 
                         "krp": "0.00001",
                         "dz0v_dh": "0.05",         # Using Value from JULES for TREE PFTs as I don't know what is best. However I have used value from Jarvis, quoted in Jones 1992, pg. 67. Produces a value within the bounds of 3.5-1.1 mol m-2 s-1 Drake, 2010, GCB for canht=17
                         "displace_ratio": "0.75",  # From Jones, pg 67, following Jarvis et al. 1976
                         "z0h_z0m": "1.0",
                         # root exudation
-                        "a0rhizo": "0.05",
+                        "a0rhizo": "0.01",
                         "a1rhizo": "0.6",
+                        "prime_km": "0.3",
 
                         "g1": "3.04",            # EucFACE parameter
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
@@ -239,8 +240,8 @@ def main(experiment_id, site,
                         "passncmax": "0.0025",
                         "passncmin": "0.001",
                         "actpcmax": "0.01",         # empirical
-                        "actpcmin": "0.005",       # empirical
-                        "slowpcmax": "0.05",    # empirical
+                        "actpcmin": "0.005",        # empirical
+                        "slowpcmax": "0.05",        # empirical
                         "slowpcmin": "0.005",       # empirical
                         "passpcmax": "0.0051",      # empirical
                         "passpcmin": "0.0051",      # empirical
@@ -248,9 +249,9 @@ def main(experiment_id, site,
                         "pcbnewz": "0.00013",      # same as sapwood
                         "pccnew": "0.00013",       # same as sapwood
                         "pccnewz": "0.00013",      # same as sapwood
-                        "pcmaxfold": "0.01",      # EucFACE parameter file
-                        "pcmaxfyoung": "0.1",      # EucFACE parameter file
-                        "pcmaxr": "0.06",         # EucFACE parameter file
+                        "pcmaxfold": "0.01",       # EucFACE parameter file
+                        "pcmaxfyoung": "0.05",      # EucFACE parameter file
+                        "pcmaxr": "0.06",          # EucFACE parameter file
                         "pcrfac": "0.8",
                         "pcwimm": "0.00013",        # EucFACE parameter file
                         "pcwimmz": "0.00013",       # EucFACE parameter file
@@ -276,13 +277,13 @@ def main(experiment_id, site,
                         "structratp": "0.0",
 
                         # control
-                        "adjust_rtslow": "false",  # priming, off
+                        "adjust_rtslow": "true",  # priming, off
                         "alloc_model": "fixed",
                         "assim_model": "mate",
                         "calc_sw_params": "true",   #false=use fwp values, true=derive them
                         "deciduous_model": "false",
                         "disturbance": "false",
-                        "exudation": "false",
+                        "exudation": "true",       # note that exudation not implemented in hourly model. 
                         "fixed_stem_nc": "true",
                         "fixed_stem_pc": "true",
                         "fixleafnc": "false",
@@ -301,13 +302,14 @@ def main(experiment_id, site,
                         "passiveconst": "false",
                         "print_options": "end",
                         "ps_pathway": "c3",
-                        "respiration_model": "fixed",
+                        "respiration_model": "vary",
                         "strfloat": "0",
                         "strpfloat": "0",
                         "sw_stress_model": "1",  # Sands and Landsberg
                         "use_eff_nc": "0",
                         "text_effect_p": "1",
                         "water_stress": "true",
+                        "water_balance": "1",
 
         }
         ad.adjust_param_file(cfg_fname, replace_dict)
@@ -867,7 +869,7 @@ if __name__ == "__main__":
 
     experiment_id = "FACE"
     site = "EUC"
-    CO2_treatment = "AMB"
+    CO2_treatment = "ELE"
     
     main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
     OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
