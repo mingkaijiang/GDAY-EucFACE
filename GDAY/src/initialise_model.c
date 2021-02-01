@@ -394,6 +394,7 @@ void initialise_fluxes(fluxes *f) {
     f->cpcroot = 0.0;
     f->cpbranch = 0.0;
     f->cpstem = 0.0;
+    f->root_exc = 0.0;
 
     /* daily N production */
     f->npleaf = 0.0;
@@ -402,7 +403,7 @@ void initialise_fluxes(fluxes *f) {
     f->npbranch = 0.0;
     f->npstemimm = 0.0;
     f->npstemmob = 0.0;
-    
+
     /* daily P production */
     f->ppleaf = 0.0;
     f->pproot = 0.0;
@@ -517,6 +518,7 @@ void initialise_fluxes(fluxes *f) {
     f->c_into_passive = 0.0;
 
     /* inorganic P flux exchanges */
+    f->pinflow = 0.0;
     f->p_avl_in = 0.0;
     f->p_avl_out = 0.0;
     f->p_sorb_to_ssorb = 0.0;
@@ -552,7 +554,8 @@ void initialise_fluxes(fluxes *f) {
     f->co2_rel_from_active_pool = 0.0;
     f->co2_rel_from_slow_pool = 0.0;
     f->co2_rel_from_passive_pool = 0.0;
-
+    f->co2_released_exud = 0.0;
+    
     /* Hydraulics stuff */
     f->soil_conduct = NULL;
     f->swp = NULL;

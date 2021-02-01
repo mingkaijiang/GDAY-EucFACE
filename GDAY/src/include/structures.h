@@ -732,6 +732,7 @@ typedef struct {
     double c_into_passive;
 
     /* inorganic P flux exchanges */
+    double pinflow;
     double p_avl_in;
     double p_avl_out;
     double p_sorb_to_ssorb;
@@ -788,7 +789,6 @@ typedef struct {
 
     /* priming/exudation */
     double root_exc;
-    double root_exn;
     double co2_released_exud;
     double factive;
     double rtslow;

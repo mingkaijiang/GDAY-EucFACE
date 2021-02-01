@@ -98,6 +98,8 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
     (delta_Cact). The remaining fraction of REXC is respired as CO2.
     */
     double active_CN, rex_NC, C_to_active_pool;
+  
+    double CNref = 20.0;
 
     active_CN = s->activesoil / s->activesoiln;
 
@@ -111,7 +113,7 @@ void calc_root_exudation_uptake_of_C(fluxes *f, params *p, state *s) {
         if (float_eq(f->root_exc, 0.0)) {
             rex_NC = 0.0;
         } else {
-            rex_NC = f->root_exn / f->root_exc;
+            rex_NC = (f->root_exc / CNref) / f->root_exc;
         }
         f->rexc_cue = MAX(0.3, MIN(0.6, rex_NC * active_CN));
     } else {
@@ -610,14 +612,18 @@ void calculate_nsoil_flows(control *c, fluxes *f, params *p, state *s,
     calc_n_net_mineralisation(f);
 
     if (c->exudation && c->alloc_model != GRASSES) {
-        calc_root_exudation_uptake_of_N(f, s);
-    }
-
-    if (c->adjust_rtslow) {
+        calc_root_exudation_effect_on_active_N(f, s);
+      
+        calc_root_exudation_effect_on_active_P(f, s);
+      
+      /* adjust slow soil pool residence time */
+      if (c->adjust_rtslow) {
         adjust_residence_time_of_slow_pool(f, p);
-    } else {
+      } else {
         /* Need to correct units of rate constant */
         f->rtslow = 1.0 / (p->kdec6 * NDAYS_IN_YR);
+      }
+      
     }
 
     /* Update model soil N pools */
@@ -630,7 +636,7 @@ void calculate_nsoil_flows(control *c, fluxes *f, params *p, state *s,
     return;
 }
 
-void calc_root_exudation_uptake_of_N(fluxes *f, state *s) {
+void calc_root_exudation_effect_on_active_N(fluxes *f, state *s) {
     /* When N mineralisation is large enough to allow a small amount of N
     immobilisation, the amount of N which enters the active pool is
     calculated according to REXC divided by the CN of the active pool. When
@@ -655,7 +661,7 @@ void calc_root_exudation_uptake_of_N(fluxes *f, state *s) {
     ** Demand for N from exudation to meet the C:N ratio of the active pool,
     ** given the amount of N you add.
     */
-    N_miss = delta_Nact - f->root_exn;
+    N_miss = delta_Nact;
 
     if (N_miss <= 0.0) {
         /*
@@ -663,7 +669,7 @@ void calc_root_exudation_uptake_of_N(fluxes *f, state *s) {
         ** excess is mineralised
         */
         f->nmineralisation -= N_miss;
-        N_to_active_pool = f->root_exn + N_miss;
+        N_to_active_pool = N_miss;// + f->root_exn;
     } else {
         /*
         ** Not enough N in the soil to meet demand, so we are providing all
@@ -671,14 +677,14 @@ void calc_root_exudation_uptake_of_N(fluxes *f, state *s) {
         ** changes.
         */
         if (N_miss > N_available) {
-            N_to_active_pool = f->root_exn + N_available;
+            N_to_active_pool = N_available; // + f->root_exn;
             f->nmineralisation -= N_available;
         } else {
             /*
             ** Enough N to meet demand, so takes N from the mineralisation
             ** and the active pool maintains the same C:N ratio.
             */
-            N_to_active_pool = f->root_exn + N_miss;
+            N_to_active_pool = N_miss; // + f->root_exn;
             f->nmineralisation -= N_miss;
         }
     }
@@ -686,6 +692,56 @@ void calc_root_exudation_uptake_of_N(fluxes *f, state *s) {
     /* update active pool */
     s->activesoiln += N_to_active_pool;
 
+    return;
+}
+
+
+void calc_root_exudation_effect_on_active_P(fluxes *f, state *s) {
+    /* Same as nitrogen
+     */
+    double P_available, active_PC, delta_Pact, P_miss, P_to_active_pool;
+    
+    P_available = s->inorglabp + (f->pinflow + f->purine + f->pmineralisation + f->p_slow_biochemical + f->p_ssorb_to_sorb -
+      f->ploss - f->puptake - f->p_sorb_to_ssorb);
+    
+    active_PC = s->activesoilp / s->activesoil;
+    delta_Pact = f->root_exc * f->rexc_cue * active_PC;
+    
+    /*
+     ** Demand for P from exudation to meet the C:P ratio of the active pool,
+     ** given the amount of P you add.
+     */
+    P_miss = delta_Pact;
+    
+    if (P_miss <= 0.0) {
+      /*
+       ** Root exudation includes more P than is needed by the microbes, the
+       ** excess is mineralised
+       */
+      f->pmineralisation -= P_miss;
+      P_to_active_pool = P_miss;
+    } else {
+      /*
+       ** Not enough P in the soil to meet demand, so we are providing all
+       ** the P we have, which means that the C:P ratio of the active pool
+       ** changes.
+       */
+      if (P_miss > P_available) {
+        P_to_active_pool = P_available; 
+        f->pmineralisation -= P_available;
+      } else {
+        /*
+         ** Enough P to meet demand, so takes P from the mineralisation
+         ** and the active pool maintains the same C:P ratio.
+         */
+        P_to_active_pool = P_miss; 
+        f->pmineralisation -= P_miss;
+      }
+    }
+    
+    /* update active pool */
+    s->activesoilp += P_to_active_pool;
+    
     return;
 }
 
@@ -1264,6 +1320,9 @@ void calculate_psoil_flows(control *c, fluxes *f, params *p, state *s,
     /* calculate P fertilizer release rate */
     calculate_p_fertilization_fluxes(f, p, s);
     
+    /* calculate P influxes driven by forcing */
+    calculate_p_influxes(f); 
+    
     /* gross P mineralisation */
     calculate_p_mineralisation(f);
 
@@ -1510,6 +1569,15 @@ void calculate_p_fertilization_fluxes(fluxes *f, params *p, state *s) {
   return;
 }
 
+void calculate_p_influxes(fluxes *f) {
+  /* total P influx from driving factors
+   */
+  f->pinflow = f->p_fertilizer_to_lab + f->p_par_to_lab + f->p_atm_dep;
+  
+  return;
+}
+
+
 void calculate_p_mineralisation(fluxes *f) {
     /* P gross mineralisation rate is given by the excess of P outflows
     over inflows. P mineralisation is the process by which organic P is
@@ -1714,7 +1782,7 @@ void calculate_p_avl_fluxes(fluxes *f, params *p, state *s) {
     
 
     /* total influx into the labile P pool */
-    f->p_avl_in = f->p_par_to_lab + f->p_atm_dep + f->pmineralisation + f->p_fertilizer_to_lab + f->purine + f->p_slow_biochemical + f->p_ssorb_to_sorb;
+    f->p_avl_in = f->pinflow + f->pmineralisation + f->purine + f->p_slow_biochemical + f->p_ssorb_to_sorb;
     
     if (s->inorglabp > 0) {
       f->p_avl_out = f->puptake + f->ploss + f->p_sorb_to_ssorb;
