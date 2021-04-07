@@ -175,14 +175,8 @@ def main(experiment_id, site,
                         "ligroot": "0.2",            # Same as Medlyn 2016
                         "rateuptake": "0.6",
                         "rateloss": "0.02",           # guess value
-                        "topsoil_depth": "450.0",    # Not needed as I have supplied the root zone water and topsoil water available
-                        "rooting_depth": "2500.0",   # Not needed as I have supplied the root zone water and topsoil water available
-                        "wcapac_root": "300.0",      # [mm] (FC-WP)*rooting_depth. But using 2.0 m, site_description_stuff/EucFACE_Plot_Summary.doc
-                        "wcapac_topsoil": "67.5",    # [mm] (FC-WP)*rooting_depth. But using 0.45 m, site_description_stuff/EucFACE_Plot_Summary.doc
-                        "ctheta_topsoil": "0.65",     # Derive based on soil type loamy_sand
-                        "ntheta_topsoil": "8.0",     # Derive based on soil type loamy_sand
-                        "ctheta_root": "0.525",      # Derive based on soil type sandy_clay_loam
-                        "ntheta_root": "5.5",        # Derive based on soil type sandy_clay_loam
+                        "topsoil_depth": "450.0",    
+                        "rooting_depth": "2000.0",   
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
                         "kn": "0.1",                # extinction coefficient for top canopy N 
