@@ -22,16 +22,16 @@ void initialise_soils_day(control *c, fluxes *f, params *p, state *s) {
                      &p->theta_sp_topsoil, &p->b_topsoil,
                      &p->psi_sat_topsoil);
                      
-                     /* Plant available water in top soil (mm) */
-                     p->wcapac_topsoil = p->topsoil_depth  *\
-                     (p->theta_fc_topsoil - p->theta_wp_topsoil);
-                     /* Root zone */
-                     calc_soil_params(fsoil_root, &p->theta_fc_root, &p->theta_wp_root,
-                                      &p->theta_sp_root, &p->b_root, &p->psi_sat_root);
-                     
-                     /* Plant available water in rooting zone (mm) */
-                     p->wcapac_root = p->rooting_depth * \
-                     (p->theta_fc_root - p->theta_wp_root);
+    /* Plant available water in top soil (mm) */
+    p->wcapac_topsoil = p->topsoil_depth  *\
+    (p->theta_fc_topsoil - p->theta_wp_topsoil);
+    /* Root zone */
+    calc_soil_params(fsoil_root, &p->theta_fc_root, &p->theta_wp_root,
+                     &p->theta_sp_root, &p->b_root, &p->psi_sat_root);
+    
+    /* Plant available water in rooting zone (mm) */
+    p->wcapac_root = p->rooting_depth * \
+    (p->theta_fc_root - p->theta_wp_root);
   }
   
   
@@ -1279,6 +1279,10 @@ void calculate_soil_water_fac(control *c, params *p, state *s) {
                                             p->ntheta_topsoil);
         s->wtfac_root = calc_sw_modifier(moisture_ratio_root, p->ctheta_root,
                                          p->ntheta_root);
+        
+        //fprintf(stderr, "moisture_ratio_root %f, pawater_root %f, wcapac_root %f, wtfac_root %f, rooting_depth %f, theta_fc_root %f, theta_wp_root %f\n", 
+        //        moisture_ratio_root, s->pawater_root, p->wcapac_root, s->wtfac_root,
+        //        p->rooting_depth, p->theta_fc_root, p->theta_wp_root);
 
     } else if (c->water_balance == BUCKET && c->sw_stress_model == 2) {
         /*

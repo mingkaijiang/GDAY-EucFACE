@@ -305,11 +305,11 @@ def main(experiment_id, site,
                         "respiration_model": "vary",
                         "strfloat": "0",
                         "strpfloat": "0",
-                        "sw_stress_model": "1",  # Sands and Landsberg
+                        "sw_stress_model": "1",  
                         "use_eff_nc": "0",
                         "text_effect_p": "1",
                         "water_stress": "true",
-                        "water_balance": "1",
+                        "water_balance": "BUCKET",
 
         }
         ad.adjust_param_file(cfg_fname, replace_dict)

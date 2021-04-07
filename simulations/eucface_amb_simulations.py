@@ -177,14 +177,15 @@ def main(experiment_id, site,
                         "rateloss": "0.02",           # guess value
                         "topsoil_depth": "450.0",    # Not needed as I have supplied the root zone water and topsoil water available
                         "rooting_depth": "2500.0",   # Not needed as I have supplied the root zone water and topsoil water available
-                        "wcapac_root": "300.0",      # [mm] (FC-WP)*rooting_depth. But using 2.0 m, site_description_stuff/EucFACE_Plot_Summary.doc
-                        "wcapac_topsoil": "67.5",    # [mm] (FC-WP)*rooting_depth. But using 0.45 m, site_description_stuff/EucFACE_Plot_Summary.doc
-                        "ctheta_topsoil": "0.65",     # Derive based on soil type loamy_sand
-                        "ntheta_topsoil": "8.0",     # Derive based on soil type loamy_sand
-                        "ctheta_root": "0.525",      # Derive based on soil type sandy_clay_loam
-                        "ntheta_root": "5.5",        # Derive based on soil type sandy_clay_loam
+                        #"wcapac_root": "300.0",      # [mm] (FC-WP)*rooting_depth. But using 2.0 m, site_description_stuff/EucFACE_Plot_Summary.doc
+                        #"wcapac_topsoil": "67.5",    # [mm] (FC-WP)*rooting_depth. But using 0.45 m, site_description_stuff/EucFACE_Plot_Summary.doc
+                        #"ctheta_topsoil": "0.65",     # Derive based on soil type loamy_sand
+                        #"ntheta_topsoil": "8.0",     # Derive based on soil type loamy_sand
+                        #"ctheta_root": "0.525",      # Derive based on soil type sandy_clay_loam
+                        #"ntheta_root": "5.5",        # Derive based on soil type sandy_clay_loam
                         "topsoil_type": "loamy_sand",
-                        "rootsoil_type": "sandy_clay_loam",
+                        #"rootsoil_type": "sandy_clay_loam",
+                        "rootsoil_type": "loamy_sand",
                         "kn": "0.1",                # extinction coefficient for top canopy N 
                         "kp": "0.1",                # extinction coefficient for top canopy P 
                         "krp": "0.00001",
@@ -305,11 +306,11 @@ def main(experiment_id, site,
                         "respiration_model": "vary",
                         "strfloat": "0",
                         "strpfloat": "0",
-                        "sw_stress_model": "1",  # Sands and Landsberg
+                        "sw_stress_model": "1",  
                         "use_eff_nc": "0",
                         "text_effect_p": "1",
                         "water_stress": "true",
-                        "water_balance": "1",
+                        "water_balance": "BUCKET",
 
         }
         ad.adjust_param_file(cfg_fname, replace_dict)
