@@ -176,9 +176,10 @@ def main(experiment_id, site,
                         "rateuptake": "0.6",
                         "rateloss": "0.02",           # guess value
                         "topsoil_depth": "450.0",    
-                        "rooting_depth": "2000.0",   
+                        "rooting_depth": "11000.0",   
                         "topsoil_type": "loamy_sand",
                         "rootsoil_type": "sandy_clay_loam",
+                        "fractup_soil": "0.5",      # fraction of transpiration from up of the soil
                         "kn": "0.1",                # extinction coefficient for top canopy N 
                         "kp": "0.1",                # extinction coefficient for top canopy P 
                         "krp": "0.00001",
@@ -190,7 +191,7 @@ def main(experiment_id, site,
                         "a1rhizo": "0.6",
                         "prime_km": "0.3",
 
-                        "g1": "3.04",            # EucFACE parameter
+                        "g1": "4.35",            # EucFACE parameter: 3.04 +- 1.31
                         "jmaxna": "49.930",      # forcing intercept to zero; if use all species df, 49.743
                         "jmaxpa": "933.90",      # forcing intercept to zero; if use all species df, 842.46 
                         "jmaxnb": "0.0",         # forcing intercept to zero
