@@ -168,7 +168,7 @@ def main(experiment_id, site,
                         "rdecaydry": "0.9",          # as above
                         "crdecay": "0.00",           # turn off coarse roots!
                         "bdecay": "0.1",            # no idea, assuming 25 years
-                        "wdecay": "0.01",            # no idea, assuming 25 years
+                        "wdecay": "0.02",            # no idea, assuming 25 years
                         "watdecaydry": "0.0",
                         "watdecaywet": "0.1",
                         "ligshoot": "0.15",          # EucFACE parameter file
