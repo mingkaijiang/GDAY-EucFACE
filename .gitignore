@@ -37,11 +37,15 @@ vignettes/*.pdf
 met_data/*.csv
 met_data/raw_met_data/*.csv
 outputs/*.csv
+outputs2/*.csv
+
 outputs/*.nceas
 outputs/old/*.csv
 data/*.csv
 analysis/*.csv
 outputs/analysis/*.pdf
+met_data2/*.csv
+*.pyc
 
 # All nc files
 met_data/raw_met_data/*.nc
@@ -62,6 +66,7 @@ download/*.csv
 
 # cfg file
 params/*.cfg
+params2/*.cfg
 
 # simulations
 simulations/*.txt
