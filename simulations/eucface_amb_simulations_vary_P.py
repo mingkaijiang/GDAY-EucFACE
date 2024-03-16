@@ -27,10 +27,20 @@ __email__   = "m.jiang@westernsydney.edu.au"
 
 def main(experiment_id, site, 
          SPIN_UP=True, POST_INDUST=True, 
-         OBS_DRY=True, OBS_WET=True,
-         PRD_DRY_NOP=True, PRD_WET_NOP=True, 
-         PRD_DRY_MDP=True, PRD_WET_MDP=True, 
-         PRD_DRY_HIP=True, PRD_WET_HIP=True):
+         OBS_DRY_1P=True, OBS_WET_1P=True,
+         OBS_DRY_2P=True, OBS_WET_2P=True,
+         OBS_DRY_3P=True, OBS_WET_3P=True,
+         OBS_DRY_4P=True, OBS_WET_4P=True,
+         OBS_DRY_5P=True, OBS_WET_5P=True,
+         OBS_DRY_6P=True, OBS_WET_6P=True,
+         OBS_DRY_7P=True, OBS_WET_7P=True,
+         PRD_DRY_1P=True, PRD_WET_1P=True, 
+         PRD_DRY_2P=True, PRD_WET_2P=True, 
+         PRD_DRY_3P=True, PRD_WET_3P=True, 
+         PRD_DRY_4P=True, PRD_WET_4P=True, 
+         PRD_DRY_5P=True, PRD_WET_5P=True, 
+         PRD_DRY_6P=True, PRD_WET_6P=True, 
+         PRD_DRY_7P=True, PRD_WET_7P=True):
 
     GDAY_SPIN = "./gday -s -p "
     GDAY = "./gday -p "
@@ -40,8 +50,8 @@ def main(experiment_id, site,
     base_param_dir = "/Users/%s/Documents/Research/Projects/EucFACE_Modeling/GDAY-EucFACE/GDAY/params" % (USER)
     base_dir = os.path.dirname(os.getcwd())
     param_dir = os.path.join(base_dir, "params")
-    met_dir = os.path.join(base_dir, "met_data")
-    run_dir = os.path.join(base_dir, "outputs")
+    met_dir = os.path.join(base_dir, "met_data2")
+    run_dir = os.path.join(base_dir, "outputs2")
 
     if SPIN_UP == True:
 
@@ -370,8 +380,8 @@ def main(experiment_id, site,
         # translate output to EucFACE requested output
         #tr.translate_output(out_fname, met_fname)
     
-    # observed (2011-2019) under dry condition: store output 
-    if OBS_DRY == True:
+    # observed (2011-2019) under dry condition and 0.1 P: store output 
+    if OBS_DRY_1P == True:
         
         # copy last cfg file and make new one
         shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
@@ -379,8 +389,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2012_2019" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_daily_2012_2019.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_2012_2019.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2012_2019.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -403,7 +413,7 @@ def main(experiment_id, site,
         #tr.translate_output(out_fname, met_fname)
     
     # observed (2011-2019) under dry condition: store cfg
-    if OBS_DRY == True:
+    if OBS_DRY_1P == True:
         
         # copy last cfg file and make new one
         shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
@@ -411,8 +421,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2012_2019" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_daily_2012_2019.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_2012_2019.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2012_2019.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -432,16 +442,16 @@ def main(experiment_id, site,
         os.system(GDAY + cfg_fname)
         
     # predicted (2020-2069) under DRY and NOP condition: store output 
-    if PRD_DRY_NOP == True:
+    if PRD_DRY_1P == True:
         
         # copy last cfg file and make new one
-        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
-                    os.path.join(param_dir, "%s_%s_model_DRY_%s_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.1_year_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
+                    os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.1_year_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
 
-        itag = "%s_%s_model_DRY_%s_2012_2019_adj" % (experiment_id, site, CO2_treatment)
-        otag = "%s_%s_model_DRY_%s_NOP_2020_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_NOP_daily_2020_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_NOP_2020_2069.csv" % (site, CO2_treatment)
+        itag = "%s_%s_model_DRY_%s_P0.1_year_2012_2019_adj" % (experiment_id, site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.1_year_NOP_2020_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2020_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2020_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -464,16 +474,16 @@ def main(experiment_id, site,
         #tr.translate_output(out_fname, met_fname)
     
     # predicted (2020-2069) under DRY and NOP condition: store cfg
-    if PRD_DRY_NOP == True:
+    if PRD_DRY_1P == True:
         
         # copy last cfg file and make new one
-        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
-                    os.path.join(param_dir, "%s_%s_model_DRY_%s_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.1_year_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
+                    os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.1_year_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
 
-        itag = "%s_%s_model_DRY_%s_2012_2019_adj" % (experiment_id, site, CO2_treatment)
-        otag = "%s_%s_model_DRY_%s_NOP_2020_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_NOP_daily_2020_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_NOP_2020_2069.csv" % (site, CO2_treatment)
+        itag = "%s_%s_model_DRY_%s_P0.1_year_2012_2019_adj" % (experiment_id, site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.1_year_2020_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2020_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2020_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -491,6 +501,133 @@ def main(experiment_id, site,
                         }
         ad.adjust_param_file(cfg_fname, replace_dict)
         os.system(GDAY + cfg_fname)   
+        
+        
+    # observed (2011-2019) under dry condition and 0.3 P: store output 
+    if OBS_DRY_2P == True:
+        
+        # copy last cfg file and make new one
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
+                    os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
+
+        itag = "%s_%s_model_indust_adj" % (experiment_id, site)
+        otag = "%s_%s_model_DRY_%s_2012_2019" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2012_2019.csv" % (site, CO2_treatment)
+        out_param_fname = os.path.join(param_dir, otag + ".cfg")
+        cfg_fname = os.path.join(param_dir, itag + ".cfg")
+        met_fname = os.path.join(met_dir, mtag)
+        out_fname = os.path.join(run_dir, out_fn)
+        replace_dict = {
+                         # files
+                         "out_param_fname": "%s" % (out_param_fname),
+                         "cfg_fname": "%s" % (cfg_fname),
+                         "met_fname": "%s" % (met_fname),
+                         "out_fname": "%s" % (out_fname),
+    
+                         # control
+                         "print_options": "daily",
+    
+                        }
+        ad.adjust_param_file(cfg_fname, replace_dict)
+        os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
+    
+    # observed (2011-2019) under dry condition: store cfg
+    if OBS_DRY_2P == True:
+        
+        # copy last cfg file and make new one
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_indust.cfg" % (experiment_id, site)),
+                    os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
+
+        itag = "%s_%s_model_indust_adj" % (experiment_id, site)
+        otag = "%s_%s_model_DRY_%s_2012_2019" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2012_2019.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2012_2019.csv" % (site, CO2_treatment)
+        out_param_fname = os.path.join(param_dir, otag + ".cfg")
+        cfg_fname = os.path.join(param_dir, itag + ".cfg")
+        met_fname = os.path.join(met_dir, mtag)
+        out_fname = os.path.join(run_dir, out_fn)
+        replace_dict = {
+                         # files
+                         "out_param_fname": "%s" % (out_param_fname),
+                         "cfg_fname": "%s" % (cfg_fname),
+                         "met_fname": "%s" % (met_fname),
+                         "out_fname": "%s" % (out_fname),
+    
+                         # control
+                         "print_options": "end",
+    
+                        }
+        ad.adjust_param_file(cfg_fname, replace_dict)
+        os.system(GDAY + cfg_fname)
+        
+    # predicted (2020-2069) under DRY and NOP condition: store output 
+    if PRD_DRY_2P == True:
+        
+        # copy last cfg file and make new one
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.3_year_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
+                    os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.3_year_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
+
+        itag = "%s_%s_model_DRY_%s_P0.3_year_2012_2019_adj" % (experiment_id, site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.3_year_NOP_2020_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2020_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2020_2069.csv" % (site, CO2_treatment)
+        out_param_fname = os.path.join(param_dir, otag + ".cfg")
+        cfg_fname = os.path.join(param_dir, itag + ".cfg")
+        met_fname = os.path.join(met_dir, mtag)
+        out_fname = os.path.join(run_dir, out_fn)
+        replace_dict = {
+                         # files
+                         "out_param_fname": "%s" % (out_param_fname),
+                         "cfg_fname": "%s" % (cfg_fname),
+                         "met_fname": "%s" % (met_fname),
+                         "out_fname": "%s" % (out_fname),
+    
+                         # control
+                         "print_options": "daily",
+    
+                        }
+        ad.adjust_param_file(cfg_fname, replace_dict)
+        os.system(GDAY + cfg_fname)
+        
+        # translate output to EucFACE requested output
+        #tr.translate_output(out_fname, met_fname)
+    
+    # predicted (2020-2069) under DRY and NOP condition: store cfg
+    if PRD_DRY_2P == True:
+        
+        # copy last cfg file and make new one
+        shutil.copy(os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.3_year_2012_2019.cfg" % (experiment_id, site, CO2_treatment)),
+                    os.path.join(param_dir, "%s_%s_model_DRY_%s_P0.3_year_2012_2019_adj.cfg" % (experiment_id, site, CO2_treatment)))
+
+        itag = "%s_%s_model_DRY_%s_P0.3_year_2012_2019_adj" % (experiment_id, site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.3_year_2020_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2020_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2020_2069.csv" % (site, CO2_treatment)
+        out_param_fname = os.path.join(param_dir, otag + ".cfg")
+        cfg_fname = os.path.join(param_dir, itag + ".cfg")
+        met_fname = os.path.join(met_dir, mtag)
+        out_fname = os.path.join(run_dir, out_fn)
+        replace_dict = {
+                         # files
+                         "out_param_fname": "%s" % (out_param_fname),
+                         "cfg_fname": "%s" % (cfg_fname),
+                         "met_fname": "%s" % (met_fname),
+                         "out_fname": "%s" % (out_fname),
+    
+                         # control
+                         "print_options": "end",
+    
+                        }
+        ad.adjust_param_file(cfg_fname, replace_dict)
+        os.system(GDAY + cfg_fname)   
+        
+        
+        
+        
         
     # predicted (2020-2069) under DRY and MDP condition: store output 
     if PRD_DRY_MDP == True:
@@ -866,9 +1003,22 @@ if __name__ == "__main__":
     site = "EUC"
     CO2_treatment = "AMB"
     
-    main(experiment_id, site, SPIN_UP=True, POST_INDUST=True, 
-    OBS_DRY=True, OBS_WET=True, PRD_DRY_NOP=True, PRD_WET_NOP=True,
-    PRD_DRY_MDP=True, PRD_WET_MDP=True, PRD_DRY_HIP=True, PRD_WET_HIP=True)
+    main(experiment_id, site, 
+    SPIN_UP=True, POST_INDUST=True, 
+    OBS_DRY_1P=True, OBS_WET_1P=False,
+    OBS_DRY_2P=False, OBS_WET_2P=False,
+    OBS_DRY_3P=False, OBS_WET_3P=False,
+    OBS_DRY_4P=False, OBS_WET_4P=False,
+    OBS_DRY_5P=False, OBS_WET_5P=False,
+    OBS_DRY_6P=False, OBS_WET_6P=False,
+    OBS_DRY_7P=False, OBS_WET_7P=False,
+    PRD_DRY_1P=False, PRD_WET_1P=False, 
+    PRD_DRY_2P=False, PRD_WET_2P=False, 
+    PRD_DRY_3P=False, PRD_WET_3P=False, 
+    PRD_DRY_4P=False, PRD_WET_4P=False, 
+    PRD_DRY_5P=False, PRD_WET_5P=False, 
+    PRD_DRY_6P=False, PRD_WET_6P=False, 
+    PRD_DRY_7P=False, PRD_WET_7P=True)
 
     #main(experiment_id, site, SPIN_UP=True, POST_INDUST=False, 
     #OBS_DRY=False, OBS_WET=False, PRD_DRY_NOP=False, PRD_WET_NOP=False,
