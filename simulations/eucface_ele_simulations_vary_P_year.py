@@ -445,9 +445,9 @@ def main(experiment_id, site,
                     os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
-        otag = "%s_%s_model_DRY_%s_P0.1_day_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.1_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.1_day_2013_2069.csv" % (site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.1_year_2013_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -477,9 +477,9 @@ def main(experiment_id, site,
                     os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
-        otag = "%s_%s_model_DRY_%s_P0.1_day_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.1_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.1_day_2013_2069.csv" % (site, CO2_treatment)
+        otag = "%s_%s_model_DRY_%s_P0.1_year_2013_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.1_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.1_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -508,8 +508,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.3_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.3_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -540,8 +540,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.3_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.3_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.3_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.3_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -570,8 +570,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -602,8 +602,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -632,8 +632,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.7_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.7_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.7_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.7_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -665,8 +665,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.7_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.7_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.7_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.7_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -695,8 +695,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.9_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.9_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.9_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.9_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -727,8 +727,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P0.9_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P0.9_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P0.9_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P0.9_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -757,8 +757,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P1.2_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P1.2_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P1.2_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P1.2_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -790,8 +790,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P1.2_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P1.2_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P1.2_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P1.2_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -820,8 +820,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P1.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P1.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P1.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P1.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -853,8 +853,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_DRY_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_DRY_%s_P1.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_DRY_%s_P1.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_DRY_%s_P1.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_DRY_%s_P1.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -947,9 +947,9 @@ def main(experiment_id, site,
                     os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
-        otag = "%s_%s_model_WET_%s_P0.1_day_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.1_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.1_day_2013_2069.csv" % (site, CO2_treatment)
+        otag = "%s_%s_model_WET_%s_P0.1_year_2013_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.1_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.1_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -979,9 +979,9 @@ def main(experiment_id, site,
                     os.path.join(param_dir, "%s_%s_model_indust_adj.cfg" % (experiment_id, site)))
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
-        otag = "%s_%s_model_WET_%s_P0.1_day_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.1_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.1_day_2013_2069.csv" % (site, CO2_treatment)
+        otag = "%s_%s_model_WET_%s_P0.1_year_2013_2069" % (experiment_id, site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.1_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.1_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1010,8 +1010,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.3_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.3_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.3_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.3_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1042,8 +1042,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.3_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.3_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.3_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.3_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1072,8 +1072,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1104,8 +1104,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1134,8 +1134,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.7_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.7_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.7_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.7_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1167,8 +1167,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.7_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.7_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.7_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.7_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1197,8 +1197,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.9_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.9_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.9_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.9_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1229,8 +1229,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P0.9_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P0.9_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P0.9_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P0.9_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1259,8 +1259,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P1.2_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P1.2_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P1.2_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P1.2_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1292,8 +1292,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P1.2_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P1.2_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P1.2_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P1.2_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1322,8 +1322,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P1.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P1.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P1.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P1.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1355,8 +1355,8 @@ def main(experiment_id, site,
 
         itag = "%s_%s_model_indust_adj" % (experiment_id, site)
         otag = "%s_%s_model_WET_%s_2013_2069" % (experiment_id, site, CO2_treatment)
-        mtag = "%s_met_WET_%s_P1.5_day_daily_2013_2069.csv" % (site, CO2_treatment)
-        out_fn = "%s_simulated_WET_%s_P1.5_day_2013_2069.csv" % (site, CO2_treatment)
+        mtag = "%s_met_WET_%s_P1.5_year_daily_2013_2069.csv" % (site, CO2_treatment)
+        out_fn = "%s_simulated_WET_%s_P1.5_year_2013_2069.csv" % (site, CO2_treatment)
         out_param_fname = os.path.join(param_dir, otag + ".cfg")
         cfg_fname = os.path.join(param_dir, itag + ".cfg")
         met_fname = os.path.join(met_dir, mtag)
@@ -1383,7 +1383,7 @@ if __name__ == "__main__":
 
     experiment_id = "FACE"
     site = "EUC"
-    CO2_treatment = "AMB"
+    CO2_treatment = "ELE"
     
     main(experiment_id, site, 
     SPIN_UP=True, POST_INDUST=True, 

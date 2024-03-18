@@ -1383,7 +1383,7 @@ if __name__ == "__main__":
 
     experiment_id = "FACE"
     site = "EUC"
-    CO2_treatment = "AMB"
+    CO2_treatment = "ELE"
     
     main(experiment_id, site, 
     SPIN_UP=True, POST_INDUST=True, 
